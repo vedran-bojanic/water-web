@@ -1,29 +1,4 @@
 <app-navbar></app-navbar>
-<div class="container">
-  <div class="py-5 text-center">
-    <img class="d-block mx-auto mb-4" src="../assets/pic/you-be-the-chemist-logo-285.png" alt="">
-    <h2>Brewing Water Adjustment Application</h2>
-    <p class="lead">This web application was made in educational purposes only! Enjoy using application and think about the environment first!</p>
-  </div>
-  <div class="row">
-    <div class="col">
-      <h4>List of beer styles by BJCP</h4>
-    </div>
-  </div>
-<!--  <div class="row py-1">
-    <div class="col-sm-6 col-md-3 col-lg-2">
-      <div ngbDropdown class="dropdown">
-        <button id="dropdownMenu" class="btn btn-outline-secondary" ngbDropdownToggle>BJCP Beer styles</button>
-        <div ngbDropdownMenu class="scrollable-menu" aria-labelledby="dropdownMenu">
-          <button class="dropdown-item" *ngFor="let beer of beerStyles" value="{{ beer.id }}" (click)="selectedBeer = beer">{{ beer.bjcpStyleId }}. {{ beer.name }}</button>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-6 col-md-9 col-lg-10">
-      <h2 class="text-muted">{{ selectedBeer.name }}</h2>
-    </div>
-  </div>-->
-
-</div>
+<router-outlet></router-outlet>
 <app-footer></app-footer>
 
