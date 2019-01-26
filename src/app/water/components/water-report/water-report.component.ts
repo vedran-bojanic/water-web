@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-water',
-  templateUrl: './water.component.html'
+  templateUrl: './water-report.component.html'
 })
-export class WaterComponent implements OnInit {
+export class WaterReportComponent implements OnInit {
 
   constructor() { }
 
