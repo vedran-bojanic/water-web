@@ -13,6 +13,8 @@ import { WaterAdjustmentComponent } from './water/components/water-adjustment/wa
 import { AdjustmentSummaryComponent } from './water/components/adjustment-summary/adjustment-summary.component';
 import { WaterReportComponent } from './water/components/water-report/water-report.component';
 import { StepperComponent } from './stepper/components/stepper.component';
+import { GrainService } from 'app/water/services/grain.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -31,9 +33,10 @@ import { StepperComponent } from './stepper/components/stepper.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule
+    RouterModule,
+    NgbModule.forRoot()
   ],
-  providers: [],
+  providers: [GrainService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

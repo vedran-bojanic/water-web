@@ -1,7 +1,218 @@
 <main role="main" class="flex-shrink-0">
-  <div class="container">
-    <div class="col py-5">
-      <h4>Grain bill</h4>
+  <div class="container py-3">
+    <div class="row">
+      <div class="col">
+        <h4>Grain bill info</h4>
+      </div>
     </div>
   </div>
+  <!-- Grains -->
+  <div class="container py-3">
+    <div class="row py-2 my-2">
+      <div class="col col-lg-2 text-center">
+        Grain type
+      </div>
+      <div class="col col-lg-2 text-center">
+        Weight (kg)
+      </div>
+      <div class="col col-lg-2 text-center">
+        Color (ºL)
+      </div>
+      <div class="col col-lg-2 text-center">
+        Mash pH
+      </div>
+    </div>
+    <div class="row border bg-light">
+      <div class="col col-lg-2 text-center">
+        <div ngbDropdown class="dropdown">
+          <button id="dropDownMenu1" class="btn btn-outline-secondary" ngbDropdownToggle>- Select Grain-</button>
+          <div ngbDropdownMenu class="scrollable-menu" aria-labelledby="dropdownMenu">
+            <button class="dropdown-item" *ngFor="let grain of grains" value="{{ grain.id }}">{{ grain.name }}</button>
+          </div>
+        </div>
+      </div>
+      <div class="col col-lg-2 text-center">
+        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+      <div class="col col-lg-2 text-center">
+
+      </div>
+      <div class="col col-lg-2 text-center">
+
+      </div>
+    </div>
+    <div class="row border bg-light">
+      <div class="col col-lg-2 text-center">
+        <div ngbDropdown class="dropdown">
+          <button id="dropDownMenu2" class="btn btn-outline-secondary" ngbDropdownToggle>- Select Grain-</button>
+          <div ngbDropdownMenu class="scrollable-menu" aria-labelledby="dropdownMenu">
+            <button class="dropdown-item" *ngFor="let grain of grains" value="{{ grain.id }}">{{ grain.name }}</button>
+          </div>
+        </div>
+      </div>
+      <div class="col col-lg-2 text-center">
+        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+      <div class="col col-lg-2 text-center">
+
+      </div>
+      <div class="col col-lg-2 text-center">
+
+      </div>
+    </div>
+    <div class="row border bg-light">
+      <div class="col col-lg-2 text-center">
+        <div ngbDropdown class="dropdown">
+          <button id="dropDownMenu3" class="btn btn-outline-secondary" ngbDropdownToggle>- Select Grain-</button>
+          <div ngbDropdownMenu class="scrollable-menu" aria-labelledby="dropdownMenu">
+            <button class="dropdown-item" *ngFor="let grain of grains" value="{{ grain.id }}">{{ grain.name }}</button>
+          </div>
+        </div>
+      </div>
+      <div class="col col-lg-2 text-center">
+        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+      <div class="col col-lg-2 text-center">
+
+      </div>
+      <div class="col col-lg-2 text-center">
+
+      </div>
+    </div>
+    <div class="row border bg-light">
+      <div class="col col-lg-2 text-center">
+        <div ngbDropdown class="dropdown">
+          <button id="dropDownMenu4" class="btn btn-outline-secondary" ngbDropdownToggle>- Select Grain-</button>
+          <div ngbDropdownMenu class="scrollable-menu" aria-labelledby="dropdownMenu">
+            <button class="dropdown-item" *ngFor="let grain of grains" value="{{ grain.id }}">{{ grain.name }}</button>
+          </div>
+        </div>
+      </div>
+      <div class="col col-lg-2 text-center">
+        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+      <div class="col col-lg-2 text-center">
+
+      </div>
+      <div class="col col-lg-2 text-center">
+
+      </div>
+    </div>
+    <div class="row border bg-light">
+      <div class="col col-lg-2 text-center">
+        <div ngbDropdown class="dropdown">
+          <button id="dropDownMenu5" class="btn btn-outline-secondary" ngbDropdownToggle>- Select Grain-</button>
+          <div ngbDropdownMenu class="scrollable-menu" aria-labelledby="dropdownMenu">
+            <button class="dropdown-item" *ngFor="let grain of grains" value="{{ grain.id }}">{{ grain.name }}</button>
+          </div>
+        </div>
+      </div>
+      <div class="col col-lg-2 text-center">
+        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+      <div class="col col-lg-2 text-center">
+
+      </div>
+      <div class="col col-lg-2 text-center">
+
+      </div>
+    </div>
+    <div class="row border bg-light">
+      <div class="col col-lg-2 text-center">
+        <div ngbDropdown class="dropdown">
+          <button id="dropDownMenu6" class="btn btn-outline-secondary" ngbDropdownToggle>- Select Grain-</button>
+          <div ngbDropdownMenu class="scrollable-menu" aria-labelledby="dropdownMenu">
+            <button class="dropdown-item" *ngFor="let grain of grains" value="{{ grain.id }}">{{ grain.name }}</button>
+          </div>
+        </div>
+      </div>
+      <div class="col col-lg-2 text-center">
+        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+      <div class="col col-lg-2 text-center">
+
+      </div>
+      <div class="col col-lg-2 text-center">
+
+      </div>
+    </div>
+    <div class="row border bg-light">
+      <div class="col col-lg-2 text-center">
+        <div ngbDropdown class="dropdown">
+          <button id="dropDownMenu7" class="btn btn-outline-secondary" ngbDropdownToggle>- Select Grain-</button>
+          <div ngbDropdownMenu class="scrollable-menu" aria-labelledby="dropdownMenu">
+            <button class="dropdown-item" *ngFor="let grain of grains" value="{{ grain.id }}">{{ grain.name }}</button>
+          </div>
+        </div>
+      </div>
+      <div class="col col-lg-2 text-center">
+        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+      <div class="col col-lg-2 text-center">
+
+      </div>
+      <div class="col col-lg-2 text-center">
+
+      </div>
+    </div>
+    <div class="row border bg-light">
+      <div class="col col-lg-2 text-center">
+        <div ngbDropdown class="dropdown">
+          <button id="dropDownMenu8" class="btn btn-outline-secondary" ngbDropdownToggle>- Select Grain-</button>
+          <div ngbDropdownMenu class="scrollable-menu" aria-labelledby="dropdownMenu">
+            <button class="dropdown-item" *ngFor="let grain of grains" value="{{ grain.id }}">{{ grain.name }}</button>
+          </div>
+        </div>
+      </div>
+      <div class="col col-lg-2 text-center">
+        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+      <div class="col col-lg-2 text-center">
+
+      </div>
+      <div class="col col-lg-2 text-center">
+
+      </div>
+    </div>
+    <div class="row border bg-light">
+      <div class="col col-lg-2 text-center">
+        <div ngbDropdown class="dropdown">
+          <button id="dropDownMenu9" class="btn btn-outline-secondary" ngbDropdownToggle>- Select Grain-</button>
+          <div ngbDropdownMenu class="scrollable-menu" aria-labelledby="dropdownMenu">
+            <button class="dropdown-item" *ngFor="let grain of grains" value="{{ grain.id }}">{{ grain.name }}</button>
+          </div>
+        </div>
+      </div>
+      <div class="col col-lg-2 text-center">
+        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+      <div class="col col-lg-2 text-center">
+
+      </div>
+      <div class="col col-lg-2 text-center">
+
+      </div>
+    </div>
+    <div class="row border bg-light">
+      <div class="col col-lg-2 text-center">
+        <div ngbDropdown class="dropdown">
+          <button id="dropDownMenu10" class="btn btn-outline-secondary" ngbDropdownToggle>- Select Grain-</button>
+          <div ngbDropdownMenu class="scrollable-menu" aria-labelledby="dropdownMenu">
+            <button class="dropdown-item" *ngFor="let grain of grains" value="{{ grain.id }}">{{ grain.name }}</button>
+          </div>
+        </div>
+      </div>
+      <div class="col col-lg-2 text-center">
+        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+      <div class="col col-lg-2 text-center">
+
+      </div>
+      <div class="col col-lg-2 text-center">
+
+      </div>
+    </div>
+  </div>
+
+
 </main>
