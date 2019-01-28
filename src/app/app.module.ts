@@ -15,6 +15,7 @@ import { WaterReportComponent } from './water/components/water-report/water-repo
 import { StepperComponent } from './stepper/components/stepper.component';
 import { GrainService } from 'app/water/services/grain.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MashPhComponent } from './water/components/mash-ph/mash-ph.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     GrainBillComponent,
     WaterAdjustmentComponent,
     AdjustmentSummaryComponent,
-    StepperComponent
+    StepperComponent,
+    MashPhComponent
   ],
   imports: [
     BrowserModule,
