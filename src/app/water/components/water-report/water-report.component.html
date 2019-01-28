@@ -1,20 +1,121 @@
 <main role="main" class="flex-shrink-0">
-  <div class="container">
-    <div class="col py-5 mt-5">
-      <h4>List of beer styles by BJCP</h4>
+  <div class="container py-3">
+    <div class="row">
+      <div class="col">
+        <h4>Starting water report</h4>
+      </div>
     </div>
   </div>
-  <!--  <div class="row py-1">
-      <div class="col-sm-6 col-md-3 col-lg-2">
-        <div ngbDropdown class="dropdown">
-          <button id="dropdownMenu" class="btn btn-outline-secondary" ngbDropdownToggle>BJCP Beer styles</button>
-          <div ngbDropdownMenu class="scrollable-menu" aria-labelledby="dropdownMenu">
-            <button class="dropdown-item" *ngFor="let beer of beerStyles" value="{{ beer.id }}" (click)="selectedBeer = beer">{{ beer.bjcpStyleId }}. {{ beer.name }}</button>
-          </div>
-        </div>
+  <!-- Minerals names -->
+  <div class="container py-3">
+    <div class="row">
+      <div class="col">
+
       </div>
-      <div class="col-sm-6 col-md-9 col-lg-10">
-        <h2 class="text-muted">{{ selectedBeer.name }}</h2>
+      <div class="col text-center">
+        Calcium
       </div>
-    </div>-->
+      <div class="col text-center">
+        Magnesium
+      </div>
+      <div class="col text-center">
+        Sodium
+      </div>
+      <div class="col text-center">
+        Chloride
+      </div>
+      <div class="col text-center">
+        Sulfate
+      </div>
+      <div class="col text-center">
+        Alkalinity
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+
+      </div>
+      <div class="col text-center">
+        (Ca ppm)
+      </div>
+      <div class="col text-center">
+        (Mg ppm)
+      </div>
+      <div class="col text-center">
+        (Na ppm)
+      </div>
+      <div class="col text-center">
+        (Cl ppm)
+      </div>
+      <div class="col text-center">
+        (SO4 ppm)
+      </div>
+      <div class="col text-center">
+        (CaCO3 ppm)
+      </div>
+    </div>
+    <!-- Minerals input fields -->
+    <div class="row">
+      <div class="col">
+
+      </div>
+      <div class="col">
+        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+      <div class="col">
+        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+      <div class="col">
+        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+      <div class="col">
+        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+      <div class="col">
+        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+      <div class="col">
+        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+    </div>
+  </div>
+  <div class="container py-3">
+    <!-- Mash ans sparge water ratios -->
+    <div class="row justify-content-md-left">
+      <div class="col col-lg-2">
+
+      </div>
+      <div class="col col-lg-2 text-center">
+        Mash water
+      </div>
+      <div class="col col-lg-2 text-center">
+        Sparge water
+      </div>
+    </div>
+    <div class="row justify-content-md-left">
+      <div class="col col-lg-2">
+        Volume (liters):
+      </div>
+      <div class="col col-lg-2">
+        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+      <div class="col col-lg-2">
+        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+    </div>
+    <div class="row justify-content-md-left">
+      <div class="col col-lg-2">
+        % of Distilled or RO:
+      </div>
+      <div class="col col-lg-2">
+        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+      <div class="col col-lg-2">
+        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
 </main>

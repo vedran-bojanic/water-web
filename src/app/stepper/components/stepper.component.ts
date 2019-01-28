@@ -5,7 +5,6 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './stepper.component.html'
 })
 export class StepperComponent implements OnInit {
-  showStepper: true;
 
   constructor() {
   }

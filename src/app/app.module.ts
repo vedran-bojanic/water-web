@@ -8,7 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/components/page-not-found.component';
 import { RootPageComponent } from './root-page/components/root-page.component';
-import { SpargeWaterComponent } from './water/components/sparge-water/sparge-water.component';
 import { GrainBillComponent } from './water/components/grain-bill/grain-bill.component';
 import { WaterAdjustmentComponent } from './water/components/water-adjustment/water-adjustment.component';
 import { AdjustmentSummaryComponent } from './water/components/adjustment-summary/adjustment-summary.component';
@@ -24,7 +23,6 @@ import { StepperComponent } from './stepper/components/stepper.component';
     WaterReportComponent,
     PageNotFoundComponent,
     RootPageComponent,
-    SpargeWaterComponent,
     GrainBillComponent,
     WaterAdjustmentComponent,
     AdjustmentSummaryComponent,
