@@ -8,11 +8,16 @@ import { Grain } from '../../models/grain';
 })
 export class GrainBillComponent implements OnInit {
   grains: Array<Grain>;
+  selectedGrain: Grain;
 
   constructor(private grainService: GrainService) { }
 
   ngOnInit() {
     this.grains = this.grainService.getGrains();
+    this.selectedGrain = { id: 0, name: '- Select Grain -', pH: 0, type: null };
   }
 
+  selectGrain(newGrain: Grain) {
+    this.selectedGrain = newGrain;
+  }
 }

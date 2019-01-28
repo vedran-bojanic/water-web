@@ -16,6 +16,7 @@ import { StepperComponent } from './stepper/components/stepper.component';
 import { GrainService } from 'app/water/services/grain.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MashPhComponent } from './water/components/mash-ph/mash-ph.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { MashPhComponent } from './water/components/mash-ph/mash-ph.component';
     MashPhComponent
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     RouterModule,

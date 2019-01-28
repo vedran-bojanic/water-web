@@ -51,13 +51,13 @@ export const GRAINS: Grain[] = [
   },
   {
     'id': 9,
-    'name': 'CARAMEL CRYSTAL',
+    'name': 'CRYSTAL',
     'pH': null,
     'type': 2
   },
   {
     'id': 10,
-    'name': 'ROASTED TOASTED',
+    'name': 'ROASTED',
     'pH': 4.71,
     'type': 3
   }
