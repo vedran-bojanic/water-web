@@ -10,11 +10,11 @@ import { AdjustmentSummaryComponent } from './water/components/adjustment-summar
 
 const routes: Routes = [
   { path: '', component: RootPageComponent, pathMatch: 'full' },
-  { path: 'water-report', component: WaterReportComponent },
-  { path: 'sparge-water', component: SpargeWaterComponent },
-  { path: 'grain-bill', component: GrainBillComponent },
-  { path: 'water-adjustment', component: WaterAdjustmentComponent },
-  { path: 'adjustment-summary', component: AdjustmentSummaryComponent },
+  { path: 'water-report', component: WaterReportComponent, data: { showStepper: true } },
+  { path: 'sparge-water', component: SpargeWaterComponent, data: { showStepper: true } },
+  { path: 'grain-bill', component: GrainBillComponent, data: { showStepper: true } },
+  { path: 'water-adjustment', component: WaterAdjustmentComponent, data: { showStepper: true } },
+  { path: 'adjustment-summary', component: AdjustmentSummaryComponent, data: { showStepper: true } },
   { path: '**', component: RootPageComponent }
 ];
 
@@ -24,4 +24,5 @@ const routes: Routes = [
     RouterModule.forRoot(routes)
   ]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

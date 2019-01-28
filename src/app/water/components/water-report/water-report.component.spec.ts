@@ -10,7 +10,7 @@ describe('WaterReportComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ WaterReportComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

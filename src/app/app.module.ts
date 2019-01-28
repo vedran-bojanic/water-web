@@ -13,6 +13,7 @@ import { GrainBillComponent } from './water/components/grain-bill/grain-bill.com
 import { WaterAdjustmentComponent } from './water/components/water-adjustment/water-adjustment.component';
 import { AdjustmentSummaryComponent } from './water/components/adjustment-summary/adjustment-summary.component';
 import { WaterReportComponent } from './water/components/water-report/water-report.component';
+import { StepperComponent } from './stepper/components/stepper.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { WaterReportComponent } from './water/components/water-report/water-repo
     SpargeWaterComponent,
     GrainBillComponent,
     WaterAdjustmentComponent,
-    AdjustmentSummaryComponent
+    AdjustmentSummaryComponent,
+    StepperComponent
   ],
   imports: [
     BrowserModule,
