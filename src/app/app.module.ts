@@ -17,6 +17,8 @@ import { GrainService } from 'app/water/services/grain.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MashPhComponent } from './water/components/mash-ph/mash-ph.component';
 import { FormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers';
 
 
 @NgModule({
@@ -38,7 +40,8 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     RouterModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    StoreModule.forRoot(reducers, { metaReducers })
   ],
   providers: [GrainService],
   bootstrap: [AppComponent]
