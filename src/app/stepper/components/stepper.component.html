@@ -1,7 +1,18 @@
-<main role="main" class="flex-shrink-0">
+<main *ngIf="showStepper" role="main" class="flex-shrink-0">
   <div class="container">
     <div class="col py-5 mt-5">
       <h4>Stepper steps</h4>
+
+      <div class="progress">
+        <div class="progress-bar progress-bar-striped"
+             role="progressbar"
+             [ngStyle]="setStyle()"
+             [attr.aria-valuenow]=stepperPercentage
+             aria-valuemin="0"
+             aria-valuemax="100">
+          Water Profile
+        </div>
+      </div>
     </div>
   </div>
 </main>

@@ -8,12 +8,44 @@ import { WaterAdjustmentComponent } from './water/components/water-adjustment/wa
 import { AdjustmentSummaryComponent } from './water/components/adjustment-summary/adjustment-summary.component';
 
 const routes: Routes = [
-  { path: '', component: RootPageComponent, pathMatch: 'full' },
-  { path: 'water-report', component: WaterReportComponent, data: { showStepper: true } },
-  { path: 'grain-bill', component: GrainBillComponent, data: { showStepper: true } },
-  { path: 'water-adjustment', component: WaterAdjustmentComponent, data: { showStepper: true } },
-  { path: 'adjustment-summary', component: AdjustmentSummaryComponent, data: { showStepper: true } },
-  { path: '**', component: RootPageComponent }
+  {
+    path: '', component: RootPageComponent, pathMatch: 'full'
+  },
+  {
+    path: 'water-report',
+    component: WaterReportComponent,
+    data: {
+      showStepper: true,
+      stepperPercentage: 25
+    }
+  },
+  {
+    path: 'grain-bill',
+    component: GrainBillComponent,
+    data: {
+      showStepper: true,
+      stepperPercentage: 50
+    }
+  },
+  {
+    path: 'water-adjustment',
+    component: WaterAdjustmentComponent,
+    data: {
+      showStepper: true,
+      stepperPercentage: 75
+    }
+  },
+  {
+    path: 'adjustment-summary',
+    component: AdjustmentSummaryComponent,
+    data: {
+      showStepper: true,
+      stepperPercentage: 100
+    }
+  },
+  {
+    path: '**', component: RootPageComponent
+  }
 ];
 
 @NgModule({
