@@ -15,32 +15,44 @@ const routes: Routes = [
     path: 'water-report',
     component: WaterReportComponent,
     data: {
-      showStepper: true,
-      stepperPercentage: 25
+      show: true,
+      stepDetails: {
+        name: 'Water Report',
+        stepperPercentage: 25
+      }
     }
   },
   {
     path: 'grain-bill',
     component: GrainBillComponent,
     data: {
-      showStepper: true,
-      stepperPercentage: 50
+      show: true,
+      stepDetails: {
+        name: 'Grain Bill',
+        stepperPercentage: 50
+      }
     }
   },
   {
     path: 'water-adjustment',
     component: WaterAdjustmentComponent,
     data: {
-      showStepper: true,
-      stepperPercentage: 75
+      show: true,
+      stepDetails: {
+        name: 'Water Adjustment',
+        stepperPercentage: 75
+      }
     }
   },
   {
     path: 'adjustment-summary',
     component: AdjustmentSummaryComponent,
     data: {
-      showStepper: true,
-      stepperPercentage: 100
+      show: true,
+      stepDetails: {
+        name: 'Summary',
+        stepperPercentage: 100
+      }
     }
   },
   {

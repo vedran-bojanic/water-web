@@ -1,6 +1,5 @@
 <app-navbar></app-navbar>
-<app-stepper></app-stepper>
+<app-stepper *ngIf="show" [details]=stepDetails></app-stepper>
 <router-outlet></router-outlet>
-<hr>
-<app-mash-ph></app-mash-ph>
+<app-mash-ph *ngIf="show"></app-mash-ph>
 <app-footer></app-footer>
