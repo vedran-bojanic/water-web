@@ -7,10 +7,10 @@
         <div class="progress-bar progress-bar-striped bg-info"
              role="progressbar"
              [ngStyle]="setStyle()"
-             [attr.aria-valuenow]=stepperPercentage
+             [attr.aria-valuenow]=details.stepperPercentage
              aria-valuemin="0"
              aria-valuemax="100">
-          {{ name }}
+          {{ details.name }}
         </div>
       </div>
     </div>
