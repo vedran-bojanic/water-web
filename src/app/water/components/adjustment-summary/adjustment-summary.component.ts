@@ -16,4 +16,7 @@ export class AdjustmentSummaryComponent implements OnInit {
     this.router.navigate(['/water-adjustment']);
   }
 
+  onSave() {
+    alert('Water Saved!');
+  }
 }
