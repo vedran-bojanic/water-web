@@ -23,10 +23,10 @@ export class GrainBillComponent implements OnInit {
   }
 
   onNext() {
-    this.router.navigate(['/water-adjustment']);
+    this.router.navigate(['/water/water-adjustment']);
   }
 
   onBack() {
-    this.router.navigate(['/water-report']);
+    this.router.navigate(['/water/water-report']);
   }
 }

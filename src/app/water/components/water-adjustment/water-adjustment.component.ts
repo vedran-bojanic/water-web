@@ -13,10 +13,10 @@ export class WaterAdjustmentComponent implements OnInit {
   }
 
   onNext() {
-    this.router.navigate(['/adjustment-summary']);
+    this.router.navigate(['/water/adjustment-summary']);
   }
 
   onBack() {
-    this.router.navigate(['/grain-bill']);
+    this.router.navigate(['/water/grain-bill']);
   }
 }
