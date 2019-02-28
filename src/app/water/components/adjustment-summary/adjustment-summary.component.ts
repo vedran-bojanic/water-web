@@ -13,7 +13,7 @@ export class AdjustmentSummaryComponent implements OnInit {
   }
 
   onBack() {
-    this.router.navigate(['/water-adjustment']);
+    this.router.navigate(['/water/water-adjustment']);
   }
 
   onSave() {

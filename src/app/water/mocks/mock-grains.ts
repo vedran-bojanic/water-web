@@ -1,6 +1,4 @@
-import { Grain } from '../models/grain';
-
-export const GRAINS: Grain[] = [
+export const GRAINS: any[] = [
   {
     'id': 1,
     'name': '2-ROW',

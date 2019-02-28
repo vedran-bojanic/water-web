@@ -13,7 +13,7 @@ export class WaterReportComponent implements OnInit {
   }
 
   onNext() {
-    this.router.navigate(['/grain-bill']);
+    this.router.navigate(['/water/grain-bill']);
   }
 
   onBack() {
