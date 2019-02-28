@@ -10,13 +10,14 @@ import { MashPhComponent } from './components/mash-ph/mash-ph.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { StepperComponent } from './components/stepper/components/stepper.component';
 import { SharedModule } from '../shared/shared.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     WaterRoutingModule,
     NgSelectModule,
     SharedModule

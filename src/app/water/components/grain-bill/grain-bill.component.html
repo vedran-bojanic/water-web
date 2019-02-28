@@ -20,31 +20,34 @@
     </div>
 
     <ng-container *ngFor="let grainId of num | multiplyElement">
-      <div class="col">
+      <form [formGroup]="GrainForm">
+        <div class="col">
         <div class="row py-1">
           <div class="col text-center">
             <div class="col text-center" style="width: 250px;">
               <ng-select [items]="grainsDropdown"
                          bindLabel="name"
                          placeholder="- Select Grain -"
-                         [(ngModel)]="selectedGrain">
+                         (change)="onChange($event)"
+                         formControlName="grain">
               </ng-select>
             </div>
           </div>
           <div class="col text-center">
-            <input type="text" value="{{ grain ? grain.name : '' }}" class="form-control text-center">
+            <input type="text" formControlName="name" value="{{ grain ? grain.name : '' }}" class="form-control text-center">
           </div>
           <div class="col text-center">
-            <input type="text" value="{{ grain ? grain.weight : '' }}" class="form-control text-center">
+            <input type="text" formControlName="weight" value="{{ grain ? grain.weight : '' }}" class="form-control text-center">
           </div>
           <div class="col text-center">
-            <input type="text" value="{{ grain ? grain.color : '' }}" class="form-control text-center">
+            <input type="text" formControlName="color" value="{{ grain ? grain.color : '' }}" class="form-control text-center">
           </div>
           <div class="col text-center">
-            <input type="text" value="{{ selectedGrain ? selectedGrain.pH : '' }}" class="form-control text-center" readonly>
+            <input type="text" formControlName="pH" value="{{ selectedGrain ? selectedGrain.pH : '' }}" class="form-control text-center" readonly>
           </div>
         </div>
       </div>
+      </form>
       {{ selectedGrain | json }}
     </ng-container>
 
@@ -82,6 +85,7 @@
         Next step
         <span class="fas fa-angle-double-right"></span>
       </button>
+      <button (click)="onSave()" type="button" class="btn btn-outline-success mr-2">Save</button>
     </div>
   </div>
 </main>
