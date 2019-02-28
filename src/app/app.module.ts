@@ -9,13 +9,13 @@ import { RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/components/page-not-found.component';
 import { RootPageComponent } from './root-page/components/root-page.component';
 import { GrainService } from 'app/water/services/grain.service';
-import { FormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { metaReducers, reducers } from './reducers';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { WaterModule } from './water/water.module';
 import { SharedModule } from './shared/shared.module';
 import { CommonModule } from '@angular/common';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -27,6 +27,7 @@ import { CommonModule } from '@angular/common';
     WaterModule,
     SharedModule,
     NgbModule.forRoot(),
+    NgSelectModule,
     StoreModule.forRoot(reducers, { metaReducers })
   ],
   declarations: [
