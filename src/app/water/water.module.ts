@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { WaterRoutingModule } from './water-routing.module';
 import { WaterComponent } from './components/water.component';
@@ -11,10 +10,13 @@ import { MashPhComponent } from './components/mash-ph/mash-ph.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { StepperComponent } from './components/stepper/components/stepper.component';
 import { SharedModule } from '../shared/shared.module';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   imports: [
-    CommonModule,
+    BrowserModule,
+    FormsModule,
     WaterRoutingModule,
     NgSelectModule,
     SharedModule

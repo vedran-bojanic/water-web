@@ -15,25 +15,26 @@ import { metaReducers, reducers } from './reducers';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { WaterModule } from './water/water.module';
 import { SharedModule } from './shared/shared.module';
+import { CommonModule } from '@angular/common';
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-    FooterComponent,
-    RootPageComponent,
-    PageNotFoundComponent
-  ],
   imports: [
-    FormsModule,
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     RouterModule,
     WaterModule,
     SharedModule,
     NgbModule.forRoot(),
     StoreModule.forRoot(reducers, { metaReducers })
+  ],
+  declarations: [
+    AppComponent,
+    NavbarComponent,
+    FooterComponent,
+    RootPageComponent,
+    PageNotFoundComponent
   ],
   providers: [GrainService],
   bootstrap: [AppComponent]
