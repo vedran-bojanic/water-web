@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
-import { SetWaterReport, WaterReportModel } from './states/water-report.action';
+import { WaterReport } from '../models/water.report.model';
+import { SetWaterReport } from './states/water-report.action';
 
 @Component({
   selector: 'app-water',
@@ -18,17 +19,17 @@ export class WaterReportComponent implements OnInit {
 
   ngOnInit() {
     this.store.selectOnce(state => state.waterReport)
-      .subscribe((x: WaterReportModel) => {
-        this.waterReportForm.controls['calcium'].setValue(x.calcium);
-        this.waterReportForm.controls['magnesium'].setValue(x.magnesium);
-        this.waterReportForm.controls['sodium'].setValue(x.sodium);
-        this.waterReportForm.controls['chloride'].setValue(x.chloride);
-        this.waterReportForm.controls['sulfate'].setValue(x.sulfate);
-        this.waterReportForm.controls['alkalinity'].setValue(x.alkalinity);
-        this.waterReportForm.controls['mashVolume'].setValue(x.mashVolume);
-        this.waterReportForm.controls['spargeVolume'].setValue(x.spargeVolume);
-        this.waterReportForm.controls['mashRoPercentage'].setValue(x.mashRoPercentage);
-        this.waterReportForm.controls['spargeRoPercentage'].setValue(x.spargeRoPercentage);
+      .subscribe((wr: WaterReport) => {
+        this.waterReportForm.controls['calcium'].setValue(wr.calcium);
+        this.waterReportForm.controls['magnesium'].setValue(wr.magnesium);
+        this.waterReportForm.controls['sodium'].setValue(wr.sodium);
+        this.waterReportForm.controls['chloride'].setValue(wr.chloride);
+        this.waterReportForm.controls['sulfate'].setValue(wr.sulfate);
+        this.waterReportForm.controls['alkalinity'].setValue(wr.alkalinity);
+        this.waterReportForm.controls['mashVolume'].setValue(wr.mashVolume);
+        this.waterReportForm.controls['spargeVolume'].setValue(wr.spargeVolume);
+        this.waterReportForm.controls['mashRoPercentage'].setValue(wr.mashRoPercentage);
+        this.waterReportForm.controls['spargeRoPercentage'].setValue(wr.spargeRoPercentage);
       });
   }
 
@@ -61,17 +62,18 @@ export class WaterReportComponent implements OnInit {
   }
 
   private storeWaterReport() {
-    this.store.dispatch(new SetWaterReport(
-      this.waterReportForm.controls['calcium'].value,
-      this.waterReportForm.controls['magnesium'].value,
-      this.waterReportForm.controls['sodium'].value,
-      this.waterReportForm.controls['chloride'].value,
-      this.waterReportForm.controls['sulfate'].value,
-      this.waterReportForm.controls['alkalinity'].value,
-      this.waterReportForm.controls['mashVolume'].value,
-      this.waterReportForm.controls['spargeVolume'].value,
-      this.waterReportForm.controls['mashRoPercentage'].value,
-      this.waterReportForm.controls['spargeRoPercentage'].value
-    ));
+    const waterReport: WaterReport = {
+      calcium: this.waterReportForm.controls['calcium'].value,
+      magnesium: this.waterReportForm.controls['magnesium'].value,
+      sodium: this.waterReportForm.controls['sodium'].value,
+      chloride: this.waterReportForm.controls['chloride'].value,
+      sulfate: this.waterReportForm.controls['sulfate'].value,
+      alkalinity: this.waterReportForm.controls['alkalinity'].value,
+      mashVolume: this.waterReportForm.controls['mashVolume'].value,
+      spargeVolume: this.waterReportForm.controls['spargeVolume'].value,
+      mashRoPercentage: this.waterReportForm.controls['mashRoPercentage'].value,
+      spargeRoPercentage: this.waterReportForm.controls['spargeRoPercentage'].value
+    };
+    this.store.dispatch(new SetWaterReport(waterReport));
   }
 }
