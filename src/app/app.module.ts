@@ -16,6 +16,10 @@ import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxsModule } from '@ngxs/store';
 import { WaterState } from './actions/water.actions';
+import { WaterReportState } from './water/components/water-report/states/water-report.action';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -29,8 +33,13 @@ import { WaterState } from './actions/water.actions';
     NgbModule.forRoot(),
     NgSelectModule,
     NgxsModule.forRoot([
-      WaterState
-    ]),
+        WaterState,
+        WaterReportState
+      ],
+      { developmentMode: !environment.production }
+    ),
+    NgxsReduxDevtoolsPluginModule.forRoot(),
+    NgxsLoggerPluginModule.forRoot()
   ],
   declarations: [
     AppComponent,
@@ -42,4 +51,5 @@ import { WaterState } from './actions/water.actions';
   providers: [GrainService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

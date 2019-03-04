@@ -1,126 +1,129 @@
 <main role="main" class="flex-shrink-0">
-  <div class="container py-3">
-    <div class="row">
-      <div class="col">
-        <h4>Starting water report</h4>
+  <form [formGroup]="waterReportForm" (ngSubmit)="onSubmit()">
+    <div class="container py-3">
+      <div class="row">
+        <div class="col">
+          <h4>Starting water report</h4>
+        </div>
       </div>
     </div>
-  </div>
-  <!-- Minerals names -->
-  <div class="container py-3">
-    <div class="row">
-      <div class="col text-center">
-        Calcium
+    <!-- Minerals names -->
+    <div class="container py-3">
+      <div class="row">
+        <div class="col text-center">
+          Calcium
+        </div>
+        <div class="col text-center">
+          Magnesium
+        </div>
+        <div class="col text-center">
+          Sodium
+        </div>
+        <div class="col text-center">
+          Chloride
+        </div>
+        <div class="col text-center">
+          Sulfate
+        </div>
+        <div class="col text-center">
+          Alkalinity
+        </div>
       </div>
-      <div class="col text-center">
-        Magnesium
+      <div class="row">
+        <div class="col text-center">
+          (Ca ppm)
+        </div>
+        <div class="col text-center">
+          (Mg ppm)
+        </div>
+        <div class="col text-center">
+          (Na ppm)
+        </div>
+        <div class="col text-center">
+          (Cl ppm)
+        </div>
+        <div class="col text-center">
+          (SO4 ppm)
+        </div>
+        <div class="col text-center">
+          (CaCO3 ppm)
+        </div>
       </div>
-      <div class="col text-center">
-        Sodium
-      </div>
-      <div class="col text-center">
-        Chloride
-      </div>
-      <div class="col text-center">
-        Sulfate
-      </div>
-      <div class="col text-center">
-        Alkalinity
-      </div>
-    </div>
-    <div class="row">
-      <div class="col text-center">
-        (Ca ppm)
-      </div>
-      <div class="col text-center">
-        (Mg ppm)
-      </div>
-      <div class="col text-center">
-        (Na ppm)
-      </div>
-      <div class="col text-center">
-        (Cl ppm)
-      </div>
-      <div class="col text-center">
-        (SO4 ppm)
-      </div>
-      <div class="col text-center">
-        (CaCO3 ppm)
-      </div>
-    </div>
-    <!-- Minerals input fields -->
-    <div class="row pt-1">
-      <div class="col">
-        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-      </div>
-      <div class="col">
-        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-      </div>
-      <div class="col">
-        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-      </div>
-      <div class="col">
-        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-      </div>
-      <div class="col">
-        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-      </div>
-      <div class="col">
-        <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-      </div>
-    </div>
-  </div>
-  <!-- Mash ans sparge water ratios -->
-  <div class="container py-3">
-    <div class="row">
-      <div class="col-lg-6">
-        <div class="row pb-2">
+      <!-- Minerals input fields -->
+      <div class="row pt-1">
           <div class="col">
+            <input type="text" formControlName="calcium" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <div class="col">
+            <input type="text" formControlName="magnesium" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <div class="col">
+            <input type="text" formControlName="sodium" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <div class="col">
+            <input type="text" formControlName="chloride" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <div class="col">
+            <input type="text" formControlName="sulfate" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <div class="col">
+            <input type="text" formControlName="alkalinity" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
+      </div>
+    </div>
+    <!-- Mash ans sparge water ratios -->
+    <div class="container py-3">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="row pb-2">
+            <div class="col">
 
+            </div>
+            <div class="col text-center">
+              Mash water
+            </div>
+            <div class="col text-center">
+              Sparge water
+            </div>
           </div>
-          <div class="col text-center">
-            Mash water
+          <div class="row pb-1">
+            <div class="col text-right">
+              Volume (liters):
+            </div>
+            <div class="col">
+              <input type="text" formControlName="mashVolume" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <div class="col">
+              <input type="text" formControlName="spargeVolume" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            </div>
           </div>
-          <div class="col text-center">
-            Sparge water
-          </div>
-        </div>
-        <div class="row pb-1">
-          <div class="col text-right">
-            Volume (liters):
-          </div>
-          <div class="col">
-            <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-          </div>
-          <div class="col">
-            <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col text-right">
-            % of Distilled or RO:
-          </div>
-          <div class="col">
-            <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-          </div>
-          <div class="col">
-            <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          <div class="row">
+            <div class="col text-right">
+              % of Distilled or RO:
+            </div>
+            <div class="col">
+              <input type="text" formControlName="mashRoPercentage" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <div class="col">
+              <input type="text" formControlName="spargeRoPercentage" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Buttons -->
-  <div class="container py-3">
-    <div class="row justify-content-end">
-      <button (click)="onBack()" type="button" class="btn btn-outline-danger mr-2">
-        <span class="fas fa-angle-double-left"></span> Home
-      </button>
-      <button (click)="onNext()" type="button" class="btn btn-outline-dark mr-2">
-        Next step
-        <span class="fas fa-angle-double-right"></span>
-      </button>
+    <!-- Buttons -->
+    <div class="container py-3">
+      <div class="row justify-content-end">
+        <button (click)="onBack()" type="button" class="btn btn-outline-danger mr-2">
+          <span class="fas fa-angle-double-left"></span> Home
+        </button>
+        <button (click)="onNext()" type="button" class="btn btn-outline-dark mr-2">
+          Next step
+          <span class="fas fa-angle-double-right"></span>
+        </button>
+        <button type="submit" class="btn btn-outline-success mr-2">Save</button>
+      </div>
     </div>
-  </div>
+  </form>
 </main>
