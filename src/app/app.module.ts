@@ -20,6 +20,7 @@ import { WaterReportState } from './water/components/water-report/states/water-r
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { environment } from '../environments/environment';
+import { WaterAdjustmentState } from './water/components/water-adjustment/states/water-adjustment.actions';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { environment } from '../environments/environment';
     NgSelectModule,
     NgxsModule.forRoot([
         WaterState,
-        WaterReportState
+        WaterReportState,
+        WaterAdjustmentState
       ],
       { developmentMode: !environment.production }
     ),

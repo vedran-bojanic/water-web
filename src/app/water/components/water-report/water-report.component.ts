@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { WaterReport } from '../models/water.report.model';
-import { SetWaterReport } from './states/water-report.action';
+import { AddWaterReport } from './states/water-report.action';
 
 @Component({
   selector: 'app-water',
@@ -74,6 +74,6 @@ export class WaterReportComponent implements OnInit {
       mashRoPercentage: this.waterReportForm.controls['mashRoPercentage'].value,
       spargeRoPercentage: this.waterReportForm.controls['spargeRoPercentage'].value
     };
-    this.store.dispatch(new SetWaterReport(waterReport));
+    this.store.dispatch(new AddWaterReport(waterReport));
   }
 }

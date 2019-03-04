@@ -1,277 +1,280 @@
 <main role="main" class="flex-shrink-0">
-  <div class="container py-3">
-    <div class="row">
-      <div class="col">
-        <h4>Water adjustment</h4>
+  <form [formGroup]="waterAdjustmentForm" (ngSubmit)="onSubmit()">
+    <div class="container py-3">
+      <div class="row">
+        <div class="col">
+          <h4>Water adjustment</h4>
+        </div>
       </div>
     </div>
-  </div>
-  <!-- Mash salts to lower pH -->
-  <div class="container pb-2">
-    <div class="row">
-      <div class="col">
-        <h6>Adjust mash pH DOWN</h6>
+    <!-- Mash salts to lower pH -->
+    <div class="container pb-2">
+      <div class="row">
+        <div class="col">
+          <h6>Adjust mash pH DOWN</h6>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-6">
-        <div class="row">
-          <div class="col text-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="row">
+            <div class="col text-center">
 
-          </div>
-          <div class="col text-center">
-            Gypsum
-          </div>
-          <div class="col text-center">
-            Cl. Chloride
-          </div>
-          <div class="col text-center">
-            Epsom Salt
-          </div>
-        </div>
-        <div class="row">
-          <div class="col text-center">
-
-          </div>
-          <div class="col text-center">
-            CaSO4
-          </div>
-          <div class="col text-center">
-            CaCl2
-          </div>
-          <div class="col text-center">
-            MgSO4
-          </div>
-        </div>
-        <div class="row">
-          <div class="col text-center">
-            Mash water (g)
-          </div>
-          <div class="col text-center">
-            <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-          </div>
-          <div class="col text-center">
-            <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-          </div>
-          <div class="col text-center">
-            <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-          </div>
-        </div>
-        <div class="row pb-1">
-          <div class="col text-center">
-
-          </div>
-          <div class="col text-center">
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="gypsumCheck">
-              <label class="custom-control-label" for="gypsumCheck"></label>
+            </div>
+            <div class="col text-center">
+              Gypsum
+            </div>
+            <div class="col text-center">
+              Cl. Chloride
+            </div>
+            <div class="col text-center">
+              Epsom Salt
             </div>
           </div>
-          <div class="col text-center">
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="clChlorideCheck">
-              <label class="custom-control-label" for="clChlorideCheck"></label>
+          <div class="row">
+            <div class="col text-center">
+
+            </div>
+            <div class="col text-center">
+              CaSO4
+            </div>
+            <div class="col text-center">
+              CaCl2
+            </div>
+            <div class="col text-center">
+              MgSO4
             </div>
           </div>
-          <div class="col text-center">
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="epsomCheck">
-              <label class="custom-control-label" for="epsomCheck"></label>
+          <div class="row" formGroupName="decreasePhSaltsMash">
+            <div class="col text-center">
+              Mash water (g)
+            </div>
+            <div class="col text-center">
+              <input type="text" formControlName="gypsum" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <div class="col text-center">
+              <input type="text" formControlName="calciumChloride" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <div class="col text-center">
+              <input type="text" formControlName="epsomSalt" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col text-center">
-            Sparge water (g)
-          </div>
-          <div class="col text-center">
-            <input type="text" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-          </div>
-          <div class="col text-center">
-            <input type="text" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-          </div>
-          <div class="col text-center">
-            <input type="text" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-          </div>
-        </div>
-      </div>
+          <div class="row pb-1">
+            <div class="col text-center">
 
-      <div class="col-lg-3 pt-4">
-        <div class="row">
-          <div class="col text-center">
-
-          </div>
-          <div class="col text-center">
-            Acidulated Malt
-          </div>
-        </div>
-        <div class="row py-2">
-
-        </div>
-        <div class="row pb-1">
-          <div class="col text-right">
-            acid:
-          </div>
-          <div class="col text-center">
-            <input type="text" value="max 3.0 %" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col text-right">
-            grams:
-          </div>
-          <div class="col text-center">
-            <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 pt-4">
-        <div class="row">
-          <div class="col text-center">
-
-          </div>
-          <div class="col text-center">
-            Lactic Acid
-          </div>
-        </div>
-        <div class="row py-2">
-
-        </div>
-        <div class="row pb-1">
-          <div class="col text-right">
-            acid:
-          </div>
-          <div class="col text-center">
-            <input type="text" value="88 %" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col text-right">
-            ml:
-          </div>
-          <div class="col text-center">
-            <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <hr>
-
-  <!-- Mash salts to rise pH -->
-  <div class="container pb-2">
-    <div class="row">
-      <div class="col">
-        <h6>Adjust mash pH UP</h6>
-      </div>
-    </div>
-  </div>
-  <div class="container">
-    <div class="row  justify-content-center">
-      <div class="col-lg-6">
-        <div class="row">
-          <div class="col text-center">
-
-          </div>
-          <div class="col text-center">
-            Slaked Lime
-          </div>
-          <div class="col text-center">
-            Baking Soda
-          </div>
-          <div class="col text-center">
-            Chalk
-          </div>
-        </div>
-        <div class="row">
-          <div class="col text-center">
-
-          </div>
-          <div class="col text-center">
-            Ca(OH)2
-          </div>
-          <div class="col text-center">
-            NaHCO3
-          </div>
-          <div class="col text-center">
-            CaCO3
-          </div>
-        </div>
-        <div class="row">
-          <div class="col text-center">
-            Mash water (g)
-          </div>
-          <div class="col text-center">
-            <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-          </div>
-          <div class="col text-center">
-            <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-          </div>
-          <div class="col text-center">
-            <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-          </div>
-        </div>
-        <div class="row pb-1">
-          <div class="col text-center">
-
-          </div>
-          <div class="col text-center">
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="limeCheck">
-              <label class="custom-control-label" for="limeCheck"></label>
+            </div>
+            <div class="col text-center">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="gypsumCheck">
+                <label class="custom-control-label" for="gypsumCheck"></label>
+              </div>
+            </div>
+            <div class="col text-center">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="clChlorideCheck">
+                <label class="custom-control-label" for="clChlorideCheck"></label>
+              </div>
+            </div>
+            <div class="col text-center">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="epsomCheck">
+                <label class="custom-control-label" for="epsomCheck"></label>
+              </div>
             </div>
           </div>
-          <div class="col text-center">
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="sodaCheck">
-              <label class="custom-control-label" for="sodaCheck"></label>
+          <div class="row" formGroupName="decreasePhSaltsSparge">
+            <div class="col text-center">
+              Sparge water (g)
             </div>
-          </div>
-          <div class="col text-center">
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="chalkCheck">
-              <label class="custom-control-label" for="chalkCheck"></label>
+            <div class="col text-center">
+              <input type="text" formControlName="gypsum" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <div class="col text-center">
+              <input type="text" formControlName="calciumChloride" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <div class="col text-center">
+              <input type="text" formControlName="epsomSalt" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col text-center">
-            Sparge water (g)
+
+        <div class="col-lg-3 pt-4">
+          <div class="row">
+            <div class="col text-center">
+
+            </div>
+            <div class="col text-center">
+              Acidulated Malt
+            </div>
           </div>
-          <div class="col text-center">
-            <input type="text" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          <div class="row py-2">
+
           </div>
-          <div class="col text-center">
-            <input type="text" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          <div class="row pb-1">
+            <div class="col text-right">
+              acid:
+            </div>
+            <div class="col text-center">
+              <input type="text" value="max 3.0 %" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            </div>
           </div>
-          <div class="col text-center">
-            <input type="text" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          <div class="row">
+            <div class="col text-right">
+              grams:
+            </div>
+            <div class="col text-center" formGroupName="decreasePhAcid">
+              <input type="text" formControlName="acidulatedMalt" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            </div>
           </div>
         </div>
+
+        <div class="col-lg-3 pt-4" >
+          <div class="row">
+            <div class="col text-center">
+
+            </div>
+            <div class="col text-center">
+              Lactic Acid
+            </div>
+          </div>
+          <div class="row py-2">
+
+          </div>
+          <div class="row pb-1">
+            <div class="col text-right">
+              acid:
+            </div>
+            <div class="col text-center">
+              <input type="text" value="88 %" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col text-right">
+              ml:
+            </div>
+            <div class="col text-center" formGroupName="decreasePhAcid">
+              <input type="text" formControlName="lacticAcid" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            </div>
+          </div>
+        </div>
+
       </div>
+    </div>
 
-      <div class="col-lg-6">
+    <hr>
+
+    <!-- Mash salts to rise pH -->
+    <div class="container pb-2">
+      <div class="row">
+        <div class="col">
+          <h6>Adjust mash pH UP</h6>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row  justify-content-center">
+        <div class="col-lg-6">
+          <div class="row">
+            <div class="col text-center">
+
+            </div>
+            <div class="col text-center">
+              Slaked Lime
+            </div>
+            <div class="col text-center">
+              Baking Soda
+            </div>
+            <div class="col text-center">
+              Chalk
+            </div>
+          </div>
+          <div class="row">
+            <div class="col text-center">
+
+            </div>
+            <div class="col text-center">
+              Ca(OH)2
+            </div>
+            <div class="col text-center">
+              NaHCO3
+            </div>
+            <div class="col text-center">
+              CaCO3
+            </div>
+          </div>
+          <div class="row" formGroupName="increasePhSaltsMash">
+            <div class="col text-center">
+              Mash water (g)
+            </div>
+            <div class="col text-center">
+              <input type="text" formControlName="slakedLime" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <div class="col text-center">
+              <input type="text" formControlName="bakingSoda" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <div class="col text-center">
+              <input type="text" formControlName="chalk" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            </div>
+          </div>
+          <div class="row pb-1">
+            <div class="col text-center">
+
+            </div>
+            <div class="col text-center">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="limeCheck">
+                <label class="custom-control-label" for="limeCheck"></label>
+              </div>
+            </div>
+            <div class="col text-center">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="sodaCheck">
+                <label class="custom-control-label" for="sodaCheck"></label>
+              </div>
+            </div>
+            <div class="col text-center">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="chalkCheck">
+                <label class="custom-control-label" for="chalkCheck"></label>
+              </div>
+            </div>
+          </div>
+          <div class="row" formGroupName="increasePhSaltsSparge">
+            <div class="col text-center">
+              Sparge water (g)
+            </div>
+            <div class="col text-center">
+              <input type="text" formControlName="slakedLime" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <div class="col text-center">
+              <input type="text" formControlName="bakingSoda" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <div class="col text-center">
+              <input type="text" formControlName="chalk" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+
+        </div>
 
       </div>
-
     </div>
-  </div>
 
-  <!-- Buttons -->
-  <div class="container py-3">
-    <div class="row justify-content-end">
-      <button (click)="onBack()" type="button" class="btn btn-outline-danger mr-2">
-        <span class="fas fa-angle-double-left"></span> Back
-      </button>
-      <button (click)="onNext()" type="button" class="btn btn-outline-dark mr-2">
-        Next step
-        <span class="fas fa-angle-double-right"></span>
-      </button>
+    <!-- Buttons -->
+    <div class="container py-3">
+      <div class="row justify-content-end">
+        <button (click)="onBack()" type="button" class="btn btn-outline-danger mr-2">
+          <span class="fas fa-angle-double-left"></span> Back
+        </button>
+        <button (click)="onNext()" type="button" class="btn btn-outline-dark mr-2">
+          Next step
+          <span class="fas fa-angle-double-right"></span>
+        </button>
+        <button type="submit" class="btn btn-outline-success mr-2">Save</button>
+      </div>
     </div>
-  </div>
+  </form>
 </main>
