@@ -11,7 +11,7 @@ import { FormControl, FormGroup } from '@angular/forms';
   providers: [ MultiplyElementPipe ]
 })
 export class GrainBillComponent implements OnInit {
-  num = 1; // TODO: Load value from config file
+  num = 8; // TODO: Load value from config file
   grainsDropdown: any[];
   grains: Grain[];
   selectedGrain: any;
