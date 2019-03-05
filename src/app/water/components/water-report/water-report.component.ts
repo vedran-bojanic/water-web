@@ -33,7 +33,21 @@ export class WaterReportComponent implements OnInit {
       });
   }
 
-  createForm() {
+  onSubmit() {
+    this.storeWaterReport();
+  }
+
+  onNext() {
+    this.storeWaterReport();
+    this.router.navigate(['/water/grain-bill']);
+  }
+
+  onBack() {
+    this.storeWaterReport();
+    this.router.navigate(['/']);
+  }
+
+  private createForm() {
     this.waterReportForm = this.fb.group({
       calcium: ['', Validators.required],
       magnesium: ['', Validators.required],
@@ -46,19 +60,6 @@ export class WaterReportComponent implements OnInit {
       mashRoPercentage: ['', Validators.required],
       spargeRoPercentage: ['', Validators.required]
     });
-  }
-
-  onSubmit() {
-    this.storeWaterReport();
-  }
-
-  onNext() {
-    this.storeWaterReport();
-    this.router.navigate(['/water/grain-bill']);
-  }
-
-  onBack() {
-    this.router.navigate(['/']);
   }
 
   private storeWaterReport() {

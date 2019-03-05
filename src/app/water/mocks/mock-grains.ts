@@ -1,4 +1,4 @@
-export const GRAINS: any[] = [
+export const GRAINS_DROPDOWN: any[] = [
   {
     'id': 1,
     'name': '2-ROW',

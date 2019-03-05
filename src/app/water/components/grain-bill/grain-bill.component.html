@@ -1,91 +1,90 @@
 <main role="main" class="flex-shrink-0">
-  <div class="container py-3">
-    <div class="row">
-      <div class="col">
-        <h4>Grain bill info</h4>
-      </div>
-    </div>
-  </div>
-
-  <!-- Grains -->
-  <div class="container py-4">
-    <div class="col">
-      <div class="row py-1">
-        <div class="col text-center">Grain type</div>
-        <div class="col text-center">Name</div>
-        <div class="col text-center">Weight (kg)</div>
-        <div class="col text-center">Color (ºL)</div>
-        <div class="col text-center">Mash pH</div>
-      </div>
-    </div>
-
-    <ng-container *ngFor="let grainId of num | multiplyElement">
-      <form [formGroup]="GrainForm">
+  <form [formGroup]="grainBillForm" (ngSubmit)="onSubmit()">
+    <div class="container py-3">
+      <div class="row">
         <div class="col">
+          <h4>Grain bill info</h4>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grains -->
+    <div class="container py-4">
+      <div class="col">
         <div class="row py-1">
-          <div class="col text-center">
-            <div class="col text-center" style="width: 250px;">
-              <ng-select [items]="grainsDropdown"
-                         bindLabel="name"
-                         placeholder="- Select Grain -"
-                         (change)="onChange($event)"
-                         formControlName="grain">
-              </ng-select>
+          <div class="col text-center">Grain type</div>
+          <div class="col text-center">Name</div>
+          <div class="col text-center">Weight (kg)</div>
+          <div class="col text-center">Color (ºL)</div>
+          <div class="col text-center">Mash pH</div>
+        </div>
+      </div>
+
+      <ng-container *ngFor="let grainId of num | multiplyElement">
+        <div class="col" formGroupName="grain">
+          <div class="row py-1">
+            <div class="col text-center">
+              <div class="col text-center" style="width: 250px;">
+                <ng-select [items]="grainsDropdown"
+                           bindLabel="name"
+                           placeholder="- Select Grain -"
+                           (change)="onChange($event)"
+                           formControlName="grain">
+                </ng-select>
+              </div>
+            </div>
+            <div class="col text-center">
+              <input type="text" formControlName="name" value="{{ grain ? grain.name : '' }}" class="form-control text-center">
+            </div>
+            <div class="col text-center">
+              <input type="text" formControlName="weight" value="{{ grain ? grain.weight : '' }}" class="form-control text-center">
+            </div>
+            <div class="col text-center">
+              <input type="text" formControlName="color" value="{{ grain ? grain.color : '' }}" class="form-control text-center">
+            </div>
+            <div class="col text-center">
+              <input type="text" value="{{ selectedGrain ? selectedGrain.pH : '' }}" class="form-control text-center" readonly>
             </div>
           </div>
-          <div class="col text-center">
-            <input type="text" formControlName="name" value="{{ grain ? grain.name : '' }}" class="form-control text-center">
+        </div>
+      </ng-container>
+
+    </div>
+
+    <!-- Total weight -->
+    <div class="container py-3">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="row py-1">
+            <div class="col-lg-6 text-right">Total grain weight (kg):</div>
+            <div class="col-lg-3 text-center">
+              <input type="text" value="5,2" class="form-control text-center" readonly>
+            </div>
+            <div class="col-lg-2 text-center"></div>
           </div>
-          <div class="col text-center">
-            <input type="text" formControlName="weight" value="{{ grain ? grain.weight : '' }}" class="form-control text-center">
-          </div>
-          <div class="col text-center">
-            <input type="text" formControlName="color" value="{{ grain ? grain.color : '' }}" class="form-control text-center">
-          </div>
-          <div class="col text-center">
-            <input type="text" formControlName="pH" value="{{ selectedGrain ? selectedGrain.pH : '' }}" class="form-control text-center" readonly>
+          <div class="row py-1">
+            <div class="col-lg-6 text-right">Mash Thickness:</div>
+            <div class="col-lg-3 text-center">
+              <input type="text" value="3,25" class="form-control text-center" readonly>
+            </div>
+            <div class="col-lg-2 text-center">l/kg</div>
           </div>
         </div>
       </div>
-      </form>
-      {{ selectedGrain | json }}
-    </ng-container>
+    </div>
 
-  </div>
-
-  <!-- Total weight -->
-  <div class="container py-3">
-    <div class="row">
-      <div class="col-lg-6">
-        <div class="row py-1">
-          <div class="col-lg-6 text-right">Total grain weight (kg):</div>
-          <div class="col-lg-3 text-center">
-            <input type="text" value="5,2" class="form-control text-center" readonly>
-          </div>
-          <div class="col-lg-2 text-center"></div>
-        </div>
-        <div class="row py-1">
-          <div class="col-lg-6 text-right">Mash Thickness:</div>
-          <div class="col-lg-3 text-center">
-            <input type="text" value="3,25" class="form-control text-center" readonly>
-          </div>
-          <div class="col-lg-2 text-center">l/kg</div>
-        </div>
+    <!-- Buttons -->
+    <div class="container py-3">
+      <div class="row justify-content-end">
+        <button (click)="onBack()" type="button" class="btn btn-outline-danger mr-2">
+          <span class="fas fa-angle-double-left"></span> Back
+        </button>
+        <button (click)="onNext()" type="button" class="btn btn-outline-dark mr-2">
+          Next step
+          <span class="fas fa-angle-double-right"></span>
+        </button>
+        <button type="submit" class="btn btn-outline-success mr-2">Save</button>
       </div>
     </div>
-  </div>
-
-  <!-- Buttons -->
-  <div class="container py-3">
-    <div class="row justify-content-end">
-      <button (click)="onBack()" type="button" class="btn btn-outline-danger mr-2">
-        <span class="fas fa-angle-double-left"></span> Back
-      </button>
-      <button (click)="onNext()" type="button" class="btn btn-outline-dark mr-2">
-        Next step
-        <span class="fas fa-angle-double-right"></span>
-      </button>
-      <button (click)="onSave()" type="button" class="btn btn-outline-success mr-2">Save</button>
-    </div>
-  </div>
+  </form>
 </main>

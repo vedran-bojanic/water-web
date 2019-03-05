@@ -23,7 +23,6 @@ export class WaterAdjustmentComponent implements OnInit {
   ngOnInit() {
     this.store.selectOnce(state => state.waterAdjustment)
       .subscribe((wa: WaterAdjustment) => {
-        console.log(wa);
         this.setFormValue('decreasePhSaltsMash', 'gypsum', wa.decreasePhSaltsMash.gypsum);
         this.setFormValue('decreasePhSaltsMash', 'calciumChloride', wa.decreasePhSaltsMash.calciumChloride);
         this.setFormValue('decreasePhSaltsMash', 'epsomSalt', wa.decreasePhSaltsMash.epsomSalt);
@@ -41,7 +40,21 @@ export class WaterAdjustmentComponent implements OnInit {
       });
   }
 
-  createForm() {
+  onSubmit() {
+    this.storeWaterAdjustment();
+  }
+
+  onNext() {
+    this.storeWaterAdjustment();
+    this.router.navigate(['/water/adjustment-summary']);
+  }
+
+  onBack() {
+    this.storeWaterAdjustment();
+    this.router.navigate(['/water/grain-bill']);
+  }
+
+  private createForm() {
     this.waterAdjustmentForm = this.fb.group({
       decreasePhSaltsMash: this.fb.group({
         gypsum: [''],
@@ -68,19 +81,6 @@ export class WaterAdjustmentComponent implements OnInit {
         chalk: ['']
       })
     });
-  }
-
-  onSubmit() {
-    this.storeWaterAdjustment();
-  }
-
-  onNext() {
-    this.storeWaterAdjustment();
-    this.router.navigate(['/water/adjustment-summary']);
-  }
-
-  onBack() {
-    this.router.navigate(['/water/grain-bill']);
   }
 
   private setFormValue(formGroupName: string, formControlName: string, value: number): any {

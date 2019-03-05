@@ -1,7 +1,6 @@
 import { GrainType } from '../models/grain-type.enum';
-import { Grain } from '../models/grain';
 
-export const GRAINS_DB: Grain[] = [
+export const GRAINS_DB: any[] = [
   {
     'id': 1,
     'name': 'Pale ale',

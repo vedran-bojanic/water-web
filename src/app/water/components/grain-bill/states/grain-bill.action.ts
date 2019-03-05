@@ -1,35 +1,32 @@
 import { GrainBill } from '../../models/grain-bill.model';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { Grain } from '../../models/grain.model';
 
 export class AddGrainBill {
   static readonly type = '[Grain Bill] AddGrainBill';
-  constructor(public payload: GrainBill) { }
+  constructor(public grain: Grain) { }
 }
 
-export interface GrainBillModel {
-  grainBill: GrainBill[];
-}
-
-@State<GrainBillModel>({
+@State<GrainBill>({
   name: 'grainBill',
   defaults: {
-    grainBill: []
+    grains: []
   }
 })
 export class GrainBillState {
 
   @Selector()
-  static getGrainBill(state: GrainBillModel) {
-    return state.grainBill;
+  static getGrainBill(state: GrainBill) {
+    return state.grains;
   }
 
   @Action(AddGrainBill)
-  addGrainBill(ctx: StateContext<GrainBillModel>, { payload }: AddGrainBill) {
+  addGrainBill(ctx: StateContext<GrainBill>, action: AddGrainBill) {
     const state = ctx.getState();
     ctx.patchState({
-      grainBill: [
-        ...state.grainBill,
-        payload
+      grains: [
+        ...state.grains,
+        action.grain
       ]
     });
   }

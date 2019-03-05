@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { GrainService } from '../../services/grain.service';
-import { Grain } from '../../models/grain';
 import { Router } from '@angular/router';
 import { MultiplyElementPipe } from '../../../shared/pipes/multiply-element.pipe';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Store } from '@ngxs/store';
+import { Grain } from '../models/grain.model';
+import { AddGrainBill } from './states/grain-bill.action';
 
 @Component({
   selector: 'app-grain-bill',
@@ -11,36 +13,33 @@ import { FormControl, FormGroup } from '@angular/forms';
   providers: [ MultiplyElementPipe ]
 })
 export class GrainBillComponent implements OnInit {
-  num = 8; // TODO: Load value from config file
+  num = 1; // TODO: Load value from config file
   grainsDropdown: any[];
-  grains: Grain[];
-  selectedGrain: any;
+  selectedGrain: Grain;
   grain: Grain;
 
-  GrainForm: FormGroup;
+  grainBillForm: FormGroup;
 
-  constructor(private grainService: GrainService, private router: Router) { }
+  constructor(
+    private grainService: GrainService,
+    private router: Router,
+    private fb: FormBuilder,
+    private store: Store
+  ) {
+    this.createForm();
+  }
 
   ngOnInit() {
-    this.GrainForm = new FormGroup({
-      grain: new FormControl(null),
-      name: new FormControl(null),
-      weight: new FormControl(null),
-      color: new FormControl(null),
-      pH: new FormControl(null)
-    });
-
     this.grainsDropdown = this.grainService.getDropdownGrains();
-    this.grains = this.grainService.getGrains();
+    // this.grains = this.grainService.getGrains();
   }
 
-  onChange(x: any) {
-    console.log(x);
+  onChange(grain: Grain) {
+    this.selectedGrain = grain;
   }
 
-  onSave() {
-    console.log(this.GrainForm.value);
-    alert('CHANGE');
+  onSubmit() {
+    this.storeGrainBill();
   }
 
   onNext() {
@@ -49,6 +48,31 @@ export class GrainBillComponent implements OnInit {
 
   onBack() {
     this.router.navigate(['/water/water-report']);
+  }
+
+  private createForm() {
+    this.grainBillForm = this.fb.group({
+      grain: this.fb.group({
+        id: [''],
+        grain: [''],
+        name: [''],
+        weight: [''],
+        color: ['']
+      })
+    });
+  }
+
+  private storeGrainBill() {
+    const grain: Grain = {
+      id: 1,
+      name: this.grainBillForm.get('grain.name').value,
+      weight: this.grainBillForm.get('grain.weight').value,
+      color: this.grainBillForm.get('grain.color').value,
+      pH: this.grainBillForm.get('grain.grain').value.pH,
+      grainTypeId: this.grainBillForm.get('grain.grain').value.id,
+      grainType: this.grainBillForm.get('grain.grain').value.type
+    };
+    this.store.dispatch(new AddGrainBill(grain));
   }
 }
 
