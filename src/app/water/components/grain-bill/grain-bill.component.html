@@ -8,7 +8,7 @@
       </div>
     </div>
 
-    <!-- Grains -->
+    <!-- Grains labels -->
     <div class="container py-4">
       <div class="col">
         <div class="row py-1">
@@ -40,10 +40,10 @@
             <input type="text" formControlName="weight" class="form-control text-center">
           </div>
           <div class="col text-center">
-            <input type="text" formControlName="color" class="form-control text-center">
+            <input type="text" formControlName="color" (change)="calculatePh(i + 1)" class="form-control text-center" [readOnly]="getGrainControl(i + 1) !== 'CRYSTAL'">
           </div>
           <div class="col text-center">
-            <input type="text" formControlName="pH" class="form-control text-center" [readOnly]="getGrainControl(i + 1).name !== 'CRYSTAL'">
+            <input type="text" formControlName="pH" class="form-control text-center" readOnly>
           </div>
         </div>
       </div>

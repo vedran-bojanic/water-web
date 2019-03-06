@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngxs/store';
@@ -7,21 +7,26 @@ import { IncreasePh } from '../models/increase-ph.model';
 import { AcidMalt } from '../models/acid-malt.model';
 import { WaterAdjustment } from '../models/water-adjustment.model';
 import { AddWaterAdjustment } from './states/water-adjustment.actions';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-water-adjustment',
   templateUrl: './water-adjustment.component.html'
 })
-export class WaterAdjustmentComponent implements OnInit {
+export class WaterAdjustmentComponent implements OnInit, OnDestroy {
 
+  private ngUnsubscribe: Subject<any>;
   waterAdjustmentForm: FormGroup;
 
   constructor(private router: Router, private fb: FormBuilder, private store: Store) {
+    this.ngUnsubscribe = new Subject();
     this.createForm();
   }
 
   ngOnInit() {
     this.store.selectOnce(state => state.waterAdjustment)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((wa: WaterAdjustment) => {
         this.setFormValue('decreasePhSaltsMash', 'gypsum', wa.decreasePhSaltsMash.gypsum);
         this.setFormValue('decreasePhSaltsMash', 'calciumChloride', wa.decreasePhSaltsMash.calciumChloride);
@@ -124,5 +129,10 @@ export class WaterAdjustmentComponent implements OnInit {
       increasePhSaltsSparge: increasePhSaltsSparge,
     };
     this.store.dispatch(new AddWaterAdjustment(waterAdjustment));
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

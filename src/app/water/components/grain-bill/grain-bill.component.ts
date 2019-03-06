@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { GrainService } from '../../services/grain.service';
 import { Router } from '@angular/router';
 import { MultiplyElementPipe } from '../../../shared/pipes/multiply-element.pipe';
@@ -8,17 +8,20 @@ import { Grain } from '../models/grain.model';
 import { AddGrainBill } from './states/grain-bill.action';
 import { GrainBill } from '../models/grain-bill.model';
 import { GrainDropdown } from '../models/grain-dropdown.model';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-grain-bill',
   templateUrl: './grain-bill.component.html',
   providers: [ MultiplyElementPipe ]
 })
-export class GrainBillComponent implements OnInit {
+export class GrainBillComponent implements OnInit, OnDestroy {
   nums = 8;
-  grainsDropdown: any[];
+  grainsDropdown: Grain[];
   grain: Grain;
 
+  private ngUnsubscribe: Subject<any>;
   grainBillForm: FormGroup;
 
   constructor(
@@ -27,12 +30,14 @@ export class GrainBillComponent implements OnInit {
     private fb: FormBuilder,
     private store: Store
   ) {
+    this.ngUnsubscribe = new Subject();
     this.createForm();
   }
 
   ngOnInit() {
     this.grainsDropdown = this.grainService.getDropdownGrains();
     this.store.select(state => state.grainBill.grains)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((grains: Grain[]) => {
         grains.forEach(grain => {
           this.setFormValue(grain.id, 'id', grain.id);
@@ -40,9 +45,11 @@ export class GrainBillComponent implements OnInit {
           this.setFormValue(grain.id, 'name', grain.name);
           this.setFormValue(grain.id, 'weight', grain.weight);
           this.setFormValue(grain.id, 'color', grain.color);
-          grain.grainDropdown.name !== 'CRYSTAL' ?
-            this.setFormValue(grain.id, 'pH', grain.grainDropdown.pH) :
-            this.setFormValue(grain.id, 'pH', grain.crystalPh);
+          if (grain.grainDropdown) {
+            grain.grainDropdown.name !== 'CRYSTAL' ?
+              this.setFormValue(grain.id, 'pH', grain.grainDropdown.pH) :
+              this.setFormValue(grain.id, 'pH', grain.crystalPh);
+          }
         });
       });
     // this.grains = this.grainService.getGrains();
@@ -51,6 +58,13 @@ export class GrainBillComponent implements OnInit {
   onChange(grain: GrainDropdown, grainRowId: number) {
     if (grain) {
       this.setFormValue(grainRowId, 'pH', grain.pH);
+
+        if (grain.name === 'CRYSTAL') {
+          const defaultCrystalPh = 5.22;
+          this.setFormValue(grainRowId, 'pH', defaultCrystalPh);
+      }
+    } else {
+      this.grainBillForm.controls['grain' + grainRowId].reset();
     }
   }
 
@@ -68,19 +82,31 @@ export class GrainBillComponent implements OnInit {
     this.router.navigate(['/water/water-report']);
   }
 
-  getGrainControl(i: number) {
-    return this.grainBillForm.get('grain' + i + '.' + 'grainDropdown').value;
+  getGrainControl(grainId: number) {
+    if (this.grainBillForm.get('grain' + grainId + '.' + 'grainDropdown').value) {
+      return this.grainBillForm.get('grain' + grainId + '.' + 'grainDropdown').value.name;
+    }
+  }
+
+  calculatePh(grainRowId: number) {
+    const grainColor = this.grainBillForm.get('grain' + grainRowId + '.color').value;
+    const crystalPH = 5.22 - 0.00504 * grainColor;
+    this.setFormValue(grainRowId, 'pH', crystalPH.toFixed(2));
   }
 
   private setFormValue(grainId: number, formControlName: string, value: any): any {
     return this.grainBillForm.get('grain' + grainId + '.' + formControlName).setValue(value);
   }
 
+  private getFormValue(grainId: number, formControlName: string): any {
+    return this.grainBillForm.get('grain' + grainId + '.' + formControlName);
+  }
+
   private createForm() {
     this.grainBillForm = this.fb.group({
       grain1: this.fb.group({
         id: [''],
-        grainDropdown: [''],
+        grainDropdown: [null],
         name: [''],
         weight: [''],
         color: [''],
@@ -88,7 +114,7 @@ export class GrainBillComponent implements OnInit {
       }),
       grain2: this.fb.group({
         id: [''],
-        grainDropdown: [''],
+        grainDropdown: [null],
         name: [''],
         weight: [''],
         color: [''],
@@ -96,7 +122,7 @@ export class GrainBillComponent implements OnInit {
       }),
       grain3: this.fb.group({
         id: [''],
-        grainDropdown: [''],
+        grainDropdown: [null],
         name: [''],
         weight: [''],
         color: [''],
@@ -104,7 +130,7 @@ export class GrainBillComponent implements OnInit {
       }),
       grain4: this.fb.group({
         id: [''],
-        grainDropdown: [''],
+        grainDropdown: [null],
         name: [''],
         weight: [''],
         color: [''],
@@ -112,7 +138,7 @@ export class GrainBillComponent implements OnInit {
       }),
       grain5: this.fb.group({
         id: [''],
-        grainDropdown: [''],
+        grainDropdown: [null],
         name: [''],
         weight: [''],
         color: [''],
@@ -120,7 +146,7 @@ export class GrainBillComponent implements OnInit {
       }),
       grain6: this.fb.group({
         id: [''],
-        grainDropdown: [''],
+        grainDropdown: [null],
         name: [''],
         weight: [''],
         color: [''],
@@ -128,7 +154,7 @@ export class GrainBillComponent implements OnInit {
       }),
       grain7: this.fb.group({
         id: [''],
-        grainDropdown: [''],
+        grainDropdown: [null],
         name: [''],
         weight: [''],
         color: [''],
@@ -136,13 +162,21 @@ export class GrainBillComponent implements OnInit {
       }),
       grain8: this.fb.group({
         id: [''],
-        grainDropdown: [''],
+        grainDropdown: [null],
         name: [''],
         weight: [''],
         color: [''],
         pH: ['']
       })
     });
+  }
+
+  private crystalPh(grainId: number): any {
+    if (this.grainBillForm.get('grain' + grainId + '.grainDropdown').value) {
+      return this.grainBillForm.get('grain' + grainId + '.grainDropdown').value.name === 'CRYSTAL' ?
+        this.grainBillForm.get('grain' + grainId + '.pH').value :
+        '';
+    }
   }
 
   private storeGrainBill() {
@@ -154,8 +188,7 @@ export class GrainBillComponent implements OnInit {
           weight: this.grainBillForm.get('grain1.weight').value,
           color: this.grainBillForm.get('grain1.color').value,
           grainDropdown: this.grainBillForm.get('grain1.grainDropdown').value,
-          crystalPh: this.grainBillForm.get('grain1.grainDropdown').value.name === 'CRYSTAL' ?
-            this.grainBillForm.get('grain1.pH').value : ''
+          crystalPh: this.crystalPh(1)
         },
         {
           id: 2,
@@ -163,8 +196,7 @@ export class GrainBillComponent implements OnInit {
           weight: this.grainBillForm.get('grain2.weight').value,
           color: this.grainBillForm.get('grain2.color').value,
           grainDropdown: this.grainBillForm.get('grain2.grainDropdown').value,
-          crystalPh: this.grainBillForm.get('grain2.grainDropdown').value.name === 'CRYSTAL' ?
-            this.grainBillForm.get('grain2.pH').value : ''
+          crystalPh: this.crystalPh(2)
         },
         {
           id: 3,
@@ -172,8 +204,7 @@ export class GrainBillComponent implements OnInit {
           weight: this.grainBillForm.get('grain3.weight').value,
           color: this.grainBillForm.get('grain3.color').value,
           grainDropdown: this.grainBillForm.get('grain3.grainDropdown').value,
-          crystalPh: this.grainBillForm.get('grain3.grainDropdown').value.name === 'CRYSTAL' ?
-            this.grainBillForm.get('grain3.pH').value : ''
+          crystalPh: this.crystalPh(3)
         },
         {
           id: 4,
@@ -181,8 +212,7 @@ export class GrainBillComponent implements OnInit {
           weight: this.grainBillForm.get('grain4.weight').value,
           color: this.grainBillForm.get('grain4.color').value,
           grainDropdown: this.grainBillForm.get('grain4.grainDropdown').value,
-          crystalPh: this.grainBillForm.get('grain4.grainDropdown').value.name === 'CRYSTAL' ?
-            this.grainBillForm.get('grain4.pH').value : ''
+          crystalPh: this.crystalPh(4)
         },
         {
           id: 5,
@@ -190,8 +220,7 @@ export class GrainBillComponent implements OnInit {
           weight: this.grainBillForm.get('grain5.weight').value,
           color: this.grainBillForm.get('grain5.color').value,
           grainDropdown: this.grainBillForm.get('grain5.grainDropdown').value,
-          crystalPh: this.grainBillForm.get('grain5.grainDropdown').value.name === 'CRYSTAL' ?
-            this.grainBillForm.get('grain5.pH').value : ''
+          crystalPh: this.crystalPh(5)
         },
         {
           id: 6,
@@ -199,8 +228,7 @@ export class GrainBillComponent implements OnInit {
           weight: this.grainBillForm.get('grain6.weight').value,
           color: this.grainBillForm.get('grain6.color').value,
           grainDropdown: this.grainBillForm.get('grain6.grainDropdown').value,
-          crystalPh: this.grainBillForm.get('grain6.grainDropdown').value.name === 'CRYSTAL' ?
-            this.grainBillForm.get('grain6.pH').value : ''
+          crystalPh: this.crystalPh(6)
         },
         {
           id: 7,
@@ -208,8 +236,7 @@ export class GrainBillComponent implements OnInit {
           weight: this.grainBillForm.get('grain7.weight').value,
           color: this.grainBillForm.get('grain7.color').value,
           grainDropdown: this.grainBillForm.get('grain7.grainDropdown').value,
-          crystalPh: this.grainBillForm.get('grain7.grainDropdown').value.name === 'CRYSTAL' ?
-            this.grainBillForm.get('grain7.pH').value : ''
+          crystalPh: this.crystalPh(7)
         },
         {
           id: 8,
@@ -217,12 +244,16 @@ export class GrainBillComponent implements OnInit {
           weight: this.grainBillForm.get('grain8.weight').value,
           color: this.grainBillForm.get('grain8.color').value,
           grainDropdown: this.grainBillForm.get('grain8.grainDropdown').value,
-          crystalPh: this.grainBillForm.get('grain8.grainDropdown').value.name === 'CRYSTAL' ?
-            this.grainBillForm.get('grain8.pH').value : ''
+          crystalPh: this.crystalPh(8)
         }
       ]
     };
     this.store.dispatch(new AddGrainBill(grainBill));
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }
 

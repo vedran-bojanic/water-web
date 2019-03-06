@@ -1,24 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { WaterReport } from '../models/water.report.model';
 import { AddWaterReport } from './states/water-report.action';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-water',
   templateUrl: './water-report.component.html'
 })
-export class WaterReportComponent implements OnInit {
+export class WaterReportComponent implements OnInit, OnDestroy {
 
+  private ngUnsubscribe: Subject<any>;
   waterReportForm: FormGroup;
 
   constructor(private router: Router, private fb: FormBuilder, private store: Store) {
+    this.ngUnsubscribe = new Subject();
     this.createForm();
   }
 
   ngOnInit() {
     this.store.selectOnce(state => state.waterReport)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((wr: WaterReport) => {
         this.waterReportForm.controls['calcium'].setValue(wr.calcium);
         this.waterReportForm.controls['magnesium'].setValue(wr.magnesium);
@@ -76,5 +81,10 @@ export class WaterReportComponent implements OnInit {
       spargeRoPercentage: this.waterReportForm.controls['spargeRoPercentage'].value
     };
     this.store.dispatch(new AddWaterReport(waterReport));
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }
