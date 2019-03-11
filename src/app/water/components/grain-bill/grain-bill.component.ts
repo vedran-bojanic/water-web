@@ -20,6 +20,7 @@ export class GrainBillComponent implements OnInit, OnDestroy {
   nums = 8;
   grainsDropdown: Grain[];
   grain: Grain;
+  totalGrainWeight = 0;
 
   private ngUnsubscribe: Subject<any>;
   grainBillForm: FormGroup;
@@ -43,13 +44,14 @@ export class GrainBillComponent implements OnInit, OnDestroy {
           this.setFormValue(grain.id, 'id', grain.id);
           this.setFormValue(grain.id, 'grainDropdown', grain.grainDropdown);
           this.setFormValue(grain.id, 'name', grain.name);
-          this.setFormValue(grain.id, 'weight', grain.weight);
+          this.setFormValue(grain.id, 'weight', grain.weight ? grain.weight : '');
           this.setFormValue(grain.id, 'color', grain.color);
           if (grain.grainDropdown) {
             grain.grainDropdown.name !== 'CRYSTAL' ?
               this.setFormValue(grain.id, 'pH', grain.grainDropdown.pH) :
               this.setFormValue(grain.id, 'pH', grain.crystalPh);
           }
+          this.calculateTotalWeight();
         });
       });
     // this.grains = this.grainService.getGrains();
@@ -92,6 +94,14 @@ export class GrainBillComponent implements OnInit, OnDestroy {
     const grainColor = this.grainBillForm.get('grain' + grainRowId + '.color').value;
     const crystalPH = 5.22 - 0.00504 * grainColor;
     this.setFormValue(grainRowId, 'pH', crystalPH.toFixed(2));
+  }
+
+  calculateTotalWeight() {
+    let sum = 0;
+    for (let grainId = 0; grainId < this.nums; grainId++) {
+      sum += this.getFormValue(grainId, 'weight') !== null ? this.getFormValue(grainId, 'weight').value : 0;
+    }
+    this.totalGrainWeight = sum;
   }
 
   private setFormValue(grainId: number, formControlName: string, value: any): any {
