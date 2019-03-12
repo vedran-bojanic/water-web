@@ -2,10 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngxs/store';
-import { AddWaterAdjustment } from './states/water-adjustment.actions';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { AcidMalt, DecreasePh, IncreasePh, WaterAdjustment } from '../../../state/water.interfaces';
+import { AddWaterAdjustment } from '../../../state/water.actions';
 
 @Component({
   selector: 'app-water-adjustment',

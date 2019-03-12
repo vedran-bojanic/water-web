@@ -1,9 +1,5 @@
 import { GrainType } from '../water/models/grain-type.enum';
 
-export interface WaterStateModel {
-  water: Water[];
-}
-
 export interface Water {
   waterId: number;
   waterReport: WaterReport;
