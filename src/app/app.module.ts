@@ -9,13 +9,19 @@ import { RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/components/page-not-found.component';
 import { RootPageComponent } from './root-page/components/root-page.component';
 import { GrainService } from 'app/water/services/grain.service';
-import { StoreModule } from '@ngrx/store';
-import { metaReducers, reducers } from './reducers';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { WaterModule } from './water/water.module';
 import { SharedModule } from './shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { NgxsModule } from '@ngxs/store';
+import { WaterState } from './actions/water.actions';
+import { WaterReportState } from './water/components/water-report/states/water-report.action';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { environment } from '../environments/environment';
+import { WaterAdjustmentState } from './water/components/water-adjustment/states/water-adjustment.actions';
+import { GrainBillState } from './water/components/grain-bill/states/grain-bill.action';
 
 
 @NgModule({
@@ -28,7 +34,16 @@ import { NgSelectModule } from '@ng-select/ng-select';
     SharedModule,
     NgbModule.forRoot(),
     NgSelectModule,
-    StoreModule.forRoot(reducers, { metaReducers })
+    NgxsModule.forRoot([
+        WaterState,
+        WaterReportState,
+        WaterAdjustmentState,
+        GrainBillState
+      ],
+      { developmentMode: !environment.production }
+    ),
+    NgxsReduxDevtoolsPluginModule.forRoot(),
+    NgxsLoggerPluginModule.forRoot()
   ],
   declarations: [
     AppComponent,
@@ -40,4 +55,5 @@ import { NgSelectModule } from '@ng-select/ng-select';
   providers: [GrainService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

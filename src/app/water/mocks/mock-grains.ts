@@ -1,4 +1,6 @@
-export const GRAINS: any[] = [
+import { GrainDropdown } from '../components/models/grain-dropdown.model';
+
+export const GRAINS_DROPDOWN: GrainDropdown[] = [
   {
     'id': 1,
     'name': '2-ROW',
