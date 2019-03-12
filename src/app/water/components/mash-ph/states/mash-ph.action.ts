@@ -1,5 +1,5 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { MashPh } from '../../models/mash-ph.model';
+import { MashPh } from '../../../../state/water.interfaces';
 
 export class SetMashPh {
   static readonly type = '[ Water MashPh ] SetMashPh';

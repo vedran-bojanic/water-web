@@ -1,5 +1,5 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { WaterReport } from '../../models/water.report.model';
+import { WaterReport } from '../../../../state/water.interfaces';
 
 export class AddWaterReport {
   static readonly type = '[ Water WaterReport ] AddWaterReport';

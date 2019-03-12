@@ -1,5 +1,5 @@
-import { WaterAdjustment } from '../../models/water-adjustment.model';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { WaterAdjustment } from '../../../../state/water.interfaces';
 
 export class AddWaterAdjustment {
     public static readonly type = '[Water WaterAdjustment] AddWaterAdjustment';

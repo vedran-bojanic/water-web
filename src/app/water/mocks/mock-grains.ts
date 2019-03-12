@@ -1,4 +1,4 @@
-import { GrainDropdown } from '../components/models/grain-dropdown.model';
+import { GrainDropdown } from '../../state/water.interfaces';
 
 export const GRAINS_DROPDOWN: GrainDropdown[] = [
   {

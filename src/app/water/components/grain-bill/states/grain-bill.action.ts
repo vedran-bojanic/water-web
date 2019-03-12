@@ -1,5 +1,5 @@
-import { GrainBill } from '../../models/grain-bill.model';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { GrainBill } from '../../../../state/water.interfaces';
 
 export class AddGrainBill {
   static readonly type = '[Water Grains] AddGrainBill';

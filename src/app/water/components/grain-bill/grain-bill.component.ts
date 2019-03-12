@@ -4,12 +4,10 @@ import { Router } from '@angular/router';
 import { MultiplyElementPipe } from '../../../shared/pipes/multiply-element.pipe';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngxs/store';
-import { Grain } from '../models/grain.model';
 import { AddGrainBill } from './states/grain-bill.action';
-import { GrainBill } from '../models/grain-bill.model';
-import { GrainDropdown } from '../models/grain-dropdown.model';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { Grain, GrainBill, GrainDropdown } from '../../../state/water.interfaces';
 
 @Component({
   selector: 'app-grain-bill',

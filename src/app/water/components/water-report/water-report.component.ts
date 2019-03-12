@@ -2,10 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
-import { WaterReport } from '../models/water.report.model';
 import { AddWaterReport } from './states/water-report.action';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { WaterReport } from '../../../state/water.interfaces';
 
 @Component({
   selector: 'app-water',
