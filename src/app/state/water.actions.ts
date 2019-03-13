@@ -1,20 +1,20 @@
-import { AdjustmentSummary, GrainBill, MashPh, Water, WaterAdjustment, WaterReport } from './water.interfaces';
+import { AdjustmentSummary, GrainBill, MashPh, WaterAdjustment, WaterReport } from './water.interfaces';
+import { WaterStateModel } from './water-state.model';
 
 
 export class SetWater {
     public static readonly type = '[ Water ] SetWater';
-    constructor(public water: Water) { }
+    constructor(public waterStateModel: WaterStateModel) { }
 }
 
 export class AddWaterReport {
   static readonly type = '[ Water WaterReport ] AddWaterReport';
-  constructor(public waterReport: WaterReport | null) {
-  }
+  constructor(public waterReport: WaterReport) { }
 }
 
 export class AddWaterAdjustment {
   public static readonly type = '[Water WaterAdjustment] AddWaterAdjustment';
-  constructor(public waterAdjustment: WaterAdjustment | null) { }
+  constructor(public waterAdjustment: WaterAdjustment) { }
 }
 
 export class AddGrainBill {

@@ -22,7 +22,7 @@ export class WaterAdjustmentComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.store.selectOnce(state => state.waterAdjustment)
+    this.store.selectOnce(state => state.water.waterAdjustment)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((wa: WaterAdjustment) => {
         this.setFormValue('decreasePhSaltsMash', 'gypsum', wa.decreasePhSaltsMash.gypsum);

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { MultiplyElementPipe } from '../../../shared/pipes/multiply-element.pipe';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngxs/store';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Grain, GrainBill, GrainDropdown } from '../../../state/water.interfaces';
 import { AddGrainBill } from '../../../state/water.actions';
@@ -35,7 +35,7 @@ export class GrainBillComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.grainsDropdown = this.grainService.getDropdownGrains();
-    this.store.select(state => state.grainBill.grains)
+    this.store.select(state => state.water.grainBill.grains)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((grains: Grain[]) => {
         grains.forEach(grain => {

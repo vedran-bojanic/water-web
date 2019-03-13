@@ -1,29 +1,85 @@
 import { GrainType } from '../water/models/grain-type.enum';
 
-export interface Water {
-  waterId: number;
-  waterReport: WaterReport;
-  grainBill: GrainBill;
-  waterAdjustment: WaterAdjustment;
-  adjustmentSummary: AdjustmentSummary;
-  mashPh: MashPh;
-}
-
 export interface WaterReport {
-  calcium: number | null;
-  magnesium: number | null;
-  sodium: number | null;
-  chloride: number | null;
-  sulfate: number | null;
-  alkalinity: number | null;
-  mashVolume: number| null;
-  spargeVolume: number| null;
-  mashRoPercentage: number| null;
-  spargeRoPercentage: number| null;
+  calcium: number;
+  magnesium: number;
+  sodium: number;
+  chloride: number;
+  sulfate: number;
+  alkalinity: number;
+  mashVolume: number;
+  spargeVolume: number;
+  mashRoPercentage: number;
+  spargeRoPercentage: number;
 }
 
 export interface GrainBill {
-  grains: Grain[];
+  grains: [
+    {
+      id: number,
+      name: string,
+      weight: number,
+      color: number,
+      grainDropdown: GrainDropdown,
+      crystalPh: number,
+    },
+    {
+      id: number,
+      name: string,
+      weight: number,
+      color: number,
+      grainDropdown: GrainDropdown,
+      crystalPh: number,
+    },
+    {
+      id: number,
+      name: string,
+      weight: number,
+      color: number,
+      grainDropdown: GrainDropdown,
+      crystalPh: number,
+    },
+    {
+      id: number,
+      name: string,
+      weight: number,
+      color: number,
+      grainDropdown: GrainDropdown,
+      crystalPh: number,
+    },
+    {
+      id: number,
+      name: string,
+      weight: number,
+      color: number,
+      grainDropdown: GrainDropdown,
+      crystalPh: number,
+    },
+    {
+      id: number,
+      name: string,
+      weight: number,
+      color: number,
+      grainDropdown: GrainDropdown,
+      crystalPh: number,
+    },
+    {
+      id: number,
+      name: string,
+      weight: number,
+      color: number,
+      grainDropdown: GrainDropdown,
+      crystalPh: number,
+    },
+    {
+      id: number,
+      name: string,
+      weight: number,
+      color: number,
+      grainDropdown: GrainDropdown,
+      crystalPh: number,
+    }
+    ];
 }
 
 export interface GrainDropdown {
@@ -50,28 +106,28 @@ export interface GrainDropdown {
 }
 
 export interface WaterAdjustment {
-  decreasePhSaltsMash: DecreasePh | null;
-  decreasePhSaltsSparge: DecreasePh | null;
-  decreasePhAcid: AcidMalt | null;
-  increasePhSaltsMash: IncreasePh | null;
-  increasePhSaltsSparge: IncreasePh | null;
+  decreasePhSaltsMash: DecreasePh;
+  decreasePhSaltsSparge: DecreasePh;
+  decreasePhAcid: AcidMalt;
+  increasePhSaltsMash: IncreasePh;
+  increasePhSaltsSparge: IncreasePh;
 }
 
 export interface DecreasePh {
-  gypsum: number | null;
-  calciumChloride: number | null;
-  epsomSalt: number | null;
+  gypsum: number;
+  calciumChloride: number;
+  epsomSalt: number;
 }
 
 export interface AcidMalt {
-  acidulatedMalt: number | null;
-  lacticAcid: number | null;
+  acidulatedMalt: number;
+  lacticAcid: number;
 }
 
 export interface IncreasePh {
-  slakedLime: number | null;
-  bakingSoda: number | null;
-  chalk: number | null;
+  slakedLime: number;
+  bakingSoda: number;
+  chalk: number;
 }
 
 export interface MashPh {
