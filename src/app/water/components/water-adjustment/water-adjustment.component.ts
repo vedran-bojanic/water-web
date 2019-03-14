@@ -2,13 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngxs/store';
-import { DecreasePh } from '../models/decrease-ph.model';
-import { IncreasePh } from '../models/increase-ph.model';
-import { AcidMalt } from '../models/acid-malt.model';
-import { WaterAdjustment } from '../models/water-adjustment.model';
-import { AddWaterAdjustment } from './states/water-adjustment.actions';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { AcidMalt, DecreasePh, IncreasePh, WaterAdjustment } from '../../../state/water.interfaces';
+import { AddWaterAdjustment } from '../../../state/water.actions';
 
 @Component({
   selector: 'app-water-adjustment',
@@ -25,7 +22,7 @@ export class WaterAdjustmentComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.store.selectOnce(state => state.waterAdjustment)
+    this.store.selectOnce(state => state.water.waterAdjustment)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((wa: WaterAdjustment) => {
         this.setFormValue('decreasePhSaltsMash', 'gypsum', wa.decreasePhSaltsMash.gypsum);

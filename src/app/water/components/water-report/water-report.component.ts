@@ -2,10 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
-import { WaterReport } from '../models/water.report.model';
-import { AddWaterReport } from './states/water-report.action';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { WaterReport } from '../../../state/water.interfaces';
+import { AddWaterReport } from '../../../state/water.actions';
 
 @Component({
   selector: 'app-water',
@@ -22,7 +22,7 @@ export class WaterReportComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.store.selectOnce(state => state.waterReport)
+    this.store.selectOnce(state => state.water.waterReport)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((wr: WaterReport) => {
         this.waterReportForm.controls['calcium'].setValue(wr.calcium);

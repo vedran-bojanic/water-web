@@ -15,13 +15,10 @@ import { SharedModule } from './shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxsModule } from '@ngxs/store';
-import { WaterState } from './actions/water.actions';
-import { WaterReportState } from './water/components/water-report/states/water-report.action';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { environment } from '../environments/environment';
-import { WaterAdjustmentState } from './water/components/water-adjustment/states/water-adjustment.actions';
-import { GrainBillState } from './water/components/grain-bill/states/grain-bill.action';
+import { WaterState } from './state/water.state';
 
 
 @NgModule({
@@ -35,10 +32,7 @@ import { GrainBillState } from './water/components/grain-bill/states/grain-bill.
     NgbModule.forRoot(),
     NgSelectModule,
     NgxsModule.forRoot([
-        WaterState,
-        WaterReportState,
-        WaterAdjustmentState,
-        GrainBillState
+        WaterState
       ],
       { developmentMode: !environment.production }
     ),

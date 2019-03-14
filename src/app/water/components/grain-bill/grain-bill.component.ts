@@ -4,12 +4,10 @@ import { Router } from '@angular/router';
 import { MultiplyElementPipe } from '../../../shared/pipes/multiply-element.pipe';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngxs/store';
-import { Grain } from '../models/grain.model';
-import { AddGrainBill } from './states/grain-bill.action';
-import { GrainBill } from '../models/grain-bill.model';
-import { GrainDropdown } from '../models/grain-dropdown.model';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { Grain, GrainBill, GrainDropdown } from '../../../state/water.interfaces';
+import { AddGrainBill } from '../../../state/water.actions';
 
 @Component({
   selector: 'app-grain-bill',
@@ -20,7 +18,6 @@ export class GrainBillComponent implements OnInit, OnDestroy {
   nums = 8;
   grainsDropdown: Grain[];
   grain: Grain;
-  totalGrainWeight = 0;
 
   private ngUnsubscribe: Subject<any>;
   grainBillForm: FormGroup;
@@ -37,24 +34,30 @@ export class GrainBillComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.grainsDropdown = this.grainService.getDropdownGrains();
-    this.store.select(state => state.grainBill.grains)
+    this.refreshPage();
+  }
+
+  refreshPage() {
+    this.store.selectOnce(state => state.water.grainBill)
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((grains: Grain[]) => {
-        grains.forEach(grain => {
-          this.setFormValue(grain.id, 'id', grain.id);
-          this.setFormValue(grain.id, 'grainDropdown', grain.grainDropdown);
-          this.setFormValue(grain.id, 'name', grain.name);
-          this.setFormValue(grain.id, 'weight', grain.weight ? grain.weight : '');
-          this.setFormValue(grain.id, 'color', grain.color);
-          if (grain.grainDropdown) {
-            grain.grainDropdown.name !== 'CRYSTAL' ?
-              this.setFormValue(grain.id, 'pH', grain.grainDropdown.pH) :
-              this.setFormValue(grain.id, 'pH', grain.crystalPh);
+      .subscribe((grainBill: GrainBill) => {
+        grainBill.grains.forEach(
+          grain => {
+            this.setFormValue(grain.id, 'id', grain.id);
+            this.setFormValue(grain.id, 'grainDropdown', grain.grainDropdown);
+            this.setFormValue(grain.id, 'name', grain.name);
+            this.setFormValue(grain.id, 'weight', grain.weight ? grain.weight : '');
+            this.setFormValue(grain.id, 'color', grain.color);
+            if (grain.grainDropdown) {
+              grain.grainDropdown.name !== 'CRYSTAL' ?
+                this.setFormValue(grain.id, 'pH', grain.grainDropdown.pH) :
+                this.setFormValue(grain.id, 'pH', grain.crystalPh);
+            }
           }
-          this.calculateTotalWeight();
-        });
+        );
+        this.grainBillForm.get('totalGrainWeight').setValue(grainBill.totalGrainWeight.toFixed(2));
+        this.grainBillForm.get('mashThickness').setValue(grainBill.mashThickness.toFixed(2));
       });
-    // this.grains = this.grainService.getGrains();
   }
 
   onChange(grain: GrainDropdown, grainRowId: number) {
@@ -94,14 +97,6 @@ export class GrainBillComponent implements OnInit, OnDestroy {
     const grainColor = this.grainBillForm.get('grain' + grainRowId + '.color').value;
     const crystalPH = 5.22 - 0.00504 * grainColor;
     this.setFormValue(grainRowId, 'pH', crystalPH.toFixed(2));
-  }
-
-  calculateTotalWeight() {
-    let sum = 0;
-    for (let grainId = 0; grainId < this.nums; grainId++) {
-      sum += this.getFormValue(grainId, 'weight') !== null ? this.getFormValue(grainId, 'weight').value : 0;
-    }
-    this.totalGrainWeight = sum;
   }
 
   private setFormValue(grainId: number, formControlName: string, value: any): any {
@@ -177,7 +172,9 @@ export class GrainBillComponent implements OnInit, OnDestroy {
         weight: [''],
         color: [''],
         pH: ['']
-      })
+      }),
+      mashThickness: [''],
+      totalGrainWeight: ['']
     });
   }
 
@@ -256,9 +253,12 @@ export class GrainBillComponent implements OnInit, OnDestroy {
           grainDropdown: this.grainBillForm.get('grain8.grainDropdown').value,
           crystalPh: this.crystalPh(8)
         }
-      ]
+      ],
+      totalGrainWeight: this.grainBillForm.get('totalGrainWeight').value,
+      mashThickness: this.grainBillForm.get('mashThickness').value
     };
     this.store.dispatch(new AddGrainBill(grainBill));
+    this.refreshPage();
   }
 
   ngOnDestroy() {
