@@ -22,11 +22,6 @@ export class AddGrainBill {
   constructor(public grainBill: GrainBill) { }
 }
 
-export class CalculateWeightAndThickness {
-  static readonly type = '[Water] CalculateWeightAndThickness';
-  constructor(public totalGrainWeight: number) { }
-}
-
 export class SetMashPh {
   static readonly type = '[Water] SetMashPh';
   constructor(public mashPh: MashPh) { }
