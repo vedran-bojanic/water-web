@@ -80,6 +80,8 @@ export interface GrainBill {
       crystalPh: number,
     }
     ];
+  mashThickness: number;
+  totalGrainWeight: number;
 }
 
 export interface GrainDropdown {

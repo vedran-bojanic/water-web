@@ -8,6 +8,7 @@ import {
   SetWater
 } from './water.actions';
 import { WaterStateModel } from './water-state.model';
+import { WaterStateService } from './water-state.service';
 
 export const getWaterInitState = (): WaterStateModel => ({
   waterId: 0,
@@ -89,7 +90,9 @@ export const getWaterInitState = (): WaterStateModel => ({
         grainDropdown: null,
         crystalPh: 0
       }
-    ]
+    ],
+    mashThickness: 0,
+    totalGrainWeight: 0
   },
   waterAdjustment: {
     decreasePhSaltsMash: {
@@ -148,7 +151,7 @@ export const getWaterInitState = (): WaterStateModel => ({
 })
 export class WaterState {
 
-  constructor() { }
+  constructor(private waterStateService: WaterStateService) { }
 
   @Selector()
   static getWaterStateModel(state: WaterStateModel) {
@@ -158,7 +161,8 @@ export class WaterState {
   @Action(SetWater)
   addWater(ctx: StateContext<WaterStateModel>, action: SetWater) {
     const state = ctx.getState();
-    ctx.patchState({
+    ctx.setState({
+      ...state,
       waterId: action.waterStateModel.waterId,
       waterReport: action.waterStateModel.waterReport,
       grainBill: action.waterStateModel.grainBill,
@@ -171,23 +175,38 @@ export class WaterState {
   @Action(AddWaterReport)
   addWaterReport(ctx: StateContext<WaterStateModel>, action: AddWaterReport) {
     const state = ctx.getState();
-    ctx.patchState({
-      waterReport: action.waterReport
+    ctx.setState({
+      ...state,
+      waterReport: action.waterReport,
+      grainBill: {
+        grains: state.grainBill.grains,
+        totalGrainWeight: state.grainBill.totalGrainWeight,
+        mashThickness: action.waterReport.mashVolume / state.grainBill.totalGrainWeight
+      }
     });
   }
 
   @Action(AddGrainBill)
   addGrainBill(ctx: StateContext<WaterStateModel>, action: AddGrainBill) {
     const state = ctx.getState();
-    ctx.patchState({
-      grainBill: action.grainBill
+    const totalGrainWeight = action.grainBill.grains
+      .filter(x => x.weight)
+      .reduce((acc, x) => acc + x.weight, 0);
+    ctx.setState({
+      ...state,
+      grainBill: {
+        grains: action.grainBill.grains,
+        totalGrainWeight: totalGrainWeight,
+        mashThickness: state.waterReport.mashVolume / (totalGrainWeight !== 0 ? totalGrainWeight : 1)
+      }
     });
   }
 
   @Action(AddWaterAdjustment)
   addWaterAdjustment(ctx: StateContext<WaterStateModel>, action: AddWaterAdjustment) {
     const state = ctx.getState();
-    ctx.patchState({
+    ctx.setState({
+      ...state,
       waterAdjustment: action.waterAdjustment
     });
   }
@@ -195,7 +214,8 @@ export class WaterState {
   @Action(SetMashPh)
   setMashPh(ctx: StateContext<WaterStateModel>, action: SetMashPh) {
     const state = ctx.getState();
-    ctx.patchState({
+    ctx.setState({
+      ...state,
       mashPh: action.mashPh
     });
   }
@@ -203,7 +223,8 @@ export class WaterState {
   @Action(SetAdjustmentSummary)
   setAdjustmentSummary(ctx: StateContext<WaterStateModel>, action: SetAdjustmentSummary) {
     const state = ctx.getState();
-    ctx.patchState({
+    ctx.setState({
+      ...state,
       adjustmentSummary: action.adjustmentSummary
     });
   }

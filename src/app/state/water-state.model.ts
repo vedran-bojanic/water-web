@@ -81,6 +81,8 @@ export class WaterStateModel {
         crystalPh: number,
       }
       ];
+    mashThickness: number;
+    totalGrainWeight: number;
   };
   waterAdjustment: {
     decreasePhSaltsMash: {
