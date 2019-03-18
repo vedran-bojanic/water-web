@@ -12,14 +12,44 @@ export class AddWaterReport {
   constructor(public waterReport: WaterReport) { }
 }
 
+export class AddGrainBill {
+  static readonly type = '[Water] AddGrainBill';
+  constructor(public grainBill: GrainBill) { }
+}
+
 export class AddWaterAdjustment {
   public static readonly type = '[Water] AddWaterAdjustment';
   constructor(public waterAdjustment: WaterAdjustment) { }
 }
 
-export class AddGrainBill {
-  static readonly type = '[Water] AddGrainBill';
-  constructor(public grainBill: GrainBill) { }
+export class CalculateSpargeGypsumAddition {
+  public static readonly type = '[Water] CalculateSpargeGypsumAddition';
+  constructor(public gypsum: number, public showGypsum: boolean) { }
+}
+
+export class CalculateSpargeCalciumChlorideAddition {
+  public static readonly type = '[Water] CalculateSpargeCalciumChlorideAddition';
+  constructor(public calciumChloride: number, public showCalciumChloride: boolean) { }
+}
+
+export class CalculateSpargeEpsomSaltAddition {
+  public static readonly type = '[Water] CalculateSpargeEpsomSaltAddition';
+  constructor(public epsomSalt: number, public showEpsomSalt: boolean) { }
+}
+
+export class CalculateSpargeSlakedLimeAddition {
+  public static readonly type = '[Water] CalculateSpargeSlakedLimeAddition';
+  constructor(public slakedLime: number, public showSlakedLime: boolean) { }
+}
+
+export class CalculateSpargeBakingSodaAddition {
+  public static readonly type = '[Water] CalculateSpargeBakingSodaAddition';
+  constructor(public bakingSoda: number, public showBakingSoda: boolean) { }
+}
+
+export class CalculateSpargeChalkAddition {
+  public static readonly type = '[Water] CalculateSpargeChalkAddition';
+  constructor(public chalk: number, public showChalk: boolean) { }
 }
 
 export class SetMashPh {

@@ -22,20 +22,7 @@ export class WaterReportComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.store.selectOnce(state => state.water.waterReport)
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((wr: WaterReport) => {
-        this.waterReportForm.controls['calcium'].setValue(wr.calcium);
-        this.waterReportForm.controls['magnesium'].setValue(wr.magnesium);
-        this.waterReportForm.controls['sodium'].setValue(wr.sodium);
-        this.waterReportForm.controls['chloride'].setValue(wr.chloride);
-        this.waterReportForm.controls['sulfate'].setValue(wr.sulfate);
-        this.waterReportForm.controls['alkalinity'].setValue(wr.alkalinity);
-        this.waterReportForm.controls['mashVolume'].setValue(wr.mashVolume);
-        this.waterReportForm.controls['spargeVolume'].setValue(wr.spargeVolume);
-        this.waterReportForm.controls['mashRoPercentage'].setValue(wr.mashRoPercentage);
-        this.waterReportForm.controls['spargeRoPercentage'].setValue(wr.spargeRoPercentage);
-      });
+    this.refreshData();
   }
 
   onSubmit() {
@@ -52,18 +39,35 @@ export class WaterReportComponent implements OnInit, OnDestroy {
     this.router.navigate(['/']);
   }
 
+  private refreshData() {
+    this.store.selectOnce(state => state.water.waterReport)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((wr: WaterReport) => {
+        this.waterReportForm.controls['calcium'].setValue(wr.calcium);
+        this.waterReportForm.controls['magnesium'].setValue(wr.magnesium);
+        this.waterReportForm.controls['sodium'].setValue(wr.sodium);
+        this.waterReportForm.controls['chloride'].setValue(wr.chloride);
+        this.waterReportForm.controls['sulfate'].setValue(wr.sulfate);
+        this.waterReportForm.controls['alkalinity'].setValue(wr.alkalinity);
+        this.waterReportForm.controls['mashVolume'].setValue(wr.mashVolume);
+        this.waterReportForm.controls['spargeVolume'].setValue(wr.spargeVolume);
+        this.waterReportForm.controls['mashRoPercentage'].setValue(wr.mashRoPercentage);
+        this.waterReportForm.controls['spargeRoPercentage'].setValue(wr.spargeRoPercentage);
+      });
+  }
+
   private createForm() {
     this.waterReportForm = this.fb.group({
-      calcium: ['', Validators.required],
-      magnesium: ['', Validators.required],
-      sodium: ['', Validators.required],
-      chloride: ['', Validators.required],
-      sulfate: ['', Validators.required],
-      alkalinity: ['', Validators.required],
-      mashVolume: ['', Validators.required],
-      spargeVolume: ['', Validators.required],
-      mashRoPercentage: ['', Validators.required],
-      spargeRoPercentage: ['', Validators.required]
+      calcium: [''],
+      magnesium: [''],
+      sodium: [''],
+      chloride: [''],
+      sulfate: [''],
+      alkalinity: [''],
+      mashVolume: [''],
+      spargeVolume: [''],
+      mashRoPercentage: [''],
+      spargeRoPercentage: ['']
     });
   }
 

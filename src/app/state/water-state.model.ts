@@ -93,7 +93,10 @@ export class WaterStateModel {
     decreasePhSaltsSparge: {
       epsomSalt: number,
       calciumChloride: number,
-      gypsum: number
+      gypsum: number,
+      showGypsum: boolean
+      showCalciumChloride: boolean;
+      showEpsomSalt: boolean;
     },
     decreasePhAcid: {
       lacticAcid: number,
@@ -107,7 +110,10 @@ export class WaterStateModel {
     increasePhSaltsSparge: {
       slakedLime: number,
       bakingSoda: number,
-      chalk: number
+      chalk: number,
+      showSlakedLime: boolean,
+      showBakingSoda: boolean,
+      showChalk: boolean
     }
   };
   adjustmentSummary: {

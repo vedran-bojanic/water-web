@@ -5,7 +5,11 @@ import { Store } from '@ngxs/store';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { AcidMalt, DecreasePh, IncreasePh, WaterAdjustment } from '../../../state/water.interfaces';
-import { AddWaterAdjustment } from '../../../state/water.actions';
+import {
+  AddWaterAdjustment, CalculateSpargeBakingSodaAddition,
+  CalculateSpargeCalciumChlorideAddition, CalculateSpargeChalkAddition, CalculateSpargeEpsomSaltAddition,
+  CalculateSpargeGypsumAddition, CalculateSpargeSlakedLimeAddition
+} from '../../../state/water.actions';
 
 @Component({
   selector: 'app-water-adjustment',
@@ -15,6 +19,12 @@ export class WaterAdjustmentComponent implements OnInit, OnDestroy {
 
   private ngUnsubscribe: Subject<any>;
   waterAdjustmentForm: FormGroup;
+  gypsum = true;
+  calciumChloride = true;
+  epsomSalt = true;
+  slakedLime = true;
+  bakingSoda = true;
+  chalk = true;
 
   constructor(private router: Router, private fb: FormBuilder, private store: Store) {
     this.ngUnsubscribe = new Subject();
@@ -22,6 +32,65 @@ export class WaterAdjustmentComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.refreshData();
+  }
+
+  calculateSpargeAddition(field: string): boolean {
+    switch (field) {
+      case 'gypsum':
+        const showGypsum = this.getFormValue('decreaseSaltsShowInput', 'showGypsum').value;
+        const gypsumAddition = this.getFormValue('decreasePhSaltsMash', 'gypsum').value;
+        this.store.dispatch(new CalculateSpargeGypsumAddition(gypsumAddition, showGypsum));
+        this.refreshData();
+        return;
+      case 'calciumChloride':
+        const showCalciumChloride = this.getFormValue('decreaseSaltsShowInput', 'showCalciumChloride').value;
+        const calciumChlorideAddition = this.getFormValue('decreasePhSaltsMash', 'calciumChloride').value;
+        this.store.dispatch(new CalculateSpargeCalciumChlorideAddition(calciumChlorideAddition, showCalciumChloride));
+        this.refreshData();
+        return;
+      case 'epsomSalt':
+        const showEpsomSalt = this.getFormValue('decreaseSaltsShowInput', 'showEpsomSalt').value;
+        const epsomSaltAddition = this.getFormValue('decreasePhSaltsMash', 'epsomSalt').value;
+        this.store.dispatch(new CalculateSpargeEpsomSaltAddition(epsomSaltAddition, showEpsomSalt));
+        this.refreshData();
+        return;
+      case 'slakedLime':
+        const showSlakedLime = this.getFormValue('increaseSaltsShowInput', 'showSlakedLime').value;
+        const slakedLimeAddition = this.getFormValue('increasePhSaltsMash', 'slakedLime').value;
+        this.store.dispatch(new CalculateSpargeSlakedLimeAddition(slakedLimeAddition, showSlakedLime));
+        this.refreshData();
+        return;
+      case 'bakingSoda':
+        const showBakingSoda = this.getFormValue('increaseSaltsShowInput', 'showBakingSoda').value;
+        const bakingSodaAddition = this.getFormValue('increasePhSaltsMash', 'bakingSoda').value;
+        this.store.dispatch(new CalculateSpargeBakingSodaAddition(bakingSodaAddition, showBakingSoda));
+        this.refreshData();
+        return;
+      case 'chalk':
+        const showChalk = this.getFormValue('increaseSaltsShowInput', 'showChalk').value;
+        const chalkAddition = this.getFormValue('increasePhSaltsMash', 'chalk').value;
+        this.store.dispatch(new CalculateSpargeChalkAddition(chalkAddition, showChalk));
+        this.refreshData();
+        return;
+    }
+  }
+
+  onSubmit() {
+    this.storeWaterAdjustment();
+  }
+
+  onNext() {
+    this.storeWaterAdjustment();
+    this.router.navigate(['/water/adjustment-summary']);
+  }
+
+  onBack() {
+    this.storeWaterAdjustment();
+    this.router.navigate(['/water/grain-bill']);
+  }
+
+  private refreshData() {
     this.store.selectOnce(state => state.water.waterAdjustment)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((wa: WaterAdjustment) => {
@@ -39,34 +108,40 @@ export class WaterAdjustmentComponent implements OnInit, OnDestroy {
         this.setFormValue('increasePhSaltsSparge', 'slakedLime', wa.increasePhSaltsSparge.slakedLime);
         this.setFormValue('increasePhSaltsSparge', 'bakingSoda', wa.increasePhSaltsSparge.bakingSoda);
         this.setFormValue('increasePhSaltsSparge', 'chalk', wa.increasePhSaltsSparge.chalk);
+
+        this.setFormValue('decreaseSaltsShowInput', 'showGypsum', wa.decreasePhSaltsSparge.showGypsum);
+        this.gypsum = !wa.decreasePhSaltsSparge.showGypsum;
+        this.setFormValue('decreaseSaltsShowInput', 'showCalciumChloride', wa.decreasePhSaltsSparge.showCalciumChloride);
+        this.calciumChloride = !wa.decreasePhSaltsSparge.showCalciumChloride;
+        this.setFormValue('decreaseSaltsShowInput', 'showEpsomSalt', wa.decreasePhSaltsSparge.showEpsomSalt);
+        this.epsomSalt = !wa.decreasePhSaltsSparge.showEpsomSalt;
+        this.setFormValue('increaseSaltsShowInput', 'showSlakedLime', wa.increasePhSaltsSparge.showSlakedLime);
+        this.slakedLime = !wa.increasePhSaltsSparge.slakedLime;
+        this.setFormValue('increaseSaltsShowInput', 'showBakingSoda', wa.increasePhSaltsSparge.showBakingSoda);
+        this.bakingSoda = !wa.increasePhSaltsSparge.showBakingSoda;
+        this.setFormValue('increaseSaltsShowInput', 'showChalk', wa.increasePhSaltsSparge.showChalk);
+        this.chalk = !wa.increasePhSaltsSparge.showChalk;
+
+
       });
-  }
-
-  onSubmit() {
-    this.storeWaterAdjustment();
-  }
-
-  onNext() {
-    this.storeWaterAdjustment();
-    this.router.navigate(['/water/adjustment-summary']);
-  }
-
-  onBack() {
-    this.storeWaterAdjustment();
-    this.router.navigate(['/water/grain-bill']);
   }
 
   private createForm() {
     this.waterAdjustmentForm = this.fb.group({
       decreasePhSaltsMash: this.fb.group({
-        gypsum: [''],
-        calciumChloride: [''],
-        epsomSalt: ['']
+        gypsum: [],
+        calciumChloride: [],
+        epsomSalt: []
+      }),
+      decreaseSaltsShowInput: this.fb.group({
+        showGypsum: [false],
+        showCalciumChloride: [false],
+        showEpsomSalt: [false]
       }),
       decreasePhSaltsSparge: this.fb.group({
-        gypsum: [''],
-        calciumChloride: [''],
-        epsomSalt: ['']
+        gypsum: [],
+        calciumChloride: [],
+        epsomSalt: []
       }),
       decreasePhAcid: this.fb.group({
         acidulatedMalt: [''],
@@ -77,6 +152,11 @@ export class WaterAdjustmentComponent implements OnInit, OnDestroy {
         bakingSoda: [''],
         chalk: ['']
       }),
+      increaseSaltsShowInput: this.fb.group({
+        showSlakedLime: [false],
+        showBakingSoda: [false],
+        showChalk: [false]
+      }),
       increasePhSaltsSparge: this.fb.group({
         slakedLime: [''],
         bakingSoda: [''],
@@ -85,7 +165,7 @@ export class WaterAdjustmentComponent implements OnInit, OnDestroy {
     });
   }
 
-  private setFormValue(formGroupName: string, formControlName: string, value: number): any {
+  private setFormValue(formGroupName: string, formControlName: string, value: any): any {
     return this.waterAdjustmentForm.get(formGroupName + '.' + formControlName).setValue(value);
   }
 
@@ -98,21 +178,33 @@ export class WaterAdjustmentComponent implements OnInit, OnDestroy {
       gypsum: this.getFormValue('decreasePhSaltsMash', 'gypsum').value,
       calciumChloride: this.getFormValue('decreasePhSaltsMash', 'calciumChloride').value,
       epsomSalt: this.getFormValue('decreasePhSaltsMash', 'epsomSalt').value,
+      showGypsum: this.getFormValue('decreaseSaltsShowInput', 'showGypsum').value,
+      showCalciumChloride: this.getFormValue('decreaseSaltsShowInput', 'showCalciumChloride').value,
+      showEpsomSalt: this.getFormValue('decreaseSaltsShowInput', 'showEpsomSalt').value,
     };
     const decreasePhSaltsSparge: DecreasePh = {
       gypsum: this.getFormValue('decreasePhSaltsSparge', 'gypsum').value,
       calciumChloride: this.getFormValue('decreasePhSaltsSparge', 'calciumChloride').value,
       epsomSalt: this.getFormValue('decreasePhSaltsSparge', 'epsomSalt').value,
+      showGypsum: this.getFormValue('decreaseSaltsShowInput', 'showGypsum').value,
+      showCalciumChloride: this.getFormValue('decreaseSaltsShowInput', 'showCalciumChloride').value,
+      showEpsomSalt: this.getFormValue('decreaseSaltsShowInput', 'showEpsomSalt').value,
     };
     const increasePhSaltsMash: IncreasePh = {
       slakedLime: this.getFormValue('increasePhSaltsMash', 'slakedLime').value,
       bakingSoda: this.getFormValue('increasePhSaltsMash', 'bakingSoda').value,
       chalk: this.getFormValue('increasePhSaltsMash', 'chalk').value,
+      showSlakedLime: this.getFormValue('increaseSaltsShowInput', 'showSlakedLime').value,
+      showBakingSoda: this.getFormValue('increaseSaltsShowInput', 'showBakingSoda').value,
+      showChalk: this.getFormValue('increaseSaltsShowInput', 'showChalk').value
     };
     const increasePhSaltsSparge: IncreasePh = {
       bakingSoda: this.getFormValue('increasePhSaltsSparge', 'bakingSoda').value,
       slakedLime: this.getFormValue('increasePhSaltsSparge', 'slakedLime').value,
       chalk: this.getFormValue('increasePhSaltsSparge', 'chalk').value,
+      showSlakedLime: this.getFormValue('increaseSaltsShowInput', 'showSlakedLime').value,
+      showBakingSoda: this.getFormValue('increaseSaltsShowInput', 'showBakingSoda').value,
+      showChalk: this.getFormValue('increaseSaltsShowInput', 'showChalk').value
     };
     const decreasePhAcid: AcidMalt = {
       acidulatedMalt: this.getFormValue('decreasePhAcid', 'acidulatedMalt').value,

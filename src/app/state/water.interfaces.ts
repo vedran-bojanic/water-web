@@ -119,6 +119,9 @@ export interface DecreasePh {
   gypsum: number;
   calciumChloride: number;
   epsomSalt: number;
+  showGypsum: boolean;
+  showCalciumChloride: boolean;
+  showEpsomSalt: boolean;
 }
 
 export interface AcidMalt {
@@ -130,6 +133,9 @@ export interface IncreasePh {
   slakedLime: number;
   bakingSoda: number;
   chalk: number;
+  showSlakedLime: boolean;
+  showBakingSoda: boolean;
+  showChalk: boolean;
 }
 
 export interface MashPh {
