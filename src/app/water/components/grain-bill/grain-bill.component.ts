@@ -34,30 +34,7 @@ export class GrainBillComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.grainsDropdown = this.grainService.getDropdownGrains();
-    this.refreshPage();
-  }
-
-  refreshPage() {
-    this.store.selectOnce(state => state.water.grainBill)
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((grainBill: GrainBill) => {
-        grainBill.grains.forEach(
-          grain => {
-            this.setFormValue(grain.id, 'id', grain.id);
-            this.setFormValue(grain.id, 'grainDropdown', grain.grainDropdown);
-            this.setFormValue(grain.id, 'name', grain.name);
-            this.setFormValue(grain.id, 'weight', grain.weight ? grain.weight : '');
-            this.setFormValue(grain.id, 'color', grain.color);
-            if (grain.grainDropdown) {
-              grain.grainDropdown.name !== 'CRYSTAL' ?
-                this.setFormValue(grain.id, 'pH', grain.grainDropdown.pH) :
-                this.setFormValue(grain.id, 'pH', grain.crystalPh);
-            }
-          }
-        );
-        this.grainBillForm.get('totalGrainWeight').setValue(grainBill.totalGrainWeight.toFixed(2));
-        this.grainBillForm.get('mashThickness').setValue(grainBill.mashThickness.toFixed(2));
-      });
+    this.refreshData();
   }
 
   onChange(grain: GrainDropdown, grainRowId: number) {
@@ -105,6 +82,29 @@ export class GrainBillComponent implements OnInit, OnDestroy {
 
   private getFormValue(grainId: number, formControlName: string): any {
     return this.grainBillForm.get('grain' + grainId + '.' + formControlName);
+  }
+
+  private refreshData() {
+    this.store.selectOnce(state => state.water.grainBill)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((grainBill: GrainBill) => {
+        grainBill.grains.forEach(
+          grain => {
+            this.setFormValue(grain.id, 'id', grain.id);
+            this.setFormValue(grain.id, 'grainDropdown', grain.grainDropdown);
+            this.setFormValue(grain.id, 'name', grain.name);
+            this.setFormValue(grain.id, 'weight', grain.weight ? grain.weight : '');
+            this.setFormValue(grain.id, 'color', grain.color);
+            if (grain.grainDropdown) {
+              grain.grainDropdown.name !== 'CRYSTAL' ?
+                this.setFormValue(grain.id, 'pH', grain.grainDropdown.pH) :
+                this.setFormValue(grain.id, 'pH', grain.crystalPh);
+            }
+          }
+        );
+        this.grainBillForm.get('totalGrainWeight').setValue(grainBill.totalGrainWeight.toFixed(2));
+        this.grainBillForm.get('mashThickness').setValue(grainBill.mashThickness.toFixed(2));
+      });
   }
 
   private createForm() {
@@ -258,7 +258,7 @@ export class GrainBillComponent implements OnInit, OnDestroy {
       mashThickness: this.grainBillForm.get('mashThickness').value
     };
     this.store.dispatch(new AddGrainBill(grainBill));
-    this.refreshPage();
+    this.refreshData();
   }
 
   ngOnDestroy() {

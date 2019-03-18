@@ -3,12 +3,16 @@ import {
   AddGrainBill,
   AddWaterAdjustment,
   AddWaterReport,
+  CalculateSpargeBakingSodaAddition,
+  CalculateSpargeCalciumChlorideAddition, CalculateSpargeChalkAddition,
+  CalculateSpargeEpsomSaltAddition,
+  CalculateSpargeGypsumAddition,
+  CalculateSpargeSlakedLimeAddition,
   SetAdjustmentSummary,
   SetMashPh,
   SetWater
 } from './water.actions';
 import { WaterStateModel } from './water-state.model';
-import { WaterStateService } from './water-state.service';
 
 export const getWaterInitState = (): WaterStateModel => ({
   waterId: 0,
@@ -103,7 +107,10 @@ export const getWaterInitState = (): WaterStateModel => ({
     decreasePhSaltsSparge: {
       epsomSalt: 0,
       calciumChloride: 0,
-      gypsum: 0
+      gypsum: 0,
+      showGypsum: false,
+      showCalciumChloride: false,
+      showEpsomSalt: false
     },
     decreasePhAcid: {
       lacticAcid: 0,
@@ -117,7 +124,10 @@ export const getWaterInitState = (): WaterStateModel => ({
     increasePhSaltsSparge: {
       slakedLime: 0,
       bakingSoda: 0,
-      chalk: 0
+      chalk: 0,
+      showSlakedLime: false,
+      showBakingSoda: false,
+      showChalk: false
     }
   },
   adjustmentSummary: {
@@ -151,7 +161,7 @@ export const getWaterInitState = (): WaterStateModel => ({
 })
 export class WaterState {
 
-  constructor(private waterStateService: WaterStateService) { }
+  constructor() { }
 
   @Selector()
   static getWaterStateModel(state: WaterStateModel) {
@@ -175,13 +185,16 @@ export class WaterState {
   @Action(AddWaterReport)
   addWaterReport(ctx: StateContext<WaterStateModel>, action: AddWaterReport) {
     const state = ctx.getState();
+    const totalGrainWeight = state.grainBill.grains
+      .filter(grain => grain.weight)
+      .reduce((acc, grain) => acc + grain.weight, 0);
     ctx.setState({
       ...state,
       waterReport: action.waterReport,
       grainBill: {
         grains: state.grainBill.grains,
         totalGrainWeight: state.grainBill.totalGrainWeight,
-        mashThickness: action.waterReport.mashVolume / state.grainBill.totalGrainWeight
+        mashThickness: action.waterReport.mashVolume / (totalGrainWeight !== 0 ? totalGrainWeight : 1)
       }
     });
   }
@@ -190,8 +203,8 @@ export class WaterState {
   addGrainBill(ctx: StateContext<WaterStateModel>, action: AddGrainBill) {
     const state = ctx.getState();
     const totalGrainWeight = action.grainBill.grains
-      .filter(x => x.weight)
-      .reduce((acc, x) => acc + x.weight, 0);
+      .filter(grain => grain.weight)
+      .reduce((acc, grain) => acc + grain.weight, 0);
     ctx.setState({
       ...state,
       grainBill: {
@@ -226,6 +239,126 @@ export class WaterState {
     ctx.setState({
       ...state,
       adjustmentSummary: action.adjustmentSummary
+    });
+  }
+
+  @Action(CalculateSpargeGypsumAddition)
+  calculateSpargeAddition(ctx: StateContext<WaterStateModel>, action: CalculateSpargeGypsumAddition) {
+    const state = ctx.getState();
+    ctx.setState({
+      ...state,
+      waterAdjustment: {
+        ...state.waterAdjustment,
+        decreasePhSaltsMash: {
+          ...state.waterAdjustment.decreasePhSaltsMash,
+          gypsum: action.gypsum
+        },
+        decreasePhSaltsSparge: {
+          ...state.waterAdjustment.decreasePhSaltsSparge,
+          gypsum: action.showGypsum ? action.gypsum * 2 : 0,
+          showGypsum: action.showGypsum
+        }
+      }
+    });
+  }
+
+  @Action(CalculateSpargeCalciumChlorideAddition)
+  calculateSpargeCalciumChlorideAddition(ctx: StateContext<WaterStateModel>, action: CalculateSpargeCalciumChlorideAddition) {
+    const state = ctx.getState();
+    ctx.setState({
+      ...state,
+      waterAdjustment: {
+        ...state.waterAdjustment,
+        decreasePhSaltsMash: {
+          ...state.waterAdjustment.decreasePhSaltsMash,
+          calciumChloride: action.calciumChloride
+        },
+        decreasePhSaltsSparge: {
+          ...state.waterAdjustment.decreasePhSaltsSparge,
+          calciumChloride: action.showCalciumChloride ? action.calciumChloride * 2 : 0,
+          showCalciumChloride: action.showCalciumChloride
+        }
+      }
+    });
+  }
+
+  @Action(CalculateSpargeEpsomSaltAddition)
+  calculateSpargeEpsomSaltAddition(ctx: StateContext<WaterStateModel>, action: CalculateSpargeEpsomSaltAddition) {
+    const state = ctx.getState();
+    ctx.setState({
+      ...state,
+      waterAdjustment: {
+        ...state.waterAdjustment,
+        decreasePhSaltsMash: {
+          ...state.waterAdjustment.decreasePhSaltsMash,
+          epsomSalt: action.epsomSalt
+        },
+        decreasePhSaltsSparge: {
+          ...state.waterAdjustment.decreasePhSaltsSparge,
+          epsomSalt: action.showEpsomSalt ? action.epsomSalt * 2 : 0,
+          showEpsomSalt: action.showEpsomSalt
+        }
+      }
+    });
+  }
+
+  @Action(CalculateSpargeSlakedLimeAddition)
+  calculateSpargeSlakedLimeAddition(ctx: StateContext<WaterStateModel>, action: CalculateSpargeSlakedLimeAddition) {
+    const state = ctx.getState();
+    ctx.setState({
+      ...state,
+      waterAdjustment: {
+        ...state.waterAdjustment,
+        increasePhSaltsMash: {
+          ...state.waterAdjustment.increasePhSaltsMash,
+          slakedLime: action.slakedLime
+        },
+        increasePhSaltsSparge: {
+          ...state.waterAdjustment.increasePhSaltsSparge,
+          slakedLime: action.showSlakedLime ? action.slakedLime * 2 : 0,
+          showSlakedLime: action.showSlakedLime
+        }
+      }
+    });
+  }
+
+  @Action(CalculateSpargeBakingSodaAddition)
+  calculateSpargeBakingSodaAddition(ctx: StateContext<WaterStateModel>, action: CalculateSpargeBakingSodaAddition) {
+    const state = ctx.getState();
+    ctx.setState({
+      ...state,
+      waterAdjustment: {
+        ...state.waterAdjustment,
+        increasePhSaltsMash: {
+          ...state.waterAdjustment.increasePhSaltsMash,
+          bakingSoda: action.bakingSoda
+        },
+        increasePhSaltsSparge: {
+          ...state.waterAdjustment.increasePhSaltsSparge,
+          bakingSoda: action.showBakingSoda ? action.bakingSoda * 2 : 0,
+          showBakingSoda: action.showBakingSoda
+        }
+      }
+    });
+  }
+
+  @Action(CalculateSpargeChalkAddition)
+  calculateSpargeChalkAddition(ctx: StateContext<WaterStateModel>, action: CalculateSpargeChalkAddition) {
+    const state = ctx.getState();
+    ctx.setState({
+      ...state,
+      waterAdjustment: {
+        ...state.waterAdjustment,
+        increasePhSaltsMash: {
+          ...state.waterAdjustment.increasePhSaltsMash,
+          chalk: action.chalk
+        },
+        increasePhSaltsSparge: {
+          ...state.waterAdjustment.increasePhSaltsSparge,
+          chalk: action.showChalk ? action.chalk * 2 : 0,
+          showChalk: action.showChalk
+        }
+      }
     });
   }
 }
