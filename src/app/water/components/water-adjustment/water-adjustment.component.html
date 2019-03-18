@@ -51,13 +51,13 @@
               Mash water (g)
             </div>
             <div class="col text-center">
-              <input type="number" formControlName="gypsum" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+              <input type="number" formControlName="gypsum" (change)="calculateSpargeAddition('gypsum')" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
             </div>
             <div class="col text-center">
-              <input type="number" formControlName="calciumChloride" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+              <input type="number" formControlName="calciumChloride" (change)="calculateSpargeAddition('calciumChloride')" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
             </div>
             <div class="col text-center">
-              <input type="number" formControlName="epsomSalt" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+              <input type="number" formControlName="epsomSalt" (change)="calculateSpargeAddition('epsomSalt')" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
             </div>
           </div>
           <div class="row pb-1" formGroupName="decreaseSaltsShowInput">
@@ -66,19 +66,19 @@
             </div>
             <div class="col text-center">
               <div class="custom-control custom-checkbox">
-                <input id="gypsumCheck" type="checkbox" class="custom-control-input" formControlName="showGypsum" (change)="enableInputField('gypsum')">
+                <input id="gypsumCheck" type="checkbox" class="custom-control-input" formControlName="showGypsum" (change)="calculateSpargeAddition('gypsum')">
                 <label class="custom-control-label" for="gypsumCheck"></label>
               </div>
             </div>
             <div class="col text-center">
               <div class="custom-control custom-checkbox">
-                <input id="clChlorideCheck" type="checkbox" class="custom-control-input" formControlName="showCalciumChloride" (change)="enableInputField('calciumChloride')">
+                <input id="clChlorideCheck" type="checkbox" class="custom-control-input" formControlName="showCalciumChloride" (change)="calculateSpargeAddition('calciumChloride')">
                 <label class="custom-control-label" for="clChlorideCheck"></label>
               </div>
             </div>
             <div class="col text-center">
               <div class="custom-control custom-checkbox">
-                <input id="epsomCheck" type="checkbox" class="custom-control-input" formControlName="showEpsomSalt"  (change)="enableInputField('epsomSalt')">
+                <input id="epsomCheck" type="checkbox" class="custom-control-input" formControlName="showEpsomSalt"  (change)="calculateSpargeAddition('epsomSalt')">
                 <label class="custom-control-label" for="epsomCheck"></label>
               </div>
             </div>
@@ -223,19 +223,19 @@
             </div>
             <div class="col text-center">
               <div class="custom-control custom-checkbox">
-                <input id="slakedLimeCheck" type="checkbox" class="custom-control-input" formControlName="showSlakedLime" (change)="enableInputField('slakedLime')">
+                <input id="slakedLimeCheck" type="checkbox" class="custom-control-input" formControlName="showSlakedLime" (change)="calculateSpargeAddition('slakedLime')">
                 <label class="custom-control-label" for="slakedLimeCheck"></label>
               </div>
             </div>
             <div class="col text-center">
               <div class="custom-control custom-checkbox">
-                <input id="bakingSodaCheck" type="checkbox" class="custom-control-input" formControlName="showBakingSoda" (change)="enableInputField('bakingSoda')">
+                <input id="bakingSodaCheck" type="checkbox" class="custom-control-input" formControlName="showBakingSoda" (change)="calculateSpargeAddition('bakingSoda')">
                 <label class="custom-control-label" for="bakingSodaCheck"></label>
               </div>
             </div>
             <div class="col text-center">
               <div class="custom-control custom-checkbox">
-                <input id="chalkCheck" type="checkbox" class="custom-control-input" formControlName="showChalk" (change)="enableInputField('chalk')">
+                <input id="chalkCheck" type="checkbox" class="custom-control-input" formControlName="showChalk" (change)="calculateSpargeAddition('chalk')">
                 <label class="custom-control-label" for="chalkCheck"></label>
               </div>
             </div>

@@ -35,7 +35,7 @@ export class WaterAdjustmentComponent implements OnInit, OnDestroy {
     this.refreshData();
   }
 
-  enableInputField(field: string): boolean {
+  calculateSpargeAddition(field: string): boolean {
     switch (field) {
       case 'gypsum':
         const showGypsum = this.getFormValue('decreaseSaltsShowInput', 'showGypsum').value;
@@ -129,9 +129,9 @@ export class WaterAdjustmentComponent implements OnInit, OnDestroy {
   private createForm() {
     this.waterAdjustmentForm = this.fb.group({
       decreasePhSaltsMash: this.fb.group({
-        gypsum: [''],
-        calciumChloride: [''],
-        epsomSalt: ['']
+        gypsum: [],
+        calciumChloride: [],
+        epsomSalt: []
       }),
       decreaseSaltsShowInput: this.fb.group({
         showGypsum: [false],
@@ -139,9 +139,9 @@ export class WaterAdjustmentComponent implements OnInit, OnDestroy {
         showEpsomSalt: [false]
       }),
       decreasePhSaltsSparge: this.fb.group({
-        gypsum: [''],
-        calciumChloride: [''],
-        epsomSalt: ['']
+        gypsum: [],
+        calciumChloride: [],
+        epsomSalt: []
       }),
       decreasePhAcid: this.fb.group({
         acidulatedMalt: [''],

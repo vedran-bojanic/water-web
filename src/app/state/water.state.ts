@@ -245,6 +245,8 @@ export class WaterState {
   @Action(CalculateSpargeGypsumAddition)
   calculateSpargeAddition(ctx: StateContext<WaterStateModel>, action: CalculateSpargeGypsumAddition) {
     const state = ctx.getState();
+    const mashVolume = state.waterReport.mashVolume;
+    const spargeVolume = state.waterReport.spargeVolume;
     ctx.setState({
       ...state,
       waterAdjustment: {
@@ -255,7 +257,7 @@ export class WaterState {
         },
         decreasePhSaltsSparge: {
           ...state.waterAdjustment.decreasePhSaltsSparge,
-          gypsum: action.showGypsum ? action.gypsum * 2 : 0,
+          gypsum: action.showGypsum ? action.gypsum / mashVolume * spargeVolume : 0,
           showGypsum: action.showGypsum
         }
       }
@@ -265,6 +267,8 @@ export class WaterState {
   @Action(CalculateSpargeCalciumChlorideAddition)
   calculateSpargeCalciumChlorideAddition(ctx: StateContext<WaterStateModel>, action: CalculateSpargeCalciumChlorideAddition) {
     const state = ctx.getState();
+    const mashVolume = state.waterReport.mashVolume;
+    const spargeVolume = state.waterReport.spargeVolume;
     ctx.setState({
       ...state,
       waterAdjustment: {
@@ -275,7 +279,7 @@ export class WaterState {
         },
         decreasePhSaltsSparge: {
           ...state.waterAdjustment.decreasePhSaltsSparge,
-          calciumChloride: action.showCalciumChloride ? action.calciumChloride * 2 : 0,
+          calciumChloride: action.showCalciumChloride ? action.calciumChloride / mashVolume * spargeVolume : 0,
           showCalciumChloride: action.showCalciumChloride
         }
       }
@@ -285,6 +289,8 @@ export class WaterState {
   @Action(CalculateSpargeEpsomSaltAddition)
   calculateSpargeEpsomSaltAddition(ctx: StateContext<WaterStateModel>, action: CalculateSpargeEpsomSaltAddition) {
     const state = ctx.getState();
+    const mashVolume = state.waterReport.mashVolume;
+    const spargeVolume = state.waterReport.spargeVolume;
     ctx.setState({
       ...state,
       waterAdjustment: {
@@ -295,7 +301,7 @@ export class WaterState {
         },
         decreasePhSaltsSparge: {
           ...state.waterAdjustment.decreasePhSaltsSparge,
-          epsomSalt: action.showEpsomSalt ? action.epsomSalt * 2 : 0,
+          epsomSalt: action.showEpsomSalt ? action.epsomSalt / mashVolume * spargeVolume : 0,
           showEpsomSalt: action.showEpsomSalt
         }
       }
@@ -305,6 +311,8 @@ export class WaterState {
   @Action(CalculateSpargeSlakedLimeAddition)
   calculateSpargeSlakedLimeAddition(ctx: StateContext<WaterStateModel>, action: CalculateSpargeSlakedLimeAddition) {
     const state = ctx.getState();
+    const mashVolume = state.waterReport.mashVolume;
+    const spargeVolume = state.waterReport.spargeVolume;
     ctx.setState({
       ...state,
       waterAdjustment: {
@@ -315,7 +323,7 @@ export class WaterState {
         },
         increasePhSaltsSparge: {
           ...state.waterAdjustment.increasePhSaltsSparge,
-          slakedLime: action.showSlakedLime ? action.slakedLime * 2 : 0,
+          slakedLime: action.showSlakedLime ? action.slakedLime / mashVolume * spargeVolume : 0,
           showSlakedLime: action.showSlakedLime
         }
       }
@@ -325,6 +333,8 @@ export class WaterState {
   @Action(CalculateSpargeBakingSodaAddition)
   calculateSpargeBakingSodaAddition(ctx: StateContext<WaterStateModel>, action: CalculateSpargeBakingSodaAddition) {
     const state = ctx.getState();
+    const mashVolume = state.waterReport.mashVolume;
+    const spargeVolume = state.waterReport.spargeVolume;
     ctx.setState({
       ...state,
       waterAdjustment: {
@@ -335,7 +345,7 @@ export class WaterState {
         },
         increasePhSaltsSparge: {
           ...state.waterAdjustment.increasePhSaltsSparge,
-          bakingSoda: action.showBakingSoda ? action.bakingSoda * 2 : 0,
+          bakingSoda: action.showBakingSoda ? action.bakingSoda / mashVolume * spargeVolume : 0,
           showBakingSoda: action.showBakingSoda
         }
       }
@@ -345,6 +355,8 @@ export class WaterState {
   @Action(CalculateSpargeChalkAddition)
   calculateSpargeChalkAddition(ctx: StateContext<WaterStateModel>, action: CalculateSpargeChalkAddition) {
     const state = ctx.getState();
+    const mashVolume = state.waterReport.mashVolume;
+    const spargeVolume = state.waterReport.spargeVolume;
     ctx.setState({
       ...state,
       waterAdjustment: {
@@ -355,7 +367,7 @@ export class WaterState {
         },
         increasePhSaltsSparge: {
           ...state.waterAdjustment.increasePhSaltsSparge,
-          chalk: action.showChalk ? action.chalk * 2 : 0,
+          chalk: action.showChalk ? action.chalk / mashVolume * spargeVolume : 0,
           showChalk: action.showChalk
         }
       }
