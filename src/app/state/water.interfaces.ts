@@ -145,20 +145,11 @@ export interface MashPh {
 }
 
 export interface AdjustmentSummary {
-  mashWater: MashWater;
-  mashSpargeWater: MashSpargeWater;
+  mashWater: Water;
+  overallWater: Water;
 }
 
-export interface MashWater {
-  calcium: number;
-  magnesium: number;
-  sodium: number;
-  chloride: number;
-  sulfate: number;
-  chlorideToSulfateRatio: number;
-}
-
-export interface MashSpargeWater {
+export interface Water {
   calcium: number;
   magnesium: number;
   sodium: number;

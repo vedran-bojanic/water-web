@@ -121,8 +121,6 @@ export class WaterAdjustmentComponent implements OnInit, OnDestroy {
         this.bakingSoda = !wa.increasePhSaltsSparge.showBakingSoda;
         this.setFormValue('increaseSaltsShowInput', 'showChalk', wa.increasePhSaltsSparge.showChalk);
         this.chalk = !wa.increasePhSaltsSparge.showChalk;
-
-
       });
   }
 

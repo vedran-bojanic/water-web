@@ -125,7 +125,7 @@ export class WaterStateModel {
       sulfate: number,
       chlorideToSulfateRatio: number
     },
-    mashSpargeWater: {
+    overallWater: {
       calcium: number,
       sodium: number,
       magnesium: number,

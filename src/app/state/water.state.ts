@@ -139,7 +139,7 @@ export const getWaterInitState = (): WaterStateModel => ({
       sulfate: 0,
       chlorideToSulfateRatio: 0
     },
-    mashSpargeWater: {
+    overallWater: {
       calcium: 0,
       sodium: 0,
       magnesium: 0,
