@@ -137,7 +137,7 @@ export const getWaterInitState = (): WaterStateModel => ({
       magnesium: 0,
       chloride: 0,
       sulfate: 0,
-      chlorideToSulfateRatio: 0
+      ratio: 0
     },
     overallWater: {
       calcium: 0,
@@ -145,7 +145,7 @@ export const getWaterInitState = (): WaterStateModel => ({
       magnesium: 0,
       chloride: 0,
       sulfate: 0,
-      chlorideToSulfateRatio: 0
+      ratio: 0
     }
   },
   mashPh: {

@@ -123,7 +123,7 @@ export class WaterStateModel {
       magnesium: number,
       chloride: number,
       sulfate: number,
-      chlorideToSulfateRatio: number
+      ratio: number
     },
     overallWater: {
       calcium: number,
@@ -131,7 +131,7 @@ export class WaterStateModel {
       magnesium: number,
       chloride: number,
       sulfate: number,
-      chlorideToSulfateRatio: number
+      ratio: number
     }
   };
   mashPh: {

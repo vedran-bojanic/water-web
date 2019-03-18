@@ -1,102 +1,100 @@
 <main role="main" class="flex-shrink-0">
-  <form [formGroup]="mashWaterForm">
-    <div class="container py-3">
-      <div class="row">
-        <div class="col">
-          <h4>Adjustment summary</h4>
-        </div>
+  <div class="container py-3">
+    <div class="row">
+      <div class="col">
+        <h4>Adjustment summary</h4>
       </div>
     </div>
-    <!-- Water Summary -->
-    <div class="container py-4">
-      <div class="row">
-        <div class="col-lg-10">
-          <div class="row">
-            <div class="col text-center"></div>
-            <div class="col text-center">Calcium</div>
-            <div class="col text-center">Magnesium</div>
-            <div class="col text-center">Sodium</div>
-            <div class="col text-center">Chloride</div>
-            <div class="col text-center">Sulfate</div>
+  </div>
+  <!-- Water Summary -->
+  <div class="container py-4">
+    <div class="row">
+      <div class="col-lg-10">
+        <div class="row">
+          <div class="col text-center"></div>
+          <div class="col text-center">Calcium</div>
+          <div class="col text-center">Magnesium</div>
+          <div class="col text-center">Sodium</div>
+          <div class="col text-center">Chloride</div>
+          <div class="col text-center">Sulfate</div>
+        </div>
+        <div class="row pb-2">
+          <div class="col text-center"></div>
+          <div class="col text-center">(Ca ppm)</div>
+          <div class="col text-center">(Mg ppm)</div>
+          <div class="col text-center">(Na ppm)</div>
+          <div class="col text-center">(Cl ppm)</div>
+          <div class="col text-center">(SO4 ppm)</div>
+        </div>
+        <div class="row pb-1">
+          <div class="col text-center">Mash Water:</div>
+          <div class="col text-center">
+            <input type="number" class="form-control text-center" value="{{ mashWater.calcium }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
-          <div class="row pb-2">
-            <div class="col text-center"></div>
-            <div class="col text-center">(Ca ppm)</div>
-            <div class="col text-center">(Mg ppm)</div>
-            <div class="col text-center">(Na ppm)</div>
-            <div class="col text-center">(Cl ppm)</div>
-            <div class="col text-center">(SO4 ppm)</div>
+          <div class="col text-center">
+            <input type="number" class="form-control text-center" value="{{ mashWater.magnesium }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
-          <div class="row pb-1" formGroupName="mashWater">
-            <div class="col text-center">Mash Water:</div>
-            <div class="col text-center">
-              <input type="number" formControlName="calcium" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-            </div>
-            <div class="col text-center">
-              <input type="number" formControlName="magnesium" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-            </div>
-            <div class="col text-center">
-              <input type="number" formControlName="sodium" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-            </div>
-            <div class="col text-center">
-              <input type="number" formControlName="chloride" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-            </div>
-            <div class="col text-center">
-              <input type="number" formControlName="sulfate" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-            </div>
+          <div class="col text-center">
+            <input type="number" class="form-control text-center" value="{{ mashWater.sodium }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
-          <div class="row" formGroupName="overallWater">
-            <div class="col text-center">Mash & Sparge Water:</div>
-            <div class="col text-center">
-              <input type="number" formControlName="calcium" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-            </div>
-            <div class="col text-center">
-              <input type="number" formControlName="magnesium" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-            </div>
-            <div class="col text-center">
-              <input type="number" formControlName="sodium" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-            </div>
-            <div class="col text-center">
-              <input type="number" formControlName="chloride" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-            </div>
-            <div class="col text-center">
-              <input type="number" formControlName="sulfate" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-            </div>
+          <div class="col text-center">
+            <input type="number" class="form-control text-center" value="{{ mashWater.chloride }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <div class="col text-center">
+            <input type="number" class="form-control text-center" value="{{ mashWater.sulfate }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
         </div>
-
-        <div class="col-lg-2" formGroupName="ratio">
-          <div class="row">
-            <div class="col text-center">Chloride / Sulfate</div>
+        <div class="row">
+          <div class="col text-center">Mash & Sparge Water:</div>
+          <div class="col text-center">
+            <input type="number" class="form-control text-center" value="{{ overallWater.calcium }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
-          <div class="row pb-2">
-            <div class="col text-center">Ratio</div>
+          <div class="col text-center">
+            <input type="number" class="form-control text-center" value="{{ overallWater.magnesium }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
-          <div class="row pb-1">
-            <div class="col text-center">
-              <input type="text" formControlName="mash" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-            </div>
+          <div class="col text-center">
+            <input type="number" class="form-control text-center" value="{{ overallWater.sodium }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
-          <div class="row">
-            <div class="col text-center">
-              <input type="text" formControlName="overall" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-            </div>
+          <div class="col text-center">
+            <input type="number" class="form-control text-center" value="{{ overallWater.chloride }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <div class="col text-center">
+            <input type="number" class="form-control text-center" value="{{ overallWater.sulfate }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
         </div>
-
       </div>
-    </div>
 
-    <!-- Buttons -->
-    <div class="container py-3">
-      <div class="row justify-content-end">
-        <button (click)="onBack()" type="button" class="btn btn-outline-danger mr-2">
-          <span class="fas fa-angle-double-left"></span> Back
-        </button>
-        <button (click)="onSave()" type="button" class="btn btn-outline-light">
-          Save <span class="fas fa-save"></span>
-        </button>
+      <div class="col-lg-2">
+        <div class="row">
+          <div class="col text-center">Chloride / Sulfate</div>
+        </div>
+        <div class="row pb-2">
+          <div class="col text-center">Ratio</div>
+        </div>
+        <div class="row pb-1">
+          <div class="col text-center">
+            <input type="text" class="form-control text-center" value="{{ mashWater.ratio }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col text-center">
+            <input type="text" class="form-control text-center" value="{{ overallWater.ratio }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
+        </div>
       </div>
+
     </div>
-  </form>
+  </div>
+
+  <!-- Buttons -->
+  <div class="container py-3">
+    <div class="row justify-content-end">
+      <button (click)="onBack()" type="button" class="btn btn-outline-danger mr-2">
+        <span class="fas fa-angle-double-left"></span> Back
+      </button>
+      <button (click)="onSave()" type="button" class="btn btn-outline-light">
+        Save <span class="fas fa-save"></span>
+      </button>
+    </div>
+  </div>
 </main>

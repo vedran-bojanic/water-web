@@ -155,5 +155,5 @@ export interface Water {
   sodium: number;
   chloride: number;
   sulfate: number;
-  chlorideToSulfateRatio: number;
+  ratio: number;
 }
