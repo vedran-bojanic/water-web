@@ -1,5 +1,5 @@
 <main role="main" class="flex-shrink-0">
-  <form [formGroup]="grainBillForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="grainBillForm">
     <div class="container py-3">
       <div class="row">
         <div class="col">
@@ -37,10 +37,10 @@
             <input type="text" formControlName="name" class="form-control text-center">
           </div>
           <div class="col text-center">
-            <input type="number" formControlName="weight" (change)="storeGrainBill()" class="form-control text-center">
+            <input type="number" formControlName="weight" (change)="onInput()" class="form-control text-center">
           </div>
           <div class="col text-center">
-            <input type="number" formControlName="color" (change)="calculatePh(i + 1)" class="form-control text-center" [readOnly]="getGrainControl(i + 1) !== 'CRYSTAL'">
+            <input type="number" formControlName="color" (change)="calculatePh(i + 1)" (change)="onInput()" class="form-control text-center" [readOnly]="getGrainControl(i + 1) !== 'CRYSTAL'">
           </div>
           <div class="col text-center">
             <input type="number" formControlName="pH" class="form-control text-center" readOnly>
@@ -80,7 +80,6 @@
         <button (click)="onNext()" type="button" class="btn btn-outline-dark mr-2">
           Next <span class="fas fa-angle-double-right"></span>
         </button>
-        <button type="submit" class="btn btn-outline-success mr-2">Save</button>
       </div>
     </div>
   </form>

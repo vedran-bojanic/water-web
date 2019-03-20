@@ -41,16 +41,17 @@ export class GrainBillComponent implements OnInit, OnDestroy {
     if (grain) {
       this.setFormValue(grainRowId, 'pH', grain.pH);
 
-        if (grain.name === 'CRYSTAL') {
-          const defaultCrystalPh = 5.22;
-          this.setFormValue(grainRowId, 'pH', defaultCrystalPh);
+      if (grain.name === 'CRYSTAL') {
+        const defaultCrystalPh = 5.22;
+        this.setFormValue(grainRowId, 'pH', defaultCrystalPh);
       }
     } else {
       this.grainBillForm.controls['grain' + grainRowId].reset();
     }
+    this.storeGrainBill();
   }
 
-  onSubmit() {
+  onInput() {
     this.storeGrainBill();
   }
 
@@ -102,7 +103,7 @@ export class GrainBillComponent implements OnInit, OnDestroy {
             }
           }
         );
-        this.grainBillForm.get('totalGrainWeight').setValue(grainBill.totalGrainWeight.toFixed(2));
+        this.grainBillForm.get('totalGrainWeight').setValue(grainBill.totalGrainWeight);
         this.grainBillForm.get('mashThickness').setValue(grainBill.mashThickness.toFixed(2));
       });
   }

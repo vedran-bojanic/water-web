@@ -29,37 +29,37 @@
         <div class="row pb-1">
           <div class="col text-center">Mash Water:</div>
           <div class="col text-center">
-            <input type="number" class="form-control text-center" value="{{ mashWater.calcium }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            <input type="number" class="form-control text-center" value="{{ mashWater.calcium | number : '1.0-0' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
           <div class="col text-center">
-            <input type="number" class="form-control text-center" value="{{ mashWater.magnesium }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            <input type="number" class="form-control text-center" value="{{ mashWater.magnesium | number : '1.0-0' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
           <div class="col text-center">
-            <input type="number" class="form-control text-center" value="{{ mashWater.sodium }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            <input type="number" class="form-control text-center" value="{{ mashWater.sodium | number : '1.0-0' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
           <div class="col text-center">
-            <input type="number" class="form-control text-center" value="{{ mashWater.chloride }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            <input type="number" class="form-control text-center" value="{{ mashWater.chloride | number : '1.0-0' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
           <div class="col text-center">
-            <input type="number" class="form-control text-center" value="{{ mashWater.sulfate }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            <input type="number" class="form-control text-center" value="{{ mashWater.sulfate | number : '1.0-0' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
         </div>
         <div class="row">
           <div class="col text-center">Mash & Sparge Water:</div>
           <div class="col text-center">
-            <input type="number" class="form-control text-center" value="{{ overallWater.calcium }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            <input type="number" class="form-control text-center" value="{{ overallWater.calcium | number : '1.0-0' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
           <div class="col text-center">
-            <input type="number" class="form-control text-center" value="{{ overallWater.magnesium }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            <input type="number" class="form-control text-center" value="{{ overallWater.magnesium | number : '1.0-0' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
           <div class="col text-center">
-            <input type="number" class="form-control text-center" value="{{ overallWater.sodium }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            <input type="number" class="form-control text-center" value="{{ overallWater.sodium | number : '1.0-0' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
           <div class="col text-center">
-            <input type="number" class="form-control text-center" value="{{ overallWater.chloride }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            <input type="number" class="form-control text-center" value="{{ overallWater.chloride | number : '1.0-0' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
           <div class="col text-center">
-            <input type="number" class="form-control text-center" value="{{ overallWater.sulfate }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            <input type="number" class="form-control text-center" value="{{ overallWater.sulfate | number : '1.0-0' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
         </div>
       </div>
@@ -73,12 +73,12 @@
         </div>
         <div class="row pb-1">
           <div class="col text-center">
-            <input type="text" class="form-control text-center" value="{{ mashWater.ratio }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            <input type="text" class="form-control text-center" value="{{ mashWater.ratio| number : '1.2-2' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
         </div>
         <div class="row">
           <div class="col text-center">
-            <input type="text" class="form-control text-center" value="{{ overallWater.ratio }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            <input type="text" class="form-control text-center" value="{{ overallWater.ratio| number : '1.2-2' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
         </div>
       </div>

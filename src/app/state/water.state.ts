@@ -13,7 +13,7 @@ import {
   SetMashPh
 } from './water.actions';
 import { WaterStateModel } from './water-state.model';
-import { AdjustmentSummary, Grain, GrainBill, MashPh, WaterAdjustment, WaterReport } from './water.interfaces';
+import { AdjustmentSummary, GrainBill, MashPh, WaterAdjustment, WaterReport } from './water.interfaces';
 
 export const getWaterInitState = (): WaterStateModel => ({
   waterId: 0,
@@ -168,7 +168,8 @@ export const getWaterInitState = (): WaterStateModel => ({
 })
 export class WaterState {
 
-  constructor() { }
+  constructor() {
+  }
 
   @Selector()
   static getWaterStateModel(state: WaterStateModel) {
@@ -178,10 +179,14 @@ export class WaterState {
   @Action(AddWaterReport)
   addWaterReport(ctx: StateContext<WaterStateModel>, action: AddWaterReport) {
     const state = ctx.getState();
+    const effectiveAlkalinity = this.effectiveAlkalinity(action.waterReport, state.waterAdjustment);
+    const residualAlkalinity = this.residualAlkalinity(effectiveAlkalinity, state.adjustmentSummary);
+    const chloride = this.chlorideMashWater(action.waterReport, state.waterAdjustment);
+    const sulfate = this.sulfateMashWater(action.waterReport, state.waterAdjustment);
     const totalGrainWeight = state.grainBill.grains
       .filter(grain => grain.weight)
       .reduce((acc, grain) => acc + grain.weight, 0);
-    const effectiveAlkalinity = this.effectiveAlkalinity(action.waterReport, state.waterAdjustment);
+
     ctx.setState({
       ...state,
       waterReport: action.waterReport,
@@ -193,7 +198,21 @@ export class WaterState {
       mashPh: {
         pH: this.mashPh(state.grainBill, action.waterReport, state.mashPh),
         effectiveAlkalinity: effectiveAlkalinity,
-        residualAlkalinity: this.residualAlkalinity(effectiveAlkalinity, state.adjustmentSummary),
+        residualAlkalinity: residualAlkalinity,
+      },
+      adjustmentSummary: {
+        ...state.adjustmentSummary,
+        mashWater: {
+          calcium: this.calciumMashWater(action.waterReport, state.waterAdjustment),
+          magnesium: this.magnesiumMashWater(action.waterReport, state.waterAdjustment),
+          sodium: this.sodiumMashWater(action.waterReport, state.waterAdjustment),
+          chloride: chloride,
+          sulfate: sulfate,
+          ratio: chloride / sulfate
+        },
+        overallWater: {
+          ...state.adjustmentSummary.overallWater
+        }
       }
     });
   }
@@ -204,6 +223,7 @@ export class WaterState {
     const totalGrainWeight = action.grainBill.grains
       .filter(grain => grain.weight)
       .reduce((acc, grain) => acc + grain.weight, 0);
+    action.grainBill.totalGrainWeight = totalGrainWeight;
     ctx.setState({
       ...state,
       grainBill: {
@@ -222,13 +242,27 @@ export class WaterState {
   addWaterAdjustment(ctx: StateContext<WaterStateModel>, action: AddWaterAdjustment) {
     const state = ctx.getState();
     const effectiveAlkalinity = this.effectiveAlkalinity(state.waterReport, action.waterAdjustment);
+    const residualAlkalinity = this.residualAlkalinity(effectiveAlkalinity, state.adjustmentSummary);
+    const chloride = this.chlorideMashWater(state.waterReport, action.waterAdjustment);
+    const sulfate = this.sulfateMashWater(state.waterReport, action.waterAdjustment);
     ctx.setState({
       ...state,
       waterAdjustment: action.waterAdjustment,
       mashPh: {
         ...state.mashPh,
         effectiveAlkalinity: effectiveAlkalinity,
-        residualAlkalinity: this.residualAlkalinity(effectiveAlkalinity, state.adjustmentSummary)
+        residualAlkalinity: residualAlkalinity
+      },
+      adjustmentSummary: {
+        ...state.adjustmentSummary,
+        mashWater: {
+          calcium: this.calciumMashWater(state.waterReport, action.waterAdjustment),
+          magnesium: this.magnesiumMashWater(state.waterReport, action.waterAdjustment),
+          sodium: this.sodiumMashWater(state.waterReport, action.waterAdjustment),
+          chloride: chloride,
+          sulfate: sulfate,
+          ratio: chloride / sulfate
+        }
       }
     });
   }
@@ -386,10 +420,10 @@ export class WaterState {
   private effectiveAlkalinity(waterReport: WaterReport, waterAdjustment: WaterAdjustment): number {
     return ((1 - waterReport.mashRoPercentage / 100) * waterReport.alkalinity) +
       ((waterAdjustment.increasePhSaltsMash.chalk * 130 +
-      waterAdjustment.increasePhSaltsMash.bakingSoda * 157 -
-      176.1 * waterAdjustment.decreasePhAcid.lacticAcid * 0.88 * 2 -
-      4160.4 * 0.02 * waterAdjustment.decreasePhAcid.acidulatedMalt * 2.5 +
-      waterAdjustment.increasePhSaltsMash.slakedLime * 357) / (waterReport.mashVolume / 3.785412));
+        waterAdjustment.increasePhSaltsMash.bakingSoda * 157 -
+        176.1 * waterAdjustment.decreasePhAcid.lacticAcid * 0.88 * 2 -
+        4160.4 * 0.02 * waterAdjustment.decreasePhAcid.acidulatedMalt * 2.5 +
+        waterAdjustment.increasePhSaltsMash.slakedLime * 357) / (waterReport.mashVolume / 3.785412));
   }
 
   private residualAlkalinity(effectiveAlkalinity: number, adjustmentSummary: AdjustmentSummary): number {
@@ -406,5 +440,39 @@ export class WaterState {
       }, 0);
     return (totalWeightPh / grainBill.totalGrainWeight) +
       ((0.1085 * (waterReport.mashVolume / 3.785412) / (grainBill.totalGrainWeight * 2.20462) + 0.013) * (mashPh.residualAlkalinity / 50));
+  }
+
+  private calciumMashWater(waterReport: WaterReport, waterAdjustment: WaterAdjustment): number {
+    return ((1 - waterReport.mashRoPercentage / 100) * waterReport.calcium) +
+      ((waterAdjustment.increasePhSaltsMash.chalk * 105.89 +
+        waterAdjustment.decreasePhSaltsMash.gypsum * 60 +
+        waterAdjustment.decreasePhSaltsMash.calciumChloride * 72 +
+        waterAdjustment.increasePhSaltsMash.slakedLime * 143) /
+        (waterReport.mashVolume / 3.785412));
+  }
+
+  private magnesiumMashWater(waterReport: WaterReport, waterAdjustment: WaterAdjustment) {
+    return ((1 - waterReport.mashRoPercentage / 100) * waterReport.magnesium) +
+      (waterAdjustment.decreasePhSaltsMash.epsomSalt * 24.6 /
+        waterReport.mashVolume / 3.785412);
+  }
+
+  private sodiumMashWater(waterReport: WaterReport, waterAdjustment: WaterAdjustment) {
+    return ((1 - waterReport.mashRoPercentage / 100) * waterReport.sodium) +
+      (waterAdjustment.increasePhSaltsMash.bakingSoda * 72.3 /
+        waterReport.mashVolume / 3.785412);
+  }
+
+  private chlorideMashWater(waterReport: WaterReport, waterAdjustment: WaterAdjustment) {
+    return ((1 - waterReport.mashRoPercentage / 100) * waterReport.chloride) +
+      (waterAdjustment.decreasePhSaltsMash.calciumChloride * 127.47 /
+        waterReport.mashVolume / 3.785412);
+  }
+
+  private sulfateMashWater(waterReport: WaterReport, waterAdjustment: WaterAdjustment) {
+    return ((1 - waterReport.mashRoPercentage / 100) * waterReport.sulfate) +
+      ((waterAdjustment.decreasePhSaltsMash.gypsum * 147.4 +
+        waterAdjustment.decreasePhSaltsMash.epsomSalt * 103) /
+        (waterReport.mashVolume / 3.785412));
   }
 }

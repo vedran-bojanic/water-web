@@ -25,7 +25,7 @@ export class WaterReportComponent implements OnInit, OnDestroy {
     this.refreshData();
   }
 
-  onSubmit() {
+  onInput() {
     this.storeWaterReport();
   }
 
