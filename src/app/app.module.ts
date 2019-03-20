@@ -19,6 +19,7 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { environment } from '../environments/environment';
 import { WaterState } from './state/water.state';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { WaterState } from './state/water.state';
     RouterModule,
     WaterModule,
     SharedModule,
+    HttpClientModule,
     NgbModule.forRoot(),
     NgSelectModule,
     NgxsModule.forRoot([

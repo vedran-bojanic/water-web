@@ -223,6 +223,7 @@ export class WaterState {
       .filter(grain => grain.weight)
       .reduce((acc, grain) => acc + grain.weight, 0);
     action.grainBill.totalGrainWeight = totalGrainWeight;
+
     ctx.setState({
       ...state,
       grainBill: {

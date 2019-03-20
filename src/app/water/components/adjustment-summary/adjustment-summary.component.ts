@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { AdjustmentSummary, Water } from '../../../state/water.interfaces';
+import { WaterService } from '../../services/water.service';
+import { BeerStyle } from '../../models/beer-style.model';
 
 @Component({
   selector: 'app-adjustment-summary',
@@ -12,10 +14,11 @@ import { AdjustmentSummary, Water } from '../../../state/water.interfaces';
 export class AdjustmentSummaryComponent implements OnInit {
 
   private ngUnsubscribe: Subject<any>;
+  beerStyles: BeerStyle[];
   mashWater: Water;
   overallWater: Water;
 
-  constructor(private router: Router, private store: Store) {
+  constructor(private router: Router, private store: Store, private waterService: WaterService) {
     this.ngUnsubscribe = new Subject();
   }
 
@@ -26,6 +29,9 @@ export class AdjustmentSummaryComponent implements OnInit {
         this.mashWater = as.mashWater;
         this.overallWater = as.overallWater;
       });
+    this.waterService.getBeerStyles()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((beerStyles) => this.beerStyles = beerStyles);
   }
 
   onBack() {
