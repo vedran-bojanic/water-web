@@ -1,5 +1,5 @@
 <main role="main" class="flex-shrink-0">
-  <form [formGroup]="waterAdjustmentForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="waterAdjustmentForm">
     <div class="container py-3">
       <div class="row">
         <div class="col">
@@ -51,13 +51,13 @@
               Mash water (g)
             </div>
             <div class="col text-center">
-              <input type="number" formControlName="gypsum" (change)="calculateSpargeAddition('gypsum')" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+              <input type="number" formControlName="gypsum" (change)="onChange()" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
             </div>
             <div class="col text-center">
-              <input type="number" formControlName="calciumChloride" (change)="calculateSpargeAddition('calciumChloride')" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+              <input type="number" formControlName="calciumChloride" (change)="onChange()" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
             </div>
             <div class="col text-center">
-              <input type="number" formControlName="epsomSalt" (change)="calculateSpargeAddition('epsomSalt')" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+              <input type="number" formControlName="epsomSalt" (change)="onChange()" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
             </div>
           </div>
           <div class="row pb-1" formGroupName="decreaseSaltsShowInput">
@@ -66,19 +66,19 @@
             </div>
             <div class="col text-center">
               <div class="custom-control custom-checkbox">
-                <input id="gypsumCheck" type="checkbox" class="custom-control-input" formControlName="showGypsum" (change)="calculateSpargeAddition('gypsum')">
+                <input id="gypsumCheck" type="checkbox" class="custom-control-input" formControlName="showGypsum">
                 <label class="custom-control-label" for="gypsumCheck"></label>
               </div>
             </div>
             <div class="col text-center">
               <div class="custom-control custom-checkbox">
-                <input id="clChlorideCheck" type="checkbox" class="custom-control-input" formControlName="showCalciumChloride" (change)="calculateSpargeAddition('calciumChloride')">
+                <input id="clChlorideCheck" type="checkbox" class="custom-control-input" formControlName="showCalciumChloride">
                 <label class="custom-control-label" for="clChlorideCheck"></label>
               </div>
             </div>
             <div class="col text-center">
               <div class="custom-control custom-checkbox">
-                <input id="epsomCheck" type="checkbox" class="custom-control-input" formControlName="showEpsomSalt"  (change)="calculateSpargeAddition('epsomSalt')">
+                <input id="epsomCheck" type="checkbox" class="custom-control-input" formControlName="showEpsomSalt">
                 <label class="custom-control-label" for="epsomCheck"></label>
               </div>
             </div>
@@ -88,13 +88,13 @@
               Sparge water (g)
             </div>
             <div class="col text-center">
-              <input type="number" formControlName="gypsum" class="form-control text-center" [readOnly]="gypsum" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+              <input type="number" formControlName="gypsum" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
             </div>
             <div class="col text-center">
-              <input type="number" formControlName="calciumChloride" class="form-control text-center" [readOnly]="calciumChloride" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+              <input type="number" formControlName="calciumChloride" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
             </div>
             <div class="col text-center">
-              <input type="number" formControlName="epsomSalt" class="form-control text-center" [readOnly]="epsomSalt" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+              <input type="number" formControlName="epsomSalt" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
             </div>
           </div>
         </div>
@@ -124,7 +124,7 @@
               grams:
             </div>
             <div class="col text-center" formGroupName="decreasePhAcid">
-              <input type="number" formControlName="acidulatedMalt" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+              <input type="number" formControlName="acidulatedMalt" (change)="onChange()" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
             </div>
           </div>
         </div>
@@ -154,7 +154,7 @@
               ml:
             </div>
             <div class="col text-center" formGroupName="decreasePhAcid">
-              <input type="number" formControlName="lacticAcid" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+              <input type="number" formControlName="lacticAcid" (change)="onChange()" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
             </div>
           </div>
         </div>
@@ -208,13 +208,13 @@
               Mash water (g)
             </div>
             <div class="col text-center">
-              <input type="number" formControlName="slakedLime" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+              <input type="number" formControlName="slakedLime" (change)="onChange()" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
             </div>
             <div class="col text-center">
-              <input type="number" formControlName="bakingSoda" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+              <input type="number" formControlName="bakingSoda" (change)="onChange()" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
             </div>
             <div class="col text-center">
-              <input type="number" formControlName="chalk" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+              <input type="number" formControlName="chalk" (change)="onChange()" class="form-control text-center" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
             </div>
           </div>
           <div class="row pb-1" formGroupName="increaseSaltsShowInput">
@@ -223,19 +223,19 @@
             </div>
             <div class="col text-center">
               <div class="custom-control custom-checkbox">
-                <input id="slakedLimeCheck" type="checkbox" class="custom-control-input" formControlName="showSlakedLime" (change)="calculateSpargeAddition('slakedLime')">
+                <input id="slakedLimeCheck" type="checkbox" class="custom-control-input" formControlName="showSlakedLime">
                 <label class="custom-control-label" for="slakedLimeCheck"></label>
               </div>
             </div>
             <div class="col text-center">
               <div class="custom-control custom-checkbox">
-                <input id="bakingSodaCheck" type="checkbox" class="custom-control-input" formControlName="showBakingSoda" (change)="calculateSpargeAddition('bakingSoda')">
+                <input id="bakingSodaCheck" type="checkbox" class="custom-control-input" formControlName="showBakingSoda">
                 <label class="custom-control-label" for="bakingSodaCheck"></label>
               </div>
             </div>
             <div class="col text-center">
               <div class="custom-control custom-checkbox">
-                <input id="chalkCheck" type="checkbox" class="custom-control-input" formControlName="showChalk" (change)="calculateSpargeAddition('chalk')">
+                <input id="chalkCheck" type="checkbox" class="custom-control-input" formControlName="showChalk">
                 <label class="custom-control-label" for="chalkCheck"></label>
               </div>
             </div>
@@ -245,13 +245,13 @@
               Sparge water (g)
             </div>
             <div class="col text-center">
-              <input type="number" formControlName="slakedLime" class="form-control text-center" [readOnly]="slakedLime" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+              <input type="number" formControlName="slakedLime" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
             </div>
             <div class="col text-center">
-              <input type="number" formControlName="bakingSoda" class="form-control text-center" [readOnly]="bakingSoda" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+              <input type="number" formControlName="bakingSoda" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
             </div>
             <div class="col text-center">
-              <input type="number" formControlName="chalk" class="form-control text-center" [readOnly]="chalk" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+              <input type="number" formControlName="chalk" class="form-control text-center" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
             </div>
           </div>
         </div>
@@ -272,7 +272,6 @@
         <button (click)="onNext()" type="button" class="btn btn-outline-dark mr-2">
           Next <span class="fas fa-angle-double-right"></span>
         </button>
-        <button type="submit" class="btn btn-outline-success mr-2">Save</button>
       </div>
     </div>
   </form>

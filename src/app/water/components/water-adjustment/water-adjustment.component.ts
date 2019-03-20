@@ -5,11 +5,7 @@ import { Store } from '@ngxs/store';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { AcidMalt, DecreasePh, IncreasePh, WaterAdjustment } from '../../../state/water.interfaces';
-import {
-  AddWaterAdjustment, CalculateSpargeBakingSodaAddition,
-  CalculateSpargeCalciumChlorideAddition, CalculateSpargeChalkAddition, CalculateSpargeEpsomSaltAddition,
-  CalculateSpargeGypsumAddition, CalculateSpargeSlakedLimeAddition
-} from '../../../state/water.actions';
+import { AddWaterAdjustment } from '../../../state/water.actions';
 
 @Component({
   selector: 'app-water-adjustment',
@@ -35,49 +31,10 @@ export class WaterAdjustmentComponent implements OnInit, OnDestroy {
     this.refreshData();
   }
 
-  calculateSpargeAddition(field: string): boolean {
-    switch (field) {
-      case 'gypsum':
-        const showGypsum = this.getFormValue('decreaseSaltsShowInput', 'showGypsum').value;
-        const gypsumAddition = this.getFormValue('decreasePhSaltsMash', 'gypsum').value;
-        this.store.dispatch(new CalculateSpargeGypsumAddition(gypsumAddition, showGypsum));
-        this.refreshData();
-        return;
-      case 'calciumChloride':
-        const showCalciumChloride = this.getFormValue('decreaseSaltsShowInput', 'showCalciumChloride').value;
-        const calciumChlorideAddition = this.getFormValue('decreasePhSaltsMash', 'calciumChloride').value;
-        this.store.dispatch(new CalculateSpargeCalciumChlorideAddition(calciumChlorideAddition, showCalciumChloride));
-        this.refreshData();
-        return;
-      case 'epsomSalt':
-        const showEpsomSalt = this.getFormValue('decreaseSaltsShowInput', 'showEpsomSalt').value;
-        const epsomSaltAddition = this.getFormValue('decreasePhSaltsMash', 'epsomSalt').value;
-        this.store.dispatch(new CalculateSpargeEpsomSaltAddition(epsomSaltAddition, showEpsomSalt));
-        this.refreshData();
-        return;
-      case 'slakedLime':
-        const showSlakedLime = this.getFormValue('increaseSaltsShowInput', 'showSlakedLime').value;
-        const slakedLimeAddition = this.getFormValue('increasePhSaltsMash', 'slakedLime').value;
-        this.store.dispatch(new CalculateSpargeSlakedLimeAddition(slakedLimeAddition, showSlakedLime));
-        this.refreshData();
-        return;
-      case 'bakingSoda':
-        const showBakingSoda = this.getFormValue('increaseSaltsShowInput', 'showBakingSoda').value;
-        const bakingSodaAddition = this.getFormValue('increasePhSaltsMash', 'bakingSoda').value;
-        this.store.dispatch(new CalculateSpargeBakingSodaAddition(bakingSodaAddition, showBakingSoda));
-        this.refreshData();
-        return;
-      case 'chalk':
-        const showChalk = this.getFormValue('increaseSaltsShowInput', 'showChalk').value;
-        const chalkAddition = this.getFormValue('increasePhSaltsMash', 'chalk').value;
-        this.store.dispatch(new CalculateSpargeChalkAddition(chalkAddition, showChalk));
-        this.refreshData();
-        return;
-    }
-  }
-
-  onSubmit() {
+  onChange() {
     this.storeWaterAdjustment();
+    this.storeWaterAdjustment(); // should be refactored
+    this.refreshData();
   }
 
   onNext() {

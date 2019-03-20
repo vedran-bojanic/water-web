@@ -2,15 +2,7 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import {
   AddGrainBill,
   AddWaterAdjustment,
-  AddWaterReport,
-  CalculateSpargeBakingSodaAddition,
-  CalculateSpargeCalciumChlorideAddition,
-  CalculateSpargeChalkAddition,
-  CalculateSpargeEpsomSaltAddition,
-  CalculateSpargeGypsumAddition,
-  CalculateSpargeSlakedLimeAddition,
-  SetAdjustmentSummary,
-  SetMashPh
+  AddWaterReport
 } from './water.actions';
 import { WaterStateModel } from './water-state.model';
 import { AdjustmentSummary, GrainBill, MashPh, WaterAdjustment, WaterReport } from './water.interfaces';
@@ -245,11 +237,56 @@ export class WaterState {
     const residualAlkalinity = this.residualAlkalinity(effectiveAlkalinity, state.adjustmentSummary);
     const chloride = this.chlorideMashWater(state.waterReport, action.waterAdjustment);
     const sulfate = this.sulfateMashWater(state.waterReport, action.waterAdjustment);
+    const mashVolume = state.waterReport.mashVolume;
+    const spargeVolume = state.waterReport.spargeVolume;
+
     ctx.setState({
       ...state,
-      waterAdjustment: action.waterAdjustment,
+      waterAdjustment: {
+        ...state.waterAdjustment,
+        decreasePhSaltsMash: {
+          ...state.waterAdjustment.decreasePhSaltsMash,
+          gypsum: action.waterAdjustment.decreasePhSaltsMash.gypsum,
+          calciumChloride: action.waterAdjustment.decreasePhSaltsMash.calciumChloride,
+          epsomSalt: action.waterAdjustment.decreasePhSaltsMash.epsomSalt
+        },
+        decreasePhSaltsSparge: {
+          ...state.waterAdjustment.decreasePhSaltsSparge,
+          gypsum: action.waterAdjustment.decreasePhSaltsSparge.showGypsum ?
+            action.waterAdjustment.decreasePhSaltsSparge.gypsum / mashVolume * spargeVolume : 0,
+          calciumChloride: action.waterAdjustment.decreasePhSaltsSparge.showCalciumChloride ?
+            action.waterAdjustment.decreasePhSaltsSparge.calciumChloride / mashVolume * spargeVolume : 0,
+          epsomSalt: action.waterAdjustment.decreasePhSaltsSparge.showEpsomSalt ?
+            action.waterAdjustment.decreasePhSaltsSparge.epsomSalt / mashVolume * spargeVolume : 0,
+          showGypsum: action.waterAdjustment.decreasePhSaltsSparge.showGypsum,
+          showCalciumChloride: action.waterAdjustment.decreasePhSaltsSparge.showCalciumChloride,
+          showEpsomSalt: action.waterAdjustment.decreasePhSaltsSparge.showEpsomSalt
+        },
+        decreasePhAcid: {
+          acidulatedMalt: action.waterAdjustment.decreasePhAcid.acidulatedMalt,
+          lacticAcid: action.waterAdjustment.decreasePhAcid.lacticAcid
+        },
+        increasePhSaltsMash: {
+          ...state.waterAdjustment.increasePhSaltsMash,
+          slakedLime: action.waterAdjustment.increasePhSaltsMash.slakedLime,
+          bakingSoda: action.waterAdjustment.increasePhSaltsMash.bakingSoda,
+          chalk: action.waterAdjustment.increasePhSaltsMash.chalk
+        },
+        increasePhSaltsSparge: {
+          ...state.waterAdjustment.increasePhSaltsSparge,
+          slakedLime: action.waterAdjustment.increasePhSaltsSparge.showSlakedLime ?
+            action.waterAdjustment.increasePhSaltsSparge.slakedLime / mashVolume * spargeVolume : 0,
+          bakingSoda: action.waterAdjustment.increasePhSaltsSparge.showBakingSoda ?
+            action.waterAdjustment.increasePhSaltsSparge.bakingSoda / mashVolume * spargeVolume : 0,
+          chalk: action.waterAdjustment.increasePhSaltsSparge.showChalk ?
+            action.waterAdjustment.increasePhSaltsSparge.chalk / mashVolume * spargeVolume : 0,
+          showSlakedLime: action.waterAdjustment.increasePhSaltsSparge.showSlakedLime,
+          showBakingSoda: action.waterAdjustment.increasePhSaltsSparge.showBakingSoda,
+          showChalk: action.waterAdjustment.increasePhSaltsSparge.showChalk
+        }
+      },
       mashPh: {
-        ...state.mashPh,
+        pH: this.mashPh(state.grainBill, state.waterReport, state.mashPh),
         effectiveAlkalinity: effectiveAlkalinity,
         residualAlkalinity: residualAlkalinity
       },
@@ -267,162 +304,12 @@ export class WaterState {
     });
   }
 
-  @Action(CalculateSpargeGypsumAddition)
-  calculateSpargeAddition(ctx: StateContext<WaterStateModel>, action: CalculateSpargeGypsumAddition) {
-    const state = ctx.getState();
-    const mashVolume = state.waterReport.mashVolume;
-    const spargeVolume = state.waterReport.spargeVolume;
-    ctx.setState({
-      ...state,
-      waterAdjustment: {
-        ...state.waterAdjustment,
-        decreasePhSaltsMash: {
-          ...state.waterAdjustment.decreasePhSaltsMash,
-          gypsum: action.gypsum
-        },
-        decreasePhSaltsSparge: {
-          ...state.waterAdjustment.decreasePhSaltsSparge,
-          gypsum: action.showGypsum ? action.gypsum / mashVolume * spargeVolume : 0,
-          showGypsum: action.showGypsum
-        }
-      }
-    });
-  }
-
-  @Action(CalculateSpargeCalciumChlorideAddition)
-  calculateSpargeCalciumChlorideAddition(ctx: StateContext<WaterStateModel>, action: CalculateSpargeCalciumChlorideAddition) {
-    const state = ctx.getState();
-    const mashVolume = state.waterReport.mashVolume;
-    const spargeVolume = state.waterReport.spargeVolume;
-    ctx.setState({
-      ...state,
-      waterAdjustment: {
-        ...state.waterAdjustment,
-        decreasePhSaltsMash: {
-          ...state.waterAdjustment.decreasePhSaltsMash,
-          calciumChloride: action.calciumChloride
-        },
-        decreasePhSaltsSparge: {
-          ...state.waterAdjustment.decreasePhSaltsSparge,
-          calciumChloride: action.showCalciumChloride ? action.calciumChloride / mashVolume * spargeVolume : 0,
-          showCalciumChloride: action.showCalciumChloride
-        }
-      }
-    });
-  }
-
-  @Action(CalculateSpargeEpsomSaltAddition)
-  calculateSpargeEpsomSaltAddition(ctx: StateContext<WaterStateModel>, action: CalculateSpargeEpsomSaltAddition) {
-    const state = ctx.getState();
-    const mashVolume = state.waterReport.mashVolume;
-    const spargeVolume = state.waterReport.spargeVolume;
-    ctx.setState({
-      ...state,
-      waterAdjustment: {
-        ...state.waterAdjustment,
-        decreasePhSaltsMash: {
-          ...state.waterAdjustment.decreasePhSaltsMash,
-          epsomSalt: action.epsomSalt
-        },
-        decreasePhSaltsSparge: {
-          ...state.waterAdjustment.decreasePhSaltsSparge,
-          epsomSalt: action.showEpsomSalt ? action.epsomSalt / mashVolume * spargeVolume : 0,
-          showEpsomSalt: action.showEpsomSalt
-        }
-      }
-    });
-  }
-
-  @Action(CalculateSpargeSlakedLimeAddition)
-  calculateSpargeSlakedLimeAddition(ctx: StateContext<WaterStateModel>, action: CalculateSpargeSlakedLimeAddition) {
-    const state = ctx.getState();
-    const mashVolume = state.waterReport.mashVolume;
-    const spargeVolume = state.waterReport.spargeVolume;
-    ctx.setState({
-      ...state,
-      waterAdjustment: {
-        ...state.waterAdjustment,
-        increasePhSaltsMash: {
-          ...state.waterAdjustment.increasePhSaltsMash,
-          slakedLime: action.slakedLime
-        },
-        increasePhSaltsSparge: {
-          ...state.waterAdjustment.increasePhSaltsSparge,
-          slakedLime: action.showSlakedLime ? action.slakedLime / mashVolume * spargeVolume : 0,
-          showSlakedLime: action.showSlakedLime
-        }
-      }
-    });
-  }
-
-  @Action(CalculateSpargeBakingSodaAddition)
-  calculateSpargeBakingSodaAddition(ctx: StateContext<WaterStateModel>, action: CalculateSpargeBakingSodaAddition) {
-    const state = ctx.getState();
-    const mashVolume = state.waterReport.mashVolume;
-    const spargeVolume = state.waterReport.spargeVolume;
-    ctx.setState({
-      ...state,
-      waterAdjustment: {
-        ...state.waterAdjustment,
-        increasePhSaltsMash: {
-          ...state.waterAdjustment.increasePhSaltsMash,
-          bakingSoda: action.bakingSoda
-        },
-        increasePhSaltsSparge: {
-          ...state.waterAdjustment.increasePhSaltsSparge,
-          bakingSoda: action.showBakingSoda ? action.bakingSoda / mashVolume * spargeVolume : 0,
-          showBakingSoda: action.showBakingSoda
-        }
-      }
-    });
-  }
-
-  @Action(CalculateSpargeChalkAddition)
-  calculateSpargeChalkAddition(ctx: StateContext<WaterStateModel>, action: CalculateSpargeChalkAddition) {
-    const state = ctx.getState();
-    const mashVolume = state.waterReport.mashVolume;
-    const spargeVolume = state.waterReport.spargeVolume;
-    ctx.setState({
-      ...state,
-      waterAdjustment: {
-        ...state.waterAdjustment,
-        increasePhSaltsMash: {
-          ...state.waterAdjustment.increasePhSaltsMash,
-          chalk: action.chalk
-        },
-        increasePhSaltsSparge: {
-          ...state.waterAdjustment.increasePhSaltsSparge,
-          chalk: action.showChalk ? action.chalk / mashVolume * spargeVolume : 0,
-          showChalk: action.showChalk
-        }
-      }
-    });
-  }
-
-  @Action(SetMashPh)
-  setMashPh(ctx: StateContext<WaterStateModel>, action: SetMashPh) {
-    const state = ctx.getState();
-    ctx.setState({
-      ...state,
-      mashPh: action.mashPh
-    });
-  }
-
-  @Action(SetAdjustmentSummary)
-  setAdjustmentSummary(ctx: StateContext<WaterStateModel>, action: SetAdjustmentSummary) {
-    const state = ctx.getState();
-    ctx.setState({
-      ...state,
-      adjustmentSummary: action.adjustmentSummary
-    });
-  }
-
   private effectiveAlkalinity(waterReport: WaterReport, waterAdjustment: WaterAdjustment): number {
     return ((1 - waterReport.mashRoPercentage / 100) * waterReport.alkalinity) +
       ((waterAdjustment.increasePhSaltsMash.chalk * 130 +
         waterAdjustment.increasePhSaltsMash.bakingSoda * 157 -
         176.1 * waterAdjustment.decreasePhAcid.lacticAcid * 0.88 * 2 -
-        4160.4 * 0.02 * waterAdjustment.decreasePhAcid.acidulatedMalt * 2.5 +
+        4160.4 * 0.02 * (waterAdjustment.decreasePhAcid.acidulatedMalt / 28.34952) * 2.5 +
         waterAdjustment.increasePhSaltsMash.slakedLime * 357) / (waterReport.mashVolume / 3.785412));
   }
 
