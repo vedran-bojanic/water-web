@@ -453,20 +453,20 @@ export class WaterState {
 
   private magnesiumMashWater(waterReport: WaterReport, waterAdjustment: WaterAdjustment) {
     return ((1 - waterReport.mashRoPercentage / 100) * waterReport.magnesium) +
-      (waterAdjustment.decreasePhSaltsMash.epsomSalt * 24.6 /
-        waterReport.mashVolume / 3.785412);
+      ((waterAdjustment.decreasePhSaltsMash.epsomSalt * 24.6) /
+        (waterReport.mashVolume / 3.785412));
   }
 
   private sodiumMashWater(waterReport: WaterReport, waterAdjustment: WaterAdjustment) {
     return ((1 - waterReport.mashRoPercentage / 100) * waterReport.sodium) +
-      (waterAdjustment.increasePhSaltsMash.bakingSoda * 72.3 /
-        waterReport.mashVolume / 3.785412);
+      ((waterAdjustment.increasePhSaltsMash.bakingSoda * 72.3) /
+        (waterReport.mashVolume / 3.785412));
   }
 
   private chlorideMashWater(waterReport: WaterReport, waterAdjustment: WaterAdjustment) {
     return ((1 - waterReport.mashRoPercentage / 100) * waterReport.chloride) +
-      (waterAdjustment.decreasePhSaltsMash.calciumChloride * 127.47 /
-        waterReport.mashVolume / 3.785412);
+      ((waterAdjustment.decreasePhSaltsMash.calciumChloride * 127.47) /
+        (waterReport.mashVolume / 3.785412));
   }
 
   private sulfateMashWater(waterReport: WaterReport, waterAdjustment: WaterAdjustment) {
