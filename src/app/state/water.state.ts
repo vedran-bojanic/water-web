@@ -173,8 +173,10 @@ export class WaterState {
     const state = ctx.getState();
     const effectiveAlkalinity = this.effectiveAlkalinity(action.waterReport, state.waterAdjustment);
     const residualAlkalinity = this.residualAlkalinity(effectiveAlkalinity, state.adjustmentSummary);
-    const chloride = this.chlorideMashWater(action.waterReport, state.waterAdjustment);
-    const sulfate = this.sulfateMashWater(action.waterReport, state.waterAdjustment);
+    const mashChloride = this.chlorideMashWater(action.waterReport, state.waterAdjustment);
+    const mashSulfate = this.sulfateMashWater(action.waterReport, state.waterAdjustment);
+    const spargeChloride = this.chlorideSpargeWater(action.waterReport, state.waterAdjustment, state.adjustmentSummary);
+    const spargeSulfate = this.sulfateSpargeWater(action.waterReport, state.waterAdjustment, state.adjustmentSummary);
     const totalGrainWeight = state.grainBill.grains
       .filter(grain => grain.weight)
       .reduce((acc, grain) => acc + grain.weight, 0);
@@ -198,12 +200,17 @@ export class WaterState {
           calcium: this.calciumMashWater(action.waterReport, state.waterAdjustment),
           magnesium: this.magnesiumMashWater(action.waterReport, state.waterAdjustment),
           sodium: this.sodiumMashWater(action.waterReport, state.waterAdjustment),
-          chloride: chloride,
-          sulfate: sulfate,
-          ratio: chloride / sulfate
+          chloride: mashChloride,
+          sulfate: mashSulfate,
+          ratio: mashChloride / mashSulfate
         },
         overallWater: {
-          ...state.adjustmentSummary.overallWater
+          calcium: this.calciumSpargeWater(action.waterReport, state.waterAdjustment, state.adjustmentSummary),
+          magnesium: this.magnesiumSpargeWater(action.waterReport, state.waterAdjustment, state.adjustmentSummary),
+          sodium: this.sodiumSpargeWater(action.waterReport, state.waterAdjustment, state.adjustmentSummary),
+          chloride: spargeChloride,
+          sulfate: spargeSulfate,
+          ratio: spargeChloride / spargeSulfate
         }
       }
     });
@@ -235,8 +242,10 @@ export class WaterState {
     const state = ctx.getState();
     const effectiveAlkalinity = this.effectiveAlkalinity(state.waterReport, action.waterAdjustment);
     const residualAlkalinity = this.residualAlkalinity(effectiveAlkalinity, state.adjustmentSummary);
-    const chloride = this.chlorideMashWater(state.waterReport, action.waterAdjustment);
-    const sulfate = this.sulfateMashWater(state.waterReport, action.waterAdjustment);
+    const mashChloride = this.chlorideMashWater(state.waterReport, action.waterAdjustment);
+    const mashSulfate = this.sulfateMashWater(state.waterReport, action.waterAdjustment);
+    const spargeChloride = this.chlorideSpargeWater(state.waterReport, action.waterAdjustment, state.adjustmentSummary);
+    const spargeSulfate = this.sulfateSpargeWater(state.waterReport, action.waterAdjustment, state.adjustmentSummary);
     const mashVolume = state.waterReport.mashVolume;
     const spargeVolume = state.waterReport.spargeVolume;
 
@@ -251,13 +260,12 @@ export class WaterState {
           epsomSalt: action.waterAdjustment.decreasePhSaltsMash.epsomSalt
         },
         decreasePhSaltsSparge: {
-          ...state.waterAdjustment.decreasePhSaltsSparge,
           gypsum: action.waterAdjustment.decreasePhSaltsSparge.showGypsum ?
-            action.waterAdjustment.decreasePhSaltsSparge.gypsum / mashVolume * spargeVolume : 0,
+            action.waterAdjustment.decreasePhSaltsMash.gypsum / mashVolume * spargeVolume : 0,
           calciumChloride: action.waterAdjustment.decreasePhSaltsSparge.showCalciumChloride ?
-            action.waterAdjustment.decreasePhSaltsSparge.calciumChloride / mashVolume * spargeVolume : 0,
+            action.waterAdjustment.decreasePhSaltsMash.calciumChloride / mashVolume * spargeVolume : 0,
           epsomSalt: action.waterAdjustment.decreasePhSaltsSparge.showEpsomSalt ?
-            action.waterAdjustment.decreasePhSaltsSparge.epsomSalt / mashVolume * spargeVolume : 0,
+            action.waterAdjustment.decreasePhSaltsMash.epsomSalt / mashVolume * spargeVolume : 0,
           showGypsum: action.waterAdjustment.decreasePhSaltsSparge.showGypsum,
           showCalciumChloride: action.waterAdjustment.decreasePhSaltsSparge.showCalciumChloride,
           showEpsomSalt: action.waterAdjustment.decreasePhSaltsSparge.showEpsomSalt
@@ -273,13 +281,12 @@ export class WaterState {
           chalk: action.waterAdjustment.increasePhSaltsMash.chalk
         },
         increasePhSaltsSparge: {
-          ...state.waterAdjustment.increasePhSaltsSparge,
           slakedLime: action.waterAdjustment.increasePhSaltsSparge.showSlakedLime ?
-            action.waterAdjustment.increasePhSaltsSparge.slakedLime / mashVolume * spargeVolume : 0,
+            action.waterAdjustment.increasePhSaltsMash.slakedLime / mashVolume * spargeVolume : 0,
           bakingSoda: action.waterAdjustment.increasePhSaltsSparge.showBakingSoda ?
-            action.waterAdjustment.increasePhSaltsSparge.bakingSoda / mashVolume * spargeVolume : 0,
+            action.waterAdjustment.increasePhSaltsMash.bakingSoda / mashVolume * spargeVolume : 0,
           chalk: action.waterAdjustment.increasePhSaltsSparge.showChalk ?
-            action.waterAdjustment.increasePhSaltsSparge.chalk / mashVolume * spargeVolume : 0,
+            action.waterAdjustment.increasePhSaltsMash.chalk / mashVolume * spargeVolume : 0,
           showSlakedLime: action.waterAdjustment.increasePhSaltsSparge.showSlakedLime,
           showBakingSoda: action.waterAdjustment.increasePhSaltsSparge.showBakingSoda,
           showChalk: action.waterAdjustment.increasePhSaltsSparge.showChalk
@@ -291,14 +298,21 @@ export class WaterState {
         residualAlkalinity: residualAlkalinity
       },
       adjustmentSummary: {
-        ...state.adjustmentSummary,
         mashWater: {
           calcium: this.calciumMashWater(state.waterReport, action.waterAdjustment),
           magnesium: this.magnesiumMashWater(state.waterReport, action.waterAdjustment),
           sodium: this.sodiumMashWater(state.waterReport, action.waterAdjustment),
-          chloride: chloride,
-          sulfate: sulfate,
-          ratio: chloride / sulfate
+          chloride: mashChloride,
+          sulfate: mashSulfate,
+          ratio: mashChloride / mashSulfate
+        },
+        overallWater: {
+          calcium: this.calciumSpargeWater(state.waterReport, action.waterAdjustment, state.adjustmentSummary),
+          magnesium: this.magnesiumSpargeWater(state.waterReport, action.waterAdjustment, state.adjustmentSummary),
+          sodium: this.sodiumSpargeWater(state.waterReport, action.waterAdjustment, state.adjustmentSummary),
+          chloride: spargeChloride,
+          sulfate: spargeSulfate,
+          ratio: spargeChloride / spargeSulfate
         }
       }
     });
@@ -338,28 +352,86 @@ export class WaterState {
         (waterReport.mashVolume / 3.785412));
   }
 
-  private magnesiumMashWater(waterReport: WaterReport, waterAdjustment: WaterAdjustment) {
+  private magnesiumMashWater(waterReport: WaterReport, waterAdjustment: WaterAdjustment): number {
     return ((1 - waterReport.mashRoPercentage / 100) * waterReport.magnesium) +
       ((waterAdjustment.decreasePhSaltsMash.epsomSalt * 24.6) /
         (waterReport.mashVolume / 3.785412));
   }
 
-  private sodiumMashWater(waterReport: WaterReport, waterAdjustment: WaterAdjustment) {
+  private sodiumMashWater(waterReport: WaterReport, waterAdjustment: WaterAdjustment): number {
     return ((1 - waterReport.mashRoPercentage / 100) * waterReport.sodium) +
       ((waterAdjustment.increasePhSaltsMash.bakingSoda * 72.3) /
         (waterReport.mashVolume / 3.785412));
   }
 
-  private chlorideMashWater(waterReport: WaterReport, waterAdjustment: WaterAdjustment) {
+  private chlorideMashWater(waterReport: WaterReport, waterAdjustment: WaterAdjustment): number {
     return ((1 - waterReport.mashRoPercentage / 100) * waterReport.chloride) +
       ((waterAdjustment.decreasePhSaltsMash.calciumChloride * 127.47) /
         (waterReport.mashVolume / 3.785412));
   }
 
-  private sulfateMashWater(waterReport: WaterReport, waterAdjustment: WaterAdjustment) {
+  private sulfateMashWater(waterReport: WaterReport, waterAdjustment: WaterAdjustment): number {
     return ((1 - waterReport.mashRoPercentage / 100) * waterReport.sulfate) +
       ((waterAdjustment.decreasePhSaltsMash.gypsum * 147.4 +
         waterAdjustment.decreasePhSaltsMash.epsomSalt * 103) /
         (waterReport.mashVolume / 3.785412));
+  }
+
+  private calciumSpargeWater(waterReport: WaterReport, waterAdjustment: WaterAdjustment, adjustmentSummary: AdjustmentSummary): number {
+    if (waterReport.spargeVolume === 0) {
+      return adjustmentSummary.mashWater.calcium;
+    } else {
+      return ((1 - ((waterReport.mashRoPercentage / 100 * waterReport.mashVolume / 3.785412) + (waterReport.spargeRoPercentage / 100 * waterReport.spargeVolume / 3.785412)) /
+        (waterReport.mashVolume / 3.785412 + waterReport.spargeVolume / 3.785412)) * waterReport.calcium) +
+        ((waterAdjustment.increasePhSaltsMash.chalk + waterAdjustment.increasePhSaltsSparge.chalk) * 105.89 +
+          ((waterAdjustment.decreasePhSaltsMash.gypsum + waterAdjustment.decreasePhSaltsSparge.gypsum) * 60) +
+          (waterAdjustment.decreasePhSaltsMash.calciumChloride + waterAdjustment.decreasePhSaltsSparge.calciumChloride) * 72 +
+          (waterAdjustment.increasePhSaltsMash.slakedLime + waterAdjustment.increasePhSaltsSparge.slakedLime) * 143) /
+        (waterReport.mashVolume / 3.785412 + waterReport.spargeVolume / 100 * 3.785412);
+    }
+  }
+
+  private magnesiumSpargeWater(waterReport: WaterReport, waterAdjustment: WaterAdjustment, adjustmentSummary: AdjustmentSummary): number {
+    if (waterReport.spargeVolume === 0) {
+      return adjustmentSummary.mashWater.magnesium;
+    } else {
+      return ((1 - ((waterReport.mashRoPercentage / 100 * waterReport.mashVolume / 3.785412) + (waterReport.spargeRoPercentage / 100 * waterReport.spargeVolume / 3.785412)) /
+        (waterReport.mashVolume / 3.785412 + waterReport.spargeVolume / 3.785412)) * waterReport.magnesium) +
+        ((waterAdjustment.decreasePhSaltsMash.epsomSalt + waterAdjustment.decreasePhSaltsMash.epsomSalt) * 24.6) /
+        (waterReport.mashVolume / 3.785412 + waterReport.spargeVolume / 100 * 3.785412);
+    }
+  }
+
+  private sodiumSpargeWater(waterReport: WaterReport, waterAdjustment: WaterAdjustment, adjustmentSummary: AdjustmentSummary): number {
+    if (waterReport.spargeVolume === 0) {
+      return adjustmentSummary.mashWater.sodium;
+    } else {
+      return ((1 - ((waterReport.mashRoPercentage / 100 * waterReport.mashVolume / 3.785412) + (waterReport.spargeRoPercentage / 100 * waterReport.spargeVolume / 3.785412)) /
+        (waterReport.mashVolume / 3.785412 + waterReport.spargeVolume / 3.785412)) * waterReport.sodium) +
+        ((waterAdjustment.increasePhSaltsMash.bakingSoda + waterAdjustment.increasePhSaltsSparge.bakingSoda) * 72.3) /
+        (waterReport.mashVolume / 3.785412 + waterReport.spargeVolume / 100 * 3.785412);
+    }
+  }
+
+  private chlorideSpargeWater(waterReport: WaterReport, waterAdjustment: WaterAdjustment, adjustmentSummary: AdjustmentSummary): number {
+    if (waterReport.spargeVolume === 0) {
+      return adjustmentSummary.mashWater.chloride;
+    } else {
+      return ((1 - ((waterReport.mashRoPercentage / 100 * waterReport.mashVolume / 3.785412) + (waterReport.spargeRoPercentage / 100 * waterReport.spargeVolume / 3.785412)) /
+        (waterReport.mashVolume / 3.785412 + waterReport.spargeVolume / 3.785412)) * waterReport.chloride) +
+        ((waterAdjustment.decreasePhSaltsMash.calciumChloride + waterAdjustment.decreasePhSaltsSparge.calciumChloride) * 127.47) /
+        (waterReport.mashVolume / 3.785412 + waterReport.spargeVolume / 100 * 3.785412);
+    }
+  }
+
+  private sulfateSpargeWater(waterReport: WaterReport, waterAdjustment: WaterAdjustment, adjustmentSummary: AdjustmentSummary): number {
+    if (waterReport.spargeVolume === 0) {
+      return adjustmentSummary.mashWater.sulfate;
+    } else {
+      return ((1 - ((waterReport.mashRoPercentage / 100 * waterReport.mashVolume / 3.785412) + (waterReport.spargeRoPercentage / 100 * waterReport.spargeVolume / 3.785412)) /
+        (waterReport.mashVolume / 3.785412 + waterReport.spargeVolume / 3.785412)) * waterReport.sulfate) +
+        ((waterAdjustment.decreasePhSaltsMash.gypsum + waterAdjustment.decreasePhSaltsSparge.gypsum) * 103) /
+        (waterReport.mashVolume / 3.785412 + waterReport.spargeVolume / 100 * 3.785412);
+    }
   }
 }
