@@ -384,10 +384,10 @@ export class WaterState {
       return ((1 - ((waterReport.mashRoPercentage / 100 * waterReport.mashVolume / 3.785412) + (waterReport.spargeRoPercentage / 100 * waterReport.spargeVolume / 3.785412)) /
         (waterReport.mashVolume / 3.785412 + waterReport.spargeVolume / 3.785412)) * waterReport.calcium) +
         ((waterAdjustment.increasePhSaltsMash.chalk + waterAdjustment.increasePhSaltsSparge.chalk) * 105.89 +
-          ((waterAdjustment.decreasePhSaltsMash.gypsum + waterAdjustment.decreasePhSaltsSparge.gypsum) * 60) +
+          (waterAdjustment.decreasePhSaltsMash.gypsum + waterAdjustment.decreasePhSaltsSparge.gypsum) * 60 +
           (waterAdjustment.decreasePhSaltsMash.calciumChloride + waterAdjustment.decreasePhSaltsSparge.calciumChloride) * 72 +
           (waterAdjustment.increasePhSaltsMash.slakedLime + waterAdjustment.increasePhSaltsSparge.slakedLime) * 143) /
-        (waterReport.mashVolume / 3.785412 + waterReport.spargeVolume / 100 * 3.785412);
+        ((waterReport.mashVolume / 3.785412) + (waterReport.spargeVolume / 3.785412));
     }
   }
 
@@ -397,8 +397,8 @@ export class WaterState {
     } else {
       return ((1 - ((waterReport.mashRoPercentage / 100 * waterReport.mashVolume / 3.785412) + (waterReport.spargeRoPercentage / 100 * waterReport.spargeVolume / 3.785412)) /
         (waterReport.mashVolume / 3.785412 + waterReport.spargeVolume / 3.785412)) * waterReport.magnesium) +
-        ((waterAdjustment.decreasePhSaltsMash.epsomSalt + waterAdjustment.decreasePhSaltsMash.epsomSalt) * 24.6) /
-        (waterReport.mashVolume / 3.785412 + waterReport.spargeVolume / 100 * 3.785412);
+        ((waterAdjustment.decreasePhSaltsMash.epsomSalt + waterAdjustment.decreasePhSaltsSparge.epsomSalt) * 24.6) /
+        ((waterReport.mashVolume / 3.785412) + (waterReport.spargeVolume / 3.785412));
     }
   }
 
@@ -409,7 +409,7 @@ export class WaterState {
       return ((1 - ((waterReport.mashRoPercentage / 100 * waterReport.mashVolume / 3.785412) + (waterReport.spargeRoPercentage / 100 * waterReport.spargeVolume / 3.785412)) /
         (waterReport.mashVolume / 3.785412 + waterReport.spargeVolume / 3.785412)) * waterReport.sodium) +
         ((waterAdjustment.increasePhSaltsMash.bakingSoda + waterAdjustment.increasePhSaltsSparge.bakingSoda) * 72.3) /
-        (waterReport.mashVolume / 3.785412 + waterReport.spargeVolume / 100 * 3.785412);
+        ((waterReport.mashVolume / 3.785412) + (waterReport.spargeVolume / 3.785412));
     }
   }
 
@@ -420,7 +420,7 @@ export class WaterState {
       return ((1 - ((waterReport.mashRoPercentage / 100 * waterReport.mashVolume / 3.785412) + (waterReport.spargeRoPercentage / 100 * waterReport.spargeVolume / 3.785412)) /
         (waterReport.mashVolume / 3.785412 + waterReport.spargeVolume / 3.785412)) * waterReport.chloride) +
         ((waterAdjustment.decreasePhSaltsMash.calciumChloride + waterAdjustment.decreasePhSaltsSparge.calciumChloride) * 127.47) /
-        (waterReport.mashVolume / 3.785412 + waterReport.spargeVolume / 100 * 3.785412);
+        ((waterReport.mashVolume / 3.785412) + (waterReport.spargeVolume / 3.785412));
     }
   }
 
@@ -430,8 +430,9 @@ export class WaterState {
     } else {
       return ((1 - ((waterReport.mashRoPercentage / 100 * waterReport.mashVolume / 3.785412) + (waterReport.spargeRoPercentage / 100 * waterReport.spargeVolume / 3.785412)) /
         (waterReport.mashVolume / 3.785412 + waterReport.spargeVolume / 3.785412)) * waterReport.sulfate) +
-        ((waterAdjustment.decreasePhSaltsMash.gypsum + waterAdjustment.decreasePhSaltsSparge.gypsum) * 103) /
-        (waterReport.mashVolume / 3.785412 + waterReport.spargeVolume / 100 * 3.785412);
+        ((waterAdjustment.decreasePhSaltsMash.gypsum + waterAdjustment.decreasePhSaltsSparge.gypsum) * 147.4 +
+          (waterAdjustment.decreasePhSaltsMash.epsomSalt + waterAdjustment.decreasePhSaltsSparge.epsomSalt) * 103) /
+        ((waterReport.mashVolume / 3.785412) + (waterReport.spargeVolume / 3.785412));
     }
   }
 }
