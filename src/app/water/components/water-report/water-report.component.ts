@@ -4,8 +4,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { WaterReport } from '../../../state/water.interfaces';
-import { AddWaterReport } from '../../../state/water.actions';
+import { BeerStyle, WaterReport } from '../../../state/water.interfaces';
+import { AddBeerStyle, AddWaterReport } from '../../../state/water.actions';
+import { WaterService } from '../../services/water.service';
 
 @Component({
   selector: 'app-water',
@@ -13,20 +14,33 @@ import { AddWaterReport } from '../../../state/water.actions';
 })
 export class WaterReportComponent implements OnInit, OnDestroy {
 
+  selectedBeerStyle: BeerStyle;
+  beerStyles: BeerStyle[];
+
   private ngUnsubscribe: Subject<any>;
   waterReportForm: FormGroup;
 
-  constructor(private router: Router, private fb: FormBuilder, private store: Store) {
+  constructor(private router: Router, private fb: FormBuilder, private store: Store, private waterService: WaterService) {
     this.ngUnsubscribe = new Subject();
     this.createForm();
   }
 
   ngOnInit() {
+    this.store.selectOnce(state => state.water.beerStyle)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((beerStyle: BeerStyle) => this.selectedBeerStyle = beerStyle);
+    this.waterService.getBeerStyles()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((beerStyles) => this.beerStyles = beerStyles);
     this.refreshData();
   }
 
   onInput() {
     this.storeWaterReport();
+  }
+
+  onBeerStyleChange() {
+    this.store.dispatch(new AddBeerStyle(this.selectedBeerStyle));
   }
 
   onNext() {

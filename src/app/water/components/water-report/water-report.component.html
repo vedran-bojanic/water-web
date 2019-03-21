@@ -1,53 +1,74 @@
 <main role="main" class="flex-shrink-0">
-  <form [formGroup]="waterReportForm">
-    <div class="container py-3">
-      <div class="row">
-        <div class="col">
-          <h4>Starting water report</h4>
+  <div class="container py-3">
+    <div class="row">
+      <div class="col">
+        <h4>Starting water report</h4>
+      </div>
+    </div>
+  </div>
+  <!-- Minerals names -->
+  <div class="container py-3">
+    <div class="row">
+      <div class="col">
+        <div class="row pb-2">
+          <div class="col-lg-4 text-left" style="width: 300px;">
+            <ng-select [items]="beerStyles"
+                       bindLabel="name"
+                       placeholder="- Select Style -"
+                       (change)="onBeerStyleChange()"
+                       [(ngModel)]="selectedBeerStyle">
+            </ng-select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col text-center">Calcium</div>
+          <div class="col text-center">Magnesium</div>
+          <div class="col text-center">Sodium</div>
+          <div class="col text-center">Chloride</div>
+          <div class="col text-center">Sulfate</div>
+          <div class="col text-center">Alkalinity</div>
+        </div>
+        <div class="row pb-2">
+          <div class="col text-center">
+            <input type="text" class="form-control text-center" value="{{ selectedBeerStyle ?  selectedBeerStyle.calciumRange : '0' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <div class="col text-center">
+            <input type="text" class="form-control text-center" value="{{ selectedBeerStyle ? selectedBeerStyle.magnesiumRange : '0' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <div class="col text-center">
+            <input type="text" class="form-control text-center" value="{{ selectedBeerStyle ? selectedBeerStyle.sodiumRange : '0' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <div class="col text-center">
+            <input type="text" class="form-control text-center" value="{{ selectedBeerStyle ? selectedBeerStyle.chlorideRange : '0' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <div class="col text-center">
+            <input type="text" class="form-control text-center" value="{{ selectedBeerStyle ? selectedBeerStyle.sulfateRange : '0' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <div class="col text-center">
+            <input type="text" class="form-control text-center" value="{{ selectedBeerStyle ? selectedBeerStyle.alkalinityRange : '0' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
         </div>
       </div>
     </div>
-    <!-- Minerals names -->
-    <div class="container py-3">
+    <hr>
+  </div>
+  <form [formGroup]="waterReportForm">
+    <div class="container">
       <div class="row">
-        <div class="col text-center">
-          Calcium
-        </div>
-        <div class="col text-center">
-          Magnesium
-        </div>
-        <div class="col text-center">
-          Sodium
-        </div>
-        <div class="col text-center">
-          Chloride
-        </div>
-        <div class="col text-center">
-          Sulfate
-        </div>
-        <div class="col text-center">
-          Alkalinity
-        </div>
+        <div class="col text-center">Calcium</div>
+        <div class="col text-center">Magnesium</div>
+        <div class="col text-center">Sodium</div>
+        <div class="col text-center">Chloride</div>
+        <div class="col text-center">Sulfate</div>
+        <div class="col text-center">Alkalinity</div>
       </div>
       <div class="row">
-        <div class="col text-center">
-          (Ca ppm)
-        </div>
-        <div class="col text-center">
-          (Mg ppm)
-        </div>
-        <div class="col text-center">
-          (Na ppm)
-        </div>
-        <div class="col text-center">
-          (Cl ppm)
-        </div>
-        <div class="col text-center">
-          (SO4 ppm)
-        </div>
-        <div class="col text-center">
-          (CaCO3 ppm)
-        </div>
+        <div class="col text-center">(Ca ppm)</div>
+        <div class="col text-center">(Mg ppm)</div>
+        <div class="col text-center">(Na ppm)</div>
+        <div class="col text-center">(Cl ppm)</div>
+        <div class="col text-center">(SO4 ppm)</div>
+        <div class="col text-center">(CaCO3 ppm)</div>
       </div>
       <!-- Minerals input fields -->
       <div class="row pt-1">

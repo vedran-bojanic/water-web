@@ -9,25 +9,21 @@
   <!-- Water Summary -->
   <div class="container py-4">
     <div class="row">
-      <div class="col-lg-10">
+      <div class="col">
         <div class="row pb-2">
           <div class="col-lg-2">Beer Style:</div>
-          <div class="col-lg-4 text-left" style="width: 300px;">
-            <ng-select [items]="beerStyles"
-                       bindLabel="name"
-                       placeholder="- Select Style -"
-                       (change)="onChange()"
-                       [(ngModel)]="selectedBeerStyle">
-            </ng-select>
+          <div class="col-lg-4">
+            <h2>{{ selectedBeerStyle ?  selectedBeerStyle.name : '' }}</h2>
           </div>
         </div>
         <div class="row pb-2">
-          <div class="col text-left">Minerals:</div>
+          <div class="col text-left"></div>
           <div class="col text-center">Calcium</div>
           <div class="col text-center">Magnesium</div>
           <div class="col text-center">Sodium</div>
           <div class="col text-center">Chloride</div>
           <div class="col text-center">Sulfate</div>
+          <div class="col text-center">Residual Alkalinity</div>
         </div>
         <div class="row pb-2">
           <div class="col text-left">Style range:</div>
@@ -45,6 +41,9 @@
           </div>
           <div class="col text-center">
             <input type="text" class="form-control text-center" value="{{ selectedBeerStyle ? selectedBeerStyle.sulfateRange : '0' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <div class="col text-center">
+            <input type="text" class="form-control text-center" value="{{ selectedBeerStyle ? selectedBeerStyle.residualAlkalinityRange : '0' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
         </div>
       </div>
