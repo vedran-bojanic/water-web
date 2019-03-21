@@ -1,5 +1,6 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import {
+  AddBeerStyle,
   AddGrainBill,
   AddWaterAdjustment,
   AddWaterReport
@@ -151,7 +152,8 @@ export const getWaterInitState = (): WaterStateModel => ({
     residualAlkalinity: 0,
     effectiveAlkalinity: 0,
     pH: 0
-  }
+  },
+  beerStyle: null
 });
 
 @State<WaterStateModel>({
@@ -316,6 +318,15 @@ export class WaterState {
           ratio: spargeChloride / spargeSulfate
         }
       }
+    });
+  }
+
+  @Action(AddBeerStyle)
+  addBeerStyle(ctx: StateContext<WaterStateModel>, action: AddBeerStyle) {
+    const state = ctx.getState();
+    ctx.setState({
+      ...state,
+      beerStyle: action.beerStyle
     });
   }
 

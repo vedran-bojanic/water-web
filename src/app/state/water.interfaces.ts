@@ -157,3 +157,17 @@ export interface Water {
   sulfate: number;
   ratio: number;
 }
+
+export interface BeerStyle {
+  id: number;
+  bjcpStyleId: string;
+  name: string;
+  calciumRange: string;
+  magnesiumRange: string;
+  sodiumRange: string;
+  chlorideRange: string;
+  sulfateRange: string;
+  alkalinityRange: string;
+  residualAlkalinityRange: string;
+  color: string;
+}

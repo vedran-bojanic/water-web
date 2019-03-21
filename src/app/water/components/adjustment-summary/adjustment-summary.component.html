@@ -10,6 +10,48 @@
   <div class="container py-4">
     <div class="row">
       <div class="col-lg-10">
+        <div class="row pb-2">
+          <div class="col-lg-2">Beer Style:</div>
+          <div class="col-lg-4 text-left" style="width: 300px;">
+            <ng-select [items]="beerStyles"
+                       bindLabel="name"
+                       placeholder="- Select Style -"
+                       (change)="onChange()"
+                       [(ngModel)]="selectedBeerStyle">
+            </ng-select>
+          </div>
+        </div>
+        <div class="row pb-2">
+          <div class="col text-left">Minerals:</div>
+          <div class="col text-center">Calcium</div>
+          <div class="col text-center">Magnesium</div>
+          <div class="col text-center">Sodium</div>
+          <div class="col text-center">Chloride</div>
+          <div class="col text-center">Sulfate</div>
+        </div>
+        <div class="row pb-2">
+          <div class="col text-left">Style range:</div>
+          <div class="col text-center">
+            <input type="text" class="form-control text-center" value="{{ selectedBeerStyle ?  selectedBeerStyle.calciumRange : '0' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <div class="col text-center">
+            <input type="text" class="form-control text-center" value="{{ selectedBeerStyle ? selectedBeerStyle.magnesiumRange : '0' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <div class="col text-center">
+            <input type="text" class="form-control text-center" value="{{ selectedBeerStyle ? selectedBeerStyle.sodiumRange : '0' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <div class="col text-center">
+            <input type="text" class="form-control text-center" value="{{ selectedBeerStyle ? selectedBeerStyle.chlorideRange : '0' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <div class="col text-center">
+            <input type="text" class="form-control text-center" value="{{ selectedBeerStyle ? selectedBeerStyle.sulfateRange : '0' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-lg-10">
         <div class="row">
           <div class="col text-center"></div>
           <div class="col text-center">Calcium</div>
@@ -27,7 +69,7 @@
           <div class="col text-center">(SO4 ppm)</div>
         </div>
         <div class="row pb-1">
-          <div class="col text-center">Mash Water:</div>
+          <div class="col text-left">Mash Water:</div>
           <div class="col text-center">
             <input type="number" class="form-control text-center" value="{{ mashWater.calcium | number : '1.0-0' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
@@ -45,7 +87,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col text-center">Mash & Sparge Water:</div>
+          <div class="col text-left">Overall Water:</div>
           <div class="col text-center">
             <input type="number" class="form-control text-center" value="{{ overallWater.calcium | number : '1.0-0' }}" readonly aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
@@ -65,6 +107,9 @@
       </div>
 
       <div class="col-lg-2">
+        <div class="row">
+          <div class="col text-center"></div>
+        </div>
         <div class="row">
           <div class="col text-center">Chloride / Sulfate</div>
         </div>
