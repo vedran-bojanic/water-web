@@ -20,12 +20,15 @@ import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { environment } from '../environments/environment';
 import { WaterState } from './state/water.state';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   imports: [
     BrowserModule,
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     RouterModule,
     WaterModule,

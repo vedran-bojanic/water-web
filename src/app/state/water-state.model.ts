@@ -1,6 +1,6 @@
 import { GrainDropdown } from './water.interfaces';
 
-export class WaterStateModel {
+export interface WaterStateModel {
   waterId: number;
   waterReport: {
     calcium: number,
