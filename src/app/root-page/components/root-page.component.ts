@@ -13,18 +13,15 @@ export class RootPageComponent implements OnInit {
 
   private ngUnsubscribe: Subject<any>;
   waters: WaterStateModel[];
-  selectedWater: WaterStateModel;
 
-  constructor(private store: Store, private waterService: WaterService) { }
+  constructor(private store: Store, private waterService: WaterService) {
+    this.ngUnsubscribe = new Subject();
+  }
 
   ngOnInit() {
     this.waterService.getAllWaters()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((waters) => this.waters = waters);
-  }
-
-  onWaterChange() {
-    this.store.dispatch(null);
   }
 
 }

@@ -19,3 +19,8 @@ export class AddBeerStyle {
   public static readonly type = '[Water] AddBeerStyle';
   constructor(public beerStyle: BeerStyle) { }
 }
+
+export class AddWaterName {
+  public static readonly type = '[Water] AddWaterName';
+  constructor(public name: string) { }
+}

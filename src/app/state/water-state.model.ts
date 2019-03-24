@@ -1,7 +1,9 @@
 import { GrainDropdown } from './water.interfaces';
 
 export interface WaterStateModel {
-  waterId: number;
+  id: number;
+  name: string;
+  beerStyleId: number;
   waterReport: {
     calcium: number,
     magnesium: number,

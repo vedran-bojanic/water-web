@@ -1,15 +1,13 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import {
-  AddBeerStyle,
-  AddGrainBill,
-  AddWaterAdjustment,
-  AddWaterReport
-} from './water.actions';
+import { AddBeerStyle, AddGrainBill, AddWaterAdjustment, AddWaterName, AddWaterReport } from './water.actions';
 import { WaterStateModel } from './water-state.model';
 import { AdjustmentSummary, GrainBill, MashPh, WaterAdjustment, WaterReport } from './water.interfaces';
+import { HttpClient } from '@angular/common/http';
 
 export const getWaterInitState = (): WaterStateModel => ({
-  waterId: 0,
+  id: 0,
+  name: '',
+  beerStyleId: null,
   waterReport: {
     calcium: 0,
     magnesium: 0,
@@ -162,7 +160,7 @@ export const getWaterInitState = (): WaterStateModel => ({
 })
 export class WaterState {
 
-  constructor() {
+  constructor(private http: HttpClient) {
   }
 
   @Selector()
@@ -326,7 +324,17 @@ export class WaterState {
     const state = ctx.getState();
     ctx.setState({
       ...state,
+      beerStyleId: action.beerStyle.id,
       beerStyle: action.beerStyle
+    });
+  }
+
+  @Action(AddWaterName)
+  addWaterName(ctx: StateContext<WaterStateModel>, action: AddWaterName) {
+    const state = ctx.getState();
+    ctx.setState({
+      ...state,
+      name: action.name
     });
   }
 

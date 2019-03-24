@@ -5,6 +5,8 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AdjustmentSummary, BeerStyle, Water } from '../../../state/water.interfaces';
 import { WaterService } from '../../services/water.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { AddWaterName } from '../../../state/water.actions';
 
 @Component({
   selector: 'app-adjustment-summary',
@@ -16,12 +18,14 @@ export class AdjustmentSummaryComponent implements OnInit {
   mashWater: Water;
   overallWater: Water;
   selectedBeerStyle: BeerStyle;
+  waterNameForm: FormGroup;
 
-  constructor(private router: Router, private store: Store) {
+  constructor(private fb: FormBuilder, private router: Router, private store: Store, private waterService: WaterService) {
     this.ngUnsubscribe = new Subject();
   }
 
   ngOnInit() {
+    this.createForm();
     this.store.select(state => state.water.adjustmentSummary)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((as: AdjustmentSummary) => {
@@ -38,7 +42,18 @@ export class AdjustmentSummaryComponent implements OnInit {
   }
 
   onSave() {
-    alert('Water Saved!');
+    this.store.dispatch(new AddWaterName(this.waterNameForm.controls['waterName'].value))
+    this.waterService.saveWater()
+      .subscribe(
+        (response) => console.log(response),
+        (error) => console.log(error)
+    );
+  }
+
+  private createForm() {
+    this.waterNameForm = this.fb.group({
+      waterName: ['']
+    });
   }
 
   ngOnDestroy() {
