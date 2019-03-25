@@ -20,7 +20,7 @@ export class WaterService {
     this.ngUnsubscribe = new Subject();
   }
 
-  getBeerStyles(): Observable<Array<BeerStyle>> {
+  getBeerStyles(): Observable<BeerStyle[]> {
     if (this.beerStyles) {
       return of(this.beerStyles);
     }
@@ -28,7 +28,7 @@ export class WaterService {
       .pipe(tap(beerStyles => this.beerStyles = beerStyles));
   }
 
-  getAllWaters(): Observable<Array<WaterStateModel>> {
+  getAllWaters(): Observable<WaterStateModel[]> {
     if (this.waters) {
       return of(this.waters);
     }
@@ -50,5 +50,9 @@ export class WaterService {
       });
 
     return this.http.post<WaterStateModel>('/waters', this.water, httpOptions);
+  }
+
+  loadBeer(id: number): Observable<WaterStateModel> {
+    return this.http.get<WaterStateModel>('/waters/' + id);
   }
 }
