@@ -16,7 +16,7 @@ import { AddGrainBill } from '../../../state/water.actions';
 })
 export class GrainBillComponent implements OnInit, OnDestroy {
   nums = 8;
-  grainsDropdown: Grain[];
+  grainsDropdown: GrainDropdown[];
   grain: Grain;
 
   private ngUnsubscribe: Subject<any>;
@@ -33,11 +33,14 @@ export class GrainBillComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.grainsDropdown = this.grainService.getDropdownGrains();
+    this.grainService.getDropdownGrains()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((grainsDropdown) => this.grainsDropdown = grainsDropdown);
     this.refreshData();
   }
 
   onChange(grain: GrainDropdown, grainRowId: number) {
+    console.log(grain);
     if (grain) {
       this.setFormValue(grainRowId, 'pH', grain.pH);
 
@@ -74,7 +77,7 @@ export class GrainBillComponent implements OnInit, OnDestroy {
   calculatePh(grainRowId: number) {
     const grainColor = this.grainBillForm.get('grain' + grainRowId + '.color').value;
     const crystalPH = 5.22 - 0.00504 * grainColor;
-    this.setFormValue(grainRowId, 'pH', crystalPH.toFixed(2));
+    this.setFormValue(grainRowId, 'pH', crystalPH);
   }
 
   private setFormValue(grainId: number, formControlName: string, value: any): any {
