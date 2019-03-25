@@ -49,7 +49,11 @@ export class WaterService {
         this.water = water;
       });
 
-    return this.http.post<WaterStateModel>('/waters', this.water, httpOptions);
+    if (this.water.id === 0) {
+      return this.http.post<WaterStateModel>('/waters', this.water, httpOptions);
+    } else {
+      return this.http.put<WaterStateModel>('/waters/' + this.water.id, this.water, httpOptions);
+    }
   }
 
   loadBeer(id: number): Observable<WaterStateModel> {

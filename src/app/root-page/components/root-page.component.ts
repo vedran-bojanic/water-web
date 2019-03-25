@@ -4,7 +4,6 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { WaterStateModel } from '../../state/water-state.model';
 import { Store } from '@ngxs/store';
-import { Water } from '../../state/water.interfaces';
 import { AddBeerStyle, AddGrainBill, AddWaterAdjustment, AddWaterReport } from '../../state/water.actions';
 
 @Component({
