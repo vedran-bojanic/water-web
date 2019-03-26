@@ -134,15 +134,18 @@
   <div class="container py-3">
     <form [formGroup]="waterNameForm">
       <div class="row justify-content-end">
-        <button (click)="onBack()" type="button" class="btn btn-outline-danger mr-2">
+        <button (click)="onBack()" type="button" class="btn btn-outline-warning mr-2">
           <span class="fas fa-angle-double-left"></span> Back
         </button>
         <div class="col-lg-2 mr-2">
           <input type="text" formControlName="waterName" class="form-control text-left" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
         </div>
-          <button (click)="onSave()" type="button" class="btn btn-outline-success">
-            Save <span class="fas fa-save"></span>
-          </button>
+        <button (click)="onSave()" type="button" class="btn btn-outline-success mr-2">
+          Save <span class="fas fa-save"></span>
+        </button>
+        <button (click)="onDelete()" type="button" class="btn btn-outline-danger">
+          Delete <span class="far fa-trash-alt"></span>
+        </button>
       </div>
     </form>
   </div>

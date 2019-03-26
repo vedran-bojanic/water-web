@@ -1,4 +1,4 @@
-import { GrainType } from '../models/grain-type.enum';
+import { MaltType } from '../models/malt-type.enum';
 
 export const GRAINS_DB: any[] = [
   {
@@ -7,7 +7,7 @@ export const GRAINS_DB: any[] = [
     'weight': 5,
     'color': 2.5,
     'pH': 5.70,
-    'type': GrainType.BASE
+    'type': MaltType.BASE
   },
   {
     'id': 2,
@@ -15,7 +15,7 @@ export const GRAINS_DB: any[] = [
     'weight': 2,
     'color': 2,
     'pH': 5.79,
-    'type': GrainType.BASE
+    'type': MaltType.BASE
   },
   {
     'id': 3,
@@ -23,7 +23,7 @@ export const GRAINS_DB: any[] = [
     'weight': 0.5,
     'color': 10,
     'pH': 5.77,
-    'type': GrainType.BASE
+    'type': MaltType.BASE
   },
   {
     'id': 4,
@@ -31,6 +31,6 @@ export const GRAINS_DB: any[] = [
     'weight': 0.25,
     'color': 15,
     'pH': 5.12,
-    'type': GrainType.CRYSTAL
+    'type': MaltType.CRYSTAL
   }
 ]

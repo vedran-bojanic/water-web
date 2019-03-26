@@ -21,6 +21,7 @@ import { environment } from '../environments/environment';
 import { WaterState } from './state/water.state';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxsResetPluginModule } from 'ngxs-reset-plugin';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
       { developmentMode: !environment.production }
     ),
     NgxsReduxDevtoolsPluginModule.forRoot(),
-    NgxsLoggerPluginModule.forRoot()
+    NgxsLoggerPluginModule.forRoot(),
+    NgxsResetPluginModule.forRoot()
   ],
   declarations: [
     AppComponent,

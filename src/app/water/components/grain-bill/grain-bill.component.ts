@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { Grain, GrainBill, GrainDropdown } from '../../../state/water.interfaces';
+import { Grain, GrainBill, GrainType } from '../../../state/water.interfaces';
 import { AddGrainBill } from '../../../state/water.actions';
 
 @Component({
@@ -16,7 +16,7 @@ import { AddGrainBill } from '../../../state/water.actions';
 })
 export class GrainBillComponent implements OnInit, OnDestroy {
   nums = 8;
-  grainsDropdown: GrainDropdown[];
+  grainTypes: GrainType[];
   grain: Grain;
 
   private ngUnsubscribe: Subject<any>;
@@ -33,14 +33,13 @@ export class GrainBillComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.grainService.getDropdownGrains()
+    this.grainService.getGrainTypes()
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((grainsDropdown) => this.grainsDropdown = grainsDropdown);
+      .subscribe((grainTypes) => this.grainTypes = grainTypes);
     this.refreshData();
   }
 
-  onChange(grain: GrainDropdown, grainRowId: number) {
-    console.log(grain);
+  onChange(grain: GrainType, grainRowId: number) {
     if (grain) {
       this.setFormValue(grainRowId, 'pH', grain.pH);
 
@@ -69,8 +68,8 @@ export class GrainBillComponent implements OnInit, OnDestroy {
   }
 
   getGrainControl(grainId: number) {
-    if (this.grainBillForm.get('grain' + grainId + '.' + 'grainDropdown').value) {
-      return this.grainBillForm.get('grain' + grainId + '.' + 'grainDropdown').value.name;
+    if (this.grainBillForm.get('grain' + grainId + '.' + 'grainType').value) {
+      return this.grainBillForm.get('grain' + grainId + '.' + 'grainType').value.name;
     }
   }
 
@@ -94,15 +93,15 @@ export class GrainBillComponent implements OnInit, OnDestroy {
       .subscribe((grainBill: GrainBill) => {
         grainBill.grains.forEach(
           grain => {
-            this.setFormValue(grain.id, 'id', grain.id);
-            this.setFormValue(grain.id, 'grainDropdown', grain.grainDropdown);
-            this.setFormValue(grain.id, 'name', grain.name);
-            this.setFormValue(grain.id, 'weight', grain.weight ? grain.weight : '');
-            this.setFormValue(grain.id, 'color', grain.color);
-            if (grain.grainDropdown) {
-              grain.grainDropdown.name !== 'CRYSTAL' ?
-                this.setFormValue(grain.id, 'pH', grain.grainDropdown.pH) :
-                this.setFormValue(grain.id, 'pH', grain.crystalPh);
+            this.setFormValue(grain.grainPosition, 'grainPosition', grain.grainPosition);
+            this.setFormValue(grain.grainPosition, 'grainType', grain.grainType);
+            this.setFormValue(grain.grainPosition, 'name', grain.name);
+            this.setFormValue(grain.grainPosition, 'weight', grain.weight ? grain.weight : '');
+            this.setFormValue(grain.grainPosition, 'color', grain.color);
+            if (grain.grainType) {
+              grain.grainType.name !== 'CRYSTAL' ?
+                this.setFormValue(grain.grainPosition, 'pH', grain.grainType.pH) :
+                this.setFormValue(grain.grainPosition, 'pH', grain.crystalPh);
             }
           }
         );
@@ -114,64 +113,64 @@ export class GrainBillComponent implements OnInit, OnDestroy {
   private createForm() {
     this.grainBillForm = this.fb.group({
       grain1: this.fb.group({
-        id: [''],
-        grainDropdown: [null],
+        grainPosition: [1],
+        grainType: [null],
         name: [''],
         weight: [''],
         color: [''],
         pH: ['']
       }),
       grain2: this.fb.group({
-        id: [''],
-        grainDropdown: [null],
+        grainPosition: [2],
+        grainType: [null],
         name: [''],
         weight: [''],
         color: [''],
         pH: ['']
       }),
       grain3: this.fb.group({
-        id: [''],
-        grainDropdown: [null],
+        grainPosition: [3],
+        grainType: [null],
         name: [''],
         weight: [''],
         color: [''],
         pH: ['']
       }),
       grain4: this.fb.group({
-        id: [''],
-        grainDropdown: [null],
+        grainPosition: [4],
+        grainType: [null],
         name: [''],
         weight: [''],
         color: [''],
         pH: ['']
       }),
       grain5: this.fb.group({
-        id: [''],
-        grainDropdown: [null],
+        grainPosition: [5],
+        grainType: [null],
         name: [''],
         weight: [''],
         color: [''],
         pH: ['']
       }),
       grain6: this.fb.group({
-        id: [''],
-        grainDropdown: [null],
+        grainPosition: [6],
+        grainType: [null],
         name: [''],
         weight: [''],
         color: [''],
         pH: ['']
       }),
       grain7: this.fb.group({
-        id: [''],
-        grainDropdown: [null],
+        grainPosition: [7],
+        grainType: [null],
         name: [''],
         weight: [''],
         color: [''],
         pH: ['']
       }),
       grain8: this.fb.group({
-        id: [''],
-        grainDropdown: [null],
+        grainPosition: [8],
+        grainType: [null],
         name: [''],
         weight: [''],
         color: [''],
@@ -183,8 +182,8 @@ export class GrainBillComponent implements OnInit, OnDestroy {
   }
 
   private crystalPh(grainId: number): any {
-    if (this.grainBillForm.get('grain' + grainId + '.grainDropdown').value) {
-      return this.grainBillForm.get('grain' + grainId + '.grainDropdown').value.name === 'CRYSTAL' ?
+    if (this.grainBillForm.get('grain' + grainId + '.grainType').value) {
+      return this.grainBillForm.get('grain' + grainId + '.grainType').value.name === 'CRYSTAL' ?
         this.grainBillForm.get('grain' + grainId + '.pH').value :
         '';
     }
@@ -194,67 +193,91 @@ export class GrainBillComponent implements OnInit, OnDestroy {
     const grainBill: GrainBill = {
       grains: [
         {
-          id: 1,
+          grainPosition: 1,
           name: this.grainBillForm.get('grain1.name').value,
           weight: this.grainBillForm.get('grain1.weight').value,
           color: this.grainBillForm.get('grain1.color').value,
-          grainDropdown: this.grainBillForm.get('grain1.grainDropdown').value,
+          grainTypeId: this.grainBillForm.get('grain1.grainType').value != null ?
+            this.grainBillForm.get('grain1.grainType').value.id :
+            null,
+          grainType: this.grainBillForm.get('grain1.grainType').value,
           crystalPh: this.crystalPh(1)
         },
         {
-          id: 2,
+          grainPosition: 2,
           name: this.grainBillForm.get('grain2.name').value,
           weight: this.grainBillForm.get('grain2.weight').value,
           color: this.grainBillForm.get('grain2.color').value,
-          grainDropdown: this.grainBillForm.get('grain2.grainDropdown').value,
+          grainTypeId: this.grainBillForm.get('grain2.grainType').value != null ?
+            this.grainBillForm.get('grain2.grainType').value.id :
+            null,
+          grainType: this.grainBillForm.get('grain2.grainType').value,
           crystalPh: this.crystalPh(2)
         },
         {
-          id: 3,
+          grainPosition: 3,
           name: this.grainBillForm.get('grain3.name').value,
           weight: this.grainBillForm.get('grain3.weight').value,
           color: this.grainBillForm.get('grain3.color').value,
-          grainDropdown: this.grainBillForm.get('grain3.grainDropdown').value,
+          grainTypeId: this.grainBillForm.get('grain3.grainType').value != null ?
+            this.grainBillForm.get('grain3.grainType').value.id :
+            null,
+          grainType: this.grainBillForm.get('grain3.grainType').value,
           crystalPh: this.crystalPh(3)
         },
         {
-          id: 4,
+          grainPosition: 4,
           name: this.grainBillForm.get('grain4.name').value,
           weight: this.grainBillForm.get('grain4.weight').value,
           color: this.grainBillForm.get('grain4.color').value,
-          grainDropdown: this.grainBillForm.get('grain4.grainDropdown').value,
+          grainTypeId: this.grainBillForm.get('grain4.grainType').value != null ?
+            this.grainBillForm.get('grain4.grainType').value.id :
+            null,
+          grainType: this.grainBillForm.get('grain4.grainType').value,
           crystalPh: this.crystalPh(4)
         },
         {
-          id: 5,
+          grainPosition: 5,
           name: this.grainBillForm.get('grain5.name').value,
           weight: this.grainBillForm.get('grain5.weight').value,
           color: this.grainBillForm.get('grain5.color').value,
-          grainDropdown: this.grainBillForm.get('grain5.grainDropdown').value,
+          grainTypeId: this.grainBillForm.get('grain5.grainType').value != null ?
+            this.grainBillForm.get('grain5.grainType').value.id :
+            null,
+          grainType: this.grainBillForm.get('grain5.grainType').value,
           crystalPh: this.crystalPh(5)
         },
         {
-          id: 6,
+          grainPosition: 6,
           name: this.grainBillForm.get('grain6.name').value,
           weight: this.grainBillForm.get('grain6.weight').value,
           color: this.grainBillForm.get('grain6.color').value,
-          grainDropdown: this.grainBillForm.get('grain6.grainDropdown').value,
+          grainTypeId: this.grainBillForm.get('grain6.grainType').value != null ?
+            this.grainBillForm.get('grain6.grainType').value.id :
+            null,
+          grainType: this.grainBillForm.get('grain6.grainType').value,
           crystalPh: this.crystalPh(6)
         },
         {
-          id: 7,
+          grainPosition: 7,
           name: this.grainBillForm.get('grain7.name').value,
           weight: this.grainBillForm.get('grain7.weight').value,
           color: this.grainBillForm.get('grain7.color').value,
-          grainDropdown: this.grainBillForm.get('grain7.grainDropdown').value,
+          grainTypeId: this.grainBillForm.get('grain7.grainType').value != null ?
+            this.grainBillForm.get('grain7.grainType').value.id :
+            null,
+          grainType: this.grainBillForm.get('grain7.grainType').value,
           crystalPh: this.crystalPh(7)
         },
         {
-          id: 8,
+          grainPosition: 8,
           name: this.grainBillForm.get('grain8.name').value,
           weight: this.grainBillForm.get('grain8.weight').value,
           color: this.grainBillForm.get('grain8.color').value,
-          grainDropdown: this.grainBillForm.get('grain8.grainDropdown').value,
+          grainTypeId: this.grainBillForm.get('grain8.grainType').value != null ?
+            this.grainBillForm.get('grain8.grainType').value.id :
+            null,
+          grainType: this.grainBillForm.get('grain8.grainType').value,
           crystalPh: this.crystalPh(8)
         }
       ],

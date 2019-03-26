@@ -1,7 +1,14 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { AddBeerStyle, AddGrainBill, AddWaterAdjustment, AddWaterName, AddWaterReport } from './water.actions';
+import {
+  AddBeerStyle,
+  AddGrainBill,
+  AddWaterAdjustment,
+  AddWaterName,
+  AddWaterReport,
+  LoadWater
+} from './water.actions';
 import { WaterStateModel } from './water-state.model';
-import { AdjustmentSummary, GrainBill, MashPh, WaterAdjustment, WaterReport } from './water.interfaces';
+import { AdjustmentSummary, GrainBill, GrainType, MashPh, WaterAdjustment, WaterReport } from './water.interfaces';
 import { HttpClient } from '@angular/common/http';
 
 export const getWaterInitState = (): WaterStateModel => ({
@@ -23,67 +30,75 @@ export const getWaterInitState = (): WaterStateModel => ({
   grainBill: {
     grains: [
       {
-        id: 1,
+        grainPosition: 1,
         name: '',
         weight: 0,
         color: 0,
-        grainDropdown: null,
+        grainTypeId: 0,
+        grainType: null,
         crystalPh: 0
       },
       {
-        id: 2,
+        grainPosition: 2,
         name: '',
         weight: 0,
         color: 0,
-        grainDropdown: null,
+        grainTypeId: 0,
+        grainType: null,
         crystalPh: 0
       },
       {
-        id: 3,
+        grainPosition: 3,
         name: '',
         weight: 0,
         color: 0,
-        grainDropdown: null,
+        grainTypeId: 0,
+        grainType: null,
         crystalPh: 0
       },
       {
-        id: 4,
+        grainPosition: 4,
         name: '',
         weight: 0,
         color: 0,
-        grainDropdown: null,
+        grainTypeId: 0,
+        grainType: null,
         crystalPh: 0
       },
       {
-        id: 5,
+        grainPosition: 5,
         name: '',
         weight: 0,
         color: 0,
-        grainDropdown: null,
+        grainTypeId: 0,
+        grainType: null,
         crystalPh: 0
       },
       {
-        id: 6,
+        grainPosition: 6,
         name: '',
         weight: 0,
         color: 0,
-        grainDropdown: null,
+        grainTypeId: 0,
+        grainType: null,
         crystalPh: 0
       },
       {
-        id: 7,
+        grainPosition: 7,
         name: '',
         weight: 0,
         color: 0,
-        grainDropdown: null,
+        grainTypeId: 0,
+        grainType: null,
         crystalPh: 0
       },
       {
-        id: 8,
+        grainPosition: 8,
         name: '',
         weight: 0,
         color: 0,
-        grainDropdown: null,
+        grainTypeId: 0,
+        grainType: null,
         crystalPh: 0
       }
     ],
@@ -253,7 +268,6 @@ export class WaterState {
     ctx.setState({
       ...state,
       waterAdjustment: {
-        ...state.waterAdjustment,
         decreasePhSaltsMash: {
           ...state.waterAdjustment.decreasePhSaltsMash,
           gypsum: action.waterAdjustment.decreasePhSaltsMash.gypsum,
@@ -294,9 +308,9 @@ export class WaterState {
         }
       },
       mashPh: {
-        pH: this.mashPh(state.grainBill, state.waterReport, state.mashPh),
         effectiveAlkalinity: effectiveAlkalinity,
-        residualAlkalinity: residualAlkalinity
+        residualAlkalinity: residualAlkalinity,
+        pH: this.mashPh(state.grainBill, state.waterReport, state.mashPh)
       },
       adjustmentSummary: {
         mashWater: {
@@ -338,6 +352,16 @@ export class WaterState {
     });
   }
 
+  @Action(LoadWater)
+  loadWater(ctx: StateContext<WaterStateModel>, action: LoadWater) {
+    const state = ctx.getState();
+    ctx.setState({
+      ...state,
+      id: action.id,
+      name: action.name
+    });
+  }
+
   private effectiveAlkalinity(waterReport: WaterReport, waterAdjustment: WaterAdjustment): number {
     return ((1 - waterReport.mashRoPercentage / 100) * waterReport.alkalinity) +
       ((waterAdjustment.increasePhSaltsMash.chalk * 130 +
@@ -352,12 +376,13 @@ export class WaterState {
   }
 
   private mashPh(grainBill: GrainBill, waterReport: WaterReport, mashPh: MashPh): number {
+    console.log('Grain Bill', grainBill);
     const totalWeightPh = grainBill.grains
       .filter(grain => grain.weight)
       .reduce((acc, grain) => {
-        return acc + (grain.weight * (grain.grainDropdown.type === 2
+        return acc + (grain.weight * (grain.grainType.maltType === 2
           ? grain.crystalPh
-          : grain.grainDropdown.pH));
+          : grain.grainType.pH));
       }, 0);
     return (totalWeightPh / grainBill.totalGrainWeight) +
       ((0.1085 * (waterReport.mashVolume / 3.785412) / (grainBill.totalGrainWeight * 2.20462) + 0.013) * (mashPh.residualAlkalinity / 50));
