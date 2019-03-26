@@ -7,12 +7,14 @@
     </div>
   </div>
   <div class="container">
-    <div class="col py-2">
-      <div class="col-lg-4 text-left">
-        <div class="col py-1">
-          <h4>Load water</h4>
-        </div>
-        <div class="col py-1" style="width: 300px;">
+    <div class="row">
+      <div class="col py-1">
+        <h4>Load water</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4 py-1">
+        <div style="width: 300px;">
           <ng-select [items]="waters"
                      bindLabel="name"
                      placeholder="- Select Style -"
@@ -21,17 +23,17 @@
           </ng-select>
         </div>
       </div>
-    </div>
-  </div>
-  <!-- Buttons -->
-  <div class="container py-3">
-      <div class="row justify-content-end">
+      <div class="col-4">
+
+      </div>
+      <div class="col-4">
         <button (click)="onStart()" type="button" class="btn btn-outline-success mr-2">
-          BUILD WATER <span class="fas fa-angle-double-right"></span>
+          New Water <span class="fas fa-angle-double-right"></span>
         </button>
         <button (click)="onDelete()" type="button" class="btn btn-outline-danger">
           Delete All Waters! <span class="far fa-trash-alt"></span>
         </button>
       </div>
+    </div>
   </div>
 </main>

@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { AddWaterName } from '../../../state/water.actions';
 import { WaterStateModel } from '../../../state/water-state.model';
 import { StateReset } from 'ngxs-reset-plugin';
+import { WaterState } from '../../../state/water.state';
 
 @Component({
   selector: 'app-adjustment-summary',
@@ -55,8 +56,8 @@ export class AdjustmentSummaryComponent implements OnInit {
     this.waterService.deleteWater().subscribe(
       () => {
         alert('Water deleted!');
+        this.store.dispatch(new StateReset(WaterState));
         this.router.navigate(['/']);
-        this.store.dispatch(new StateReset());
       }
     );
   }

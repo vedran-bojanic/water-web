@@ -14,6 +14,8 @@ import {
 } from '../../state/water.actions';
 import { WaterModel } from '../../water/models/water-model';
 import { Router } from '@angular/router';
+import { StateReset } from 'ngxs-reset-plugin';
+import { WaterState } from '../../state/water.state';
 
 @Component({
   selector: 'app-root-page',
@@ -43,14 +45,25 @@ export class RootPageComponent implements OnInit {
   }
 
   onStart() {
+    this.store.dispatch(new StateReset(WaterState));
     this.router.navigate(['/water/water-report']);
   }
 
   onDelete() {
-    this.waterService.deleteAllWater().subscribe();
+    this.waterService.deleteAllWater().subscribe(
+      () => {
+        alert('All waters deleted!');
+        this.store.dispatch(new StateReset(WaterState));
+        this.waters = null;
+      }
+    );
   }
 
   onWaterChange() {
+    if (!this.selectedWater) {
+      this.store.dispatch(new StateReset(WaterState));
+      return;
+    }
     this.waterService.loadWater(this.selectedWater.id)
       .pipe(
         map((water: WaterModel) => {

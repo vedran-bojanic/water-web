@@ -376,7 +376,6 @@ export class WaterState {
   }
 
   private mashPh(grainBill: GrainBill, waterReport: WaterReport, mashPh: MashPh): number {
-    console.log('Grain Bill', grainBill);
     const totalWeightPh = grainBill.grains
       .filter(grain => grain.weight)
       .reduce((acc, grain) => {

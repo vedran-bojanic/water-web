@@ -49,7 +49,6 @@ export class WaterService {
     this.store.selectOnce(state => state.water)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((water: WaterStateModel) => {
-        console.log('Water', water);
         this.waterModel = {
           id: water.id,
           name: water.name,
