@@ -24,3 +24,8 @@ export class AddWaterName {
   public static readonly type = '[Water] AddWaterName';
   constructor(public name: string) { }
 }
+
+export class LoadWater {
+  public static readonly type = '[Water] LoadWater';
+  constructor(public id: number, public name: string) { }
+}

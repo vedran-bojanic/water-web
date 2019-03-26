@@ -1,4 +1,4 @@
-import { GrainDropdown } from './water.interfaces';
+import { GrainType } from './water.interfaces';
 
 export interface WaterStateModel {
   id: number;
@@ -19,67 +19,75 @@ export interface WaterStateModel {
   grainBill: {
     grains: [
       {
-        id: number,
+        grainPosition: number,
         name: string,
         weight: number,
         color: number,
-        grainDropdown: GrainDropdown,
+        grainTypeId: number,
+        grainType: GrainType
+        crystalPh: number
+      },
+      {
+        grainPosition: number,
+        name: string,
+        weight: number,
+        color: number,
+        grainTypeId: number,
+        grainType: GrainType
+        crystalPh: number
+      },
+      {
+        grainPosition: number,
+        name: string,
+        weight: number,
+        color: number,
+        grainTypeId: number,
+        grainType: GrainType,
         crystalPh: number,
       },
       {
-        id: number,
+        grainPosition: number,
         name: string,
         weight: number,
         color: number,
-        grainDropdown: GrainDropdown,
+        grainTypeId: number,
+        grainType: GrainType
         crystalPh: number,
       },
       {
-        id: number,
+        grainPosition: number,
         name: string,
         weight: number,
         color: number,
-        grainDropdown: GrainDropdown,
+        grainTypeId: number,
+        grainType: GrainType
         crystalPh: number,
       },
       {
-        id: number,
+        grainPosition: number,
         name: string,
         weight: number,
         color: number,
-        grainDropdown: GrainDropdown,
+        grainTypeId: number,
+        grainType: GrainType
         crystalPh: number,
       },
       {
-        id: number,
+        grainPosition: number,
         name: string,
         weight: number,
         color: number,
-        grainDropdown: GrainDropdown,
+        grainTypeId: number,
+        grainType: GrainType
         crystalPh: number,
       },
       {
-        id: number,
+        grainPosition: number,
         name: string,
         weight: number,
         color: number,
-        grainDropdown: GrainDropdown,
-        crystalPh: number,
-      },
-      {
-        id: number,
-        name: string,
-        weight: number,
-        color: number,
-        grainDropdown: GrainDropdown,
-        crystalPh: number,
-      },
-      {
-        id: number,
-        name: string,
-        weight: number,
-        color: number,
-        grainDropdown: GrainDropdown,
+        grainTypeId: number,
+        grainType: GrainType
         crystalPh: number,
       }
       ];

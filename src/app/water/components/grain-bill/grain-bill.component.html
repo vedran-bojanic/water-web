@@ -25,11 +25,11 @@
         <div class="row py-1">
           <div class="col text-center">
             <div class="col text-center" style="width: 250px;">
-              <ng-select [items]="grainsDropdown"
+              <ng-select [items]="grainTypes"
                          bindLabel="name"
                          placeholder="- Select Grain -"
                          (change)="onChange($event, i + 1)"
-                         formControlName="grainDropdown">
+                         formControlName="grainType">
             </ng-select>
             </div>
           </div>

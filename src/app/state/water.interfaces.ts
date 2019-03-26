@@ -1,4 +1,4 @@
-import { GrainType } from '../water/models/grain-type.enum';
+import { MaltType } from '../water/models/malt-type.enum';
 
 export interface WaterReport {
   calcium: number;
@@ -16,67 +16,75 @@ export interface WaterReport {
 export interface GrainBill {
   grains: [
     {
-      id: number,
+      grainPosition: number,
       name: string,
       weight: number,
       color: number,
-      grainDropdown: GrainDropdown,
+      grainTypeId: number,
+      grainType: GrainType,
       crystalPh: number,
     },
     {
-      id: number,
+      grainPosition: number,
       name: string,
       weight: number,
       color: number,
-      grainDropdown: GrainDropdown,
+      grainTypeId: number,
+      grainType: GrainType,
       crystalPh: number,
     },
     {
-      id: number,
+      grainPosition: number,
       name: string,
       weight: number,
       color: number,
-      grainDropdown: GrainDropdown,
+      grainTypeId: number,
+      grainType: GrainType,
       crystalPh: number,
     },
     {
-      id: number,
+      grainPosition: number,
       name: string,
       weight: number,
       color: number,
-      grainDropdown: GrainDropdown,
+      grainTypeId: number,
+      grainType: GrainType,
       crystalPh: number,
     },
     {
-      id: number,
+      grainPosition: number,
       name: string,
       weight: number,
       color: number,
-      grainDropdown: GrainDropdown,
+      grainTypeId: number,
+      grainType: GrainType,
       crystalPh: number,
     },
     {
-      id: number,
+      grainPosition: number,
       name: string,
       weight: number,
       color: number,
-      grainDropdown: GrainDropdown,
+      grainTypeId: number,
+      grainType: GrainType,
       crystalPh: number,
     },
     {
-      id: number,
+      grainPosition: number,
       name: string,
       weight: number,
       color: number,
-      grainDropdown: GrainDropdown,
+      grainTypeId: number,
+      grainType: GrainType,
       crystalPh: number,
     },
     {
-      id: number,
+      grainPosition: number,
       name: string,
       weight: number,
       color: number,
-      grainDropdown: GrainDropdown,
+      grainTypeId: number,
+      grainType: GrainType,
       crystalPh: number,
     }
     ];
@@ -84,27 +92,20 @@ export interface GrainBill {
   totalGrainWeight: number;
 }
 
-export interface GrainDropdown {
+export interface GrainType {
   id: number;
   name: string;
   pH: number;
-  type: GrainType;
+  maltType: MaltType;
 }
 
 export interface Grain {
-  id: number;
+  grainPosition: number;
   name: string;
   weight: number;
   color: number;
-  grainDropdown: GrainDropdown;
+  grainType: GrainType;
   crystalPh: number;
-}
-
-export interface GrainDropdown {
-  id: number;
-  name: string;
-  pH: number;
-  type: GrainType;
 }
 
 export interface WaterAdjustment {

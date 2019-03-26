@@ -5,6 +5,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BeerStyle } from '../../state/water.interfaces';
 import { WaterStateModel } from '../../state/water-state.model';
 import { Store } from '@ngxs/store';
+import { WaterModel } from '../models/water-model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,7 @@ export class WaterService {
   beerStyles: BeerStyle[];
   waters: WaterStateModel[];
   water: WaterStateModel;
+  waterModel: WaterModel;
   private ngUnsubscribe: Subject<any>;
 
   constructor(private http: HttpClient, private store: Store) {
@@ -46,13 +49,36 @@ export class WaterService {
     this.store.selectOnce(state => state.water)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((water: WaterStateModel) => {
-        this.water = water;
+        this.waterModel = {
+          id: water.id,
+          name: water.name,
+          beerStyleId: water.beerStyleId,
+          waterReport: water.waterReport,
+          grains: water.grainBill.grains,
+          waterAdjustment: water.waterAdjustment
+        } as WaterModel;
       });
-
-    return this.http.post<WaterStateModel>('/waters', this.water, httpOptions);
+      if (this.waterModel.id === 0) {
+        return this.http.post<WaterModel>('/waters', this.waterModel, httpOptions);
+      } else {
+        return this.http.put<WaterModel>('/waters/' + this.waterModel.id, this.waterModel, httpOptions);
+      }
   }
 
-  loadBeer(id: number): Observable<WaterStateModel> {
-    return this.http.get<WaterStateModel>('/waters/' + id);
+  deleteWater() {
+    this.store.selectOnce(state => state.water)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((water: WaterStateModel) => {
+        this.water = water;
+      });
+    return this.http.delete('/waters/' + this.water.id);
+  }
+
+  deleteAllWater() {
+    return this.http.delete('/waters');
+  }
+
+  loadWater(id: number): Observable<any> {
+    return this.http.get<WaterModel>('/waters/' + id);
   }
 }

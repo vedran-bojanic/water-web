@@ -3,10 +3,13 @@ import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { AdjustmentSummary, BeerStyle, Water } from '../../../state/water.interfaces';
+import { BeerStyle, Water } from '../../../state/water.interfaces';
 import { WaterService } from '../../services/water.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AddWaterName } from '../../../state/water.actions';
+import { WaterStateModel } from '../../../state/water-state.model';
+import { StateReset } from 'ngxs-reset-plugin';
+import { WaterState } from '../../../state/water.state';
 
 @Component({
   selector: 'app-adjustment-summary',
@@ -26,11 +29,12 @@ export class AdjustmentSummaryComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    this.store.select(state => state.water.adjustmentSummary)
+    this.store.select(state => state.water)
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((as: AdjustmentSummary) => {
-        this.mashWater = as.mashWater;
-        this.overallWater = as.overallWater;
+      .subscribe((water: WaterStateModel) => {
+        this.mashWater = water.adjustmentSummary.mashWater;
+        this.overallWater = water.adjustmentSummary.overallWater;
+        this.waterNameForm.get('waterName').setValue(water.name);
       });
     this.store.selectOnce(state => state.water.beerStyle)
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -42,11 +46,19 @@ export class AdjustmentSummaryComponent implements OnInit {
   }
 
   onSave() {
-    this.store.dispatch(new AddWaterName(this.waterNameForm.controls['waterName'].value))
-    this.waterService.saveWater()
-      .subscribe(
-        (response) => console.log(response),
-        (error) => console.log(error)
+    this.store.dispatch(new AddWaterName(this.waterNameForm.controls['waterName'].value));
+    this.waterService.saveWater().subscribe(
+      () => alert('Water Saved!')
+    );
+  }
+
+  onDelete() {
+    this.waterService.deleteWater().subscribe(
+      () => {
+        alert('Water deleted!');
+        this.store.dispatch(new StateReset(WaterState));
+        this.router.navigate(['/']);
+      }
     );
   }
 
