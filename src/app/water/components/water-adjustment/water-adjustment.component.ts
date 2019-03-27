@@ -54,17 +54,17 @@ export class WaterAdjustmentComponent implements OnInit, OnDestroy {
         this.setFormValue('decreasePhSaltsMash', 'gypsum', wa.decreasePhSaltsMash.gypsum);
         this.setFormValue('decreasePhSaltsMash', 'calciumChloride', wa.decreasePhSaltsMash.calciumChloride);
         this.setFormValue('decreasePhSaltsMash', 'epsomSalt', wa.decreasePhSaltsMash.epsomSalt);
-        this.setFormValue('decreasePhSaltsSparge', 'gypsum', wa.decreasePhSaltsSparge.gypsum);
-        this.setFormValue('decreasePhSaltsSparge', 'calciumChloride', wa.decreasePhSaltsSparge.calciumChloride);
-        this.setFormValue('decreasePhSaltsSparge', 'epsomSalt', wa.decreasePhSaltsSparge.epsomSalt);
+        this.setFormValue('decreasePhSaltsSparge', 'gypsum', Math.round(wa.decreasePhSaltsSparge.gypsum * 100) / 100);
+        this.setFormValue('decreasePhSaltsSparge', 'calciumChloride', Math.round(wa.decreasePhSaltsSparge.calciumChloride * 100) / 100);
+        this.setFormValue('decreasePhSaltsSparge', 'epsomSalt', Math.round(wa.decreasePhSaltsSparge.epsomSalt * 100) / 100);
         this.setFormValue('decreasePhAcid', 'acidulatedMalt', wa.decreasePhAcid.acidulatedMalt);
         this.setFormValue('decreasePhAcid', 'lacticAcid', wa.decreasePhAcid.lacticAcid);
         this.setFormValue('increasePhSaltsMash', 'slakedLime', wa.increasePhSaltsMash.slakedLime);
         this.setFormValue('increasePhSaltsMash', 'bakingSoda', wa.increasePhSaltsMash.bakingSoda);
         this.setFormValue('increasePhSaltsMash', 'chalk', wa.increasePhSaltsMash.chalk);
-        this.setFormValue('increasePhSaltsSparge', 'slakedLime', wa.increasePhSaltsSparge.slakedLime);
-        this.setFormValue('increasePhSaltsSparge', 'bakingSoda', wa.increasePhSaltsSparge.bakingSoda);
-        this.setFormValue('increasePhSaltsSparge', 'chalk', wa.increasePhSaltsSparge.chalk);
+        this.setFormValue('increasePhSaltsSparge', 'slakedLime', Math.round(wa.increasePhSaltsSparge.slakedLime * 100) / 100);
+        this.setFormValue('increasePhSaltsSparge', 'bakingSoda', Math.round(wa.increasePhSaltsSparge.bakingSoda * 100) / 100);
+        this.setFormValue('increasePhSaltsSparge', 'chalk', Math.round(wa.increasePhSaltsSparge.chalk * 100) / 100);
 
         this.setFormValue('decreaseSaltsShowInput', 'showGypsum', wa.decreasePhSaltsSparge.showGypsum);
         this.gypsum = !wa.decreasePhSaltsSparge.showGypsum;

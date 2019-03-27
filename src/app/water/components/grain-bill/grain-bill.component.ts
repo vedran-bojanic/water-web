@@ -76,7 +76,7 @@ export class GrainBillComponent implements OnInit, OnDestroy {
   calculatePh(grainRowId: number) {
     const grainColor = this.grainBillForm.get('grain' + grainRowId + '.color').value;
     const crystalPH = 5.22 - 0.00504 * grainColor;
-    this.setFormValue(grainRowId, 'pH', crystalPH);
+    this.setFormValue(grainRowId, 'pH', Math.round(crystalPH * 100) / 100);
   }
 
   private setFormValue(grainId: number, formControlName: string, value: any): any {
