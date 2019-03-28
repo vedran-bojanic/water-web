@@ -83,6 +83,9 @@ export class RootPageComponent implements OnInit {
         this.store.dispatch(new AddWaterReport(water.waterReport));
         this.store.dispatch(new AddGrainBill(water.grainBill));
         this.store.dispatch(new AddWaterAdjustment(water.waterAdjustment));
+        this.store.dispatch(new AddWaterReport(water.waterReport));
+        this.store.dispatch(new AddGrainBill(water.grainBill));
+        this.store.dispatch(new AddWaterAdjustment(water.waterAdjustment));
       });
   }
 }
