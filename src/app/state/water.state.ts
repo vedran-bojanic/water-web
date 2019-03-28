@@ -8,7 +8,7 @@ import {
   LoadWater
 } from './water.actions';
 import { WaterStateModel } from './water-state.model';
-import { AdjustmentSummary, GrainBill, GrainType, MashPh, WaterAdjustment, WaterReport } from './water.interfaces';
+import { AdjustmentSummary, GrainBill, MashPh, WaterAdjustment, WaterReport } from './water.interfaces';
 import { HttpClient } from '@angular/common/http';
 
 export const getWaterInitState = (): WaterStateModel => ({
@@ -357,8 +357,10 @@ export class WaterState {
     const state = ctx.getState();
     ctx.setState({
       ...state,
-      id: action.id,
-      name: action.name
+      id: action.water.id,
+      name: action.water.name,
+      beerStyleId: action.water.beerStyleId,
+      beerStyle: action.water.beerStyle
     });
   }
 

@@ -1,4 +1,5 @@
 import { BeerStyle, GrainBill, WaterAdjustment, WaterReport } from './water.interfaces';
+import { WaterStateModel } from './water-state.model';
 
 export class AddWaterReport {
   static readonly type = '[Water] AddWaterReport';
@@ -27,5 +28,5 @@ export class AddWaterName {
 
 export class LoadWater {
   public static readonly type = '[Water] LoadWater';
-  constructor(public id: number, public name: string) { }
+  constructor(public water: WaterStateModel) { }
 }

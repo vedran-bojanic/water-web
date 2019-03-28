@@ -90,7 +90,7 @@ export interface WaterStateModel {
         grainType: GrainType
         crystalPh: number,
       }
-      ];
+    ];
     mashThickness: number;
     totalGrainWeight: number;
   };

@@ -105,8 +105,8 @@ export class GrainBillComponent implements OnInit, OnDestroy {
             }
           }
         );
-        this.grainBillForm.get('totalGrainWeight').setValue(grainBill.totalGrainWeight);
-        this.grainBillForm.get('mashThickness').setValue(grainBill.mashThickness.toFixed(2));
+        this.grainBillForm.get('totalGrainWeight').setValue(Math.round(grainBill.totalGrainWeight * 100) / 100);
+        this.grainBillForm.get('mashThickness').setValue(Math.round(grainBill.mashThickness * 100) / 100);
       });
   }
 

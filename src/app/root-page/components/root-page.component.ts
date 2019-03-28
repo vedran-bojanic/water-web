@@ -5,10 +5,8 @@ import { Subject } from 'rxjs';
 import { WaterStateModel } from '../../state/water-state.model';
 import { Store } from '@ngxs/store';
 import {
-  AddBeerStyle,
   AddGrainBill,
   AddWaterAdjustment,
-  AddWaterName,
   AddWaterReport,
   LoadWater
 } from '../../state/water.actions';
@@ -81,9 +79,7 @@ export class RootPageComponent implements OnInit {
         })
       )
       .subscribe((water: WaterStateModel) => {
-        this.store.dispatch(new LoadWater(water.id, water.name));
-        this.store.dispatch(new AddWaterName(water.name));
-        this.store.dispatch(new AddBeerStyle(water.beerStyle));
+        this.store.dispatch(new LoadWater(water));
         this.store.dispatch(new AddWaterReport(water.waterReport));
         this.store.dispatch(new AddGrainBill(water.grainBill));
         this.store.dispatch(new AddWaterAdjustment(water.waterAdjustment));
