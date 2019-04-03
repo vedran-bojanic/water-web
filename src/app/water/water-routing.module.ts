@@ -6,11 +6,13 @@ import { WaterAdjustmentComponent } from './components/water-adjustment/water-ad
 import { AdjustmentSummaryComponent } from './components/adjustment-summary/adjustment-summary.component';
 import { WaterComponent } from './components/water.component';
 import { StepDetails } from '../shared/models/StepDetails';
+import { AuthGuardService } from '../authentication/services/auth-guard.service';
 
 const routes: Routes = [
   {
     path: 'water',
     component: WaterComponent,
+    canActivate: [ AuthGuardService ],
     children: [
       {
         path: 'water-report',

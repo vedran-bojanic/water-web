@@ -22,6 +22,7 @@ import { WaterState } from './state/water.state';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxsResetPluginModule } from 'ngxs-reset-plugin';
+import { LoginComponent } from './authentication/components/login.component';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { NgxsResetPluginModule } from 'ngxs-reset-plugin';
     NavbarComponent,
     FooterComponent,
     RootPageComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    LoginComponent
   ],
   providers: [GrainService],
   bootstrap: [AppComponent]

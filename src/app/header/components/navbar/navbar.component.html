@@ -1,24 +1,18 @@
-<header class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+<header class="navbar navbar-expand-md navbar-light bg-light fixed-top border-bottom shadow-sm">
   <div class="container">
     <a class="navbar-brand" routerLink="/">Home</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/water/water-report">Report</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/water/grain-bill">Grains</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/water/water-adjustment">Adjuster</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/water/adjustment-summary">Summary</a>
-        </li>
-      </ul>
-    </div>
+    <ul class="navbar-nav">
+      <li *ngIf="authenticationService.isUserLoggedIn()" class="nav-item"><a class="nav-link p-2 text-dark" routerLink="/water/water-report">Report</a></li>
+      <li *ngIf="authenticationService.isUserLoggedIn()" class="nav-item"><a class="nav-link p-2 text-dark" routerLink="/water/grain-bill">Grains</a></li>
+      <li *ngIf="authenticationService.isUserLoggedIn()" class="nav-item"><a class="nav-link p-2 text-dark" routerLink="/water/water-adjustment">Adjuster</a></li>
+      <li *ngIf="authenticationService.isUserLoggedIn()" class="nav-item"><a class="nav-link p-2 text-dark" routerLink="/water/adjustment-summary">Summary</a></li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="logging" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sign in</a>
+        <div class="dropdown-menu" aria-labelledby="logging">
+          <a class="dropdown-item" routerLink="/login">Login</a>
+          <a class="dropdown-item" (click)="logout()">Logout</a>
+        </div>
+      </li>
+    </ul>
   </div>
 </header>

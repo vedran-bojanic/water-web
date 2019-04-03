@@ -14,6 +14,7 @@ import { WaterModel } from '../../water/models/water-model';
 import { Router } from '@angular/router';
 import { StateReset } from 'ngxs-reset-plugin';
 import { WaterState } from '../../state/water.state';
+import { AuthenticationService } from '../../authentication/services/authentication.service';
 
 @Component({
   selector: 'app-root-page',
@@ -25,7 +26,7 @@ export class RootPageComponent implements OnInit {
   waters: WaterStateModel[];
   selectedWater: WaterStateModel;
 
-  constructor(private store: Store, private waterService: WaterService, private router: Router) {
+  constructor(private store: Store, private waterService: WaterService, private router: Router, private authenticationService: AuthenticationService) {
     this.ngUnsubscribe = new Subject();
   }
 
@@ -87,5 +88,9 @@ export class RootPageComponent implements OnInit {
         this.store.dispatch(new AddGrainBill(water.grainBill));
         this.store.dispatch(new AddWaterAdjustment(water.waterAdjustment));
       });
+  }
+
+  authenticated() {
+    return this.authenticationService.authenticated;
   }
 }
