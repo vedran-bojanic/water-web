@@ -9,9 +9,9 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 export class LoginComponent implements OnInit {
 
-  username = 'javainuse'
-  password = ''
-  invalidLogin = false
+  username = '';
+  password = '';
+  invalidLogin = false;
 
   constructor(private router: Router, private loginservice: AuthenticationService) { }
 
@@ -19,12 +19,16 @@ export class LoginComponent implements OnInit {
   ngOnInit() { }
 
   checkLogin() {
-    if (this.loginservice.authenticate(this.username, this.password)) {
-      this.router.navigate(['/home'])
-      this.invalidLogin = false;
-    } else {
-      this.invalidLogin = true;
-    }
+    (this.loginservice.authenticate(this.username, this.password).subscribe(
+        data => {
+          this.router.navigate(['/home']);
+          this.invalidLogin = false;
+        },
+        error => {
+          this.invalidLogin = true;
+        }
+      )
+    );
   }
 
 }

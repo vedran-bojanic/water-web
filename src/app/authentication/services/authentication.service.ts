@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { UserModel } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +13,15 @@ export class AuthenticationService {
   constructor(private http: HttpClient) { }
 
   authenticate(username, password) {
-    if (username === 'javainuse' && password === 'password') {
-      sessionStorage.setItem('username', username);
-      return true;
-    } else {
-      return false;
-    }
+    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
+    return this.http.get<UserModel>('/login', { headers })
+      .pipe(
+        map(
+          userData => {
+            sessionStorage.setItem('username', username );
+            return userData;
+          })
+      );
   }
 
   isUserLoggedIn() {
