@@ -1,0 +1,18 @@
+<main role="main" class="flex-shrink-0">
+  <div class="container">
+    <div class="col py-5 mt-5 text-center">
+      <img class="d-block mx-auto mb-2" src="../assets/pic/you-be-the-chemist-logo-285.png" alt="">
+    </div>
+  </div>
+  <div class="container">
+    <div class="col form-signin text-center">
+      <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
+      <label for="username" class="sr-only">Username</label>
+      <input type="text" class="form-control" id="username" name="username" [(ngModel)]="username" placeholder="Username" required="" autocomplete="off">
+      <label for="password" class="sr-only">Password</label>
+      <input type="password" class="form-control" id="password" name="password" [(ngModel)]="password" placeholder="Password" required="" autocomplete="off">
+      <button class="btn btn-lg btn-dark btn-block" (click)=checkLogin()>Sign in</button>
+      <button class="btn btn-lg btn-outline-info btn-block" (click)=register()>New User</button>
+    </div>
+  </div>
+</main>
