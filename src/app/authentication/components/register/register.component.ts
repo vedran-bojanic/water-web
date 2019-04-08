@@ -9,6 +9,7 @@ export class RegisterComponent implements OnInit {
 
   username = '';
   password = '';
+  repeatPassword = '';
 
   constructor() { }
 
