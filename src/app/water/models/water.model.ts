@@ -2,6 +2,7 @@ import { GrainType } from '../../state/water.interfaces';
 
 export interface WaterModel {
   id: number;
+  userId: number;
   name: string;
   beerStyleId: number;
   waterReport: {

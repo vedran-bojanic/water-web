@@ -10,7 +10,7 @@ import {
   AddWaterReport,
   LoadWater
 } from '../../state/water.actions';
-import { WaterModel } from '../../water/models/water-model';
+import { WaterModel } from '../../water/models/water.model';
 import { Router } from '@angular/router';
 import { StateReset } from 'ngxs-reset-plugin';
 import { WaterState } from '../../state/water.state';

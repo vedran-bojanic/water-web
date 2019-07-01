@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { UserModel } from '../models/user.model';
 
 @Injectable({
@@ -13,26 +13,26 @@ export class AuthenticationService {
   constructor(private http: HttpClient) { }
 
   authenticate(username, password) {
-    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
-    console.log('Headers', headers);
-    return this.http.get<UserModel>('http://localhost:8080/login', { headers })
+    return this.http.post<UserModel>('/token/generate', { username, password })
       .pipe(
-        map(
+        tap(
           userData => {
-            sessionStorage.setItem('username', username );
-            const authString = 'Basic ' + btoa(username + ':' + password);
-            sessionStorage.setItem('basicauth', authString);
-            return userData;
+            localStorage.setItem('username', username );
+            const authString = 'Bearer ' + userData.result.token;
+            localStorage.setItem('basicauth', authString);
+            localStorage.setItem('userId', userData.result.userId);
           })
       );
   }
 
   isUserLoggedIn() {
-    const user = sessionStorage.getItem('username');
+    const user = localStorage.getItem('username');
     return !(user === null);
   }
 
   logOut() {
-    sessionStorage.removeItem('username');
+    localStorage.removeItem('username');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('basicauth');
   }
 }

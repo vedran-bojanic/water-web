@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BeerStyle } from '../../state/water.interfaces';
 import { WaterStateModel } from '../../state/water-state.model';
 import { Store } from '@ngxs/store';
-import { WaterModel } from '../models/water-model';
+import { WaterModel } from '../models/water.model';
 
 
 @Injectable({
@@ -35,8 +35,12 @@ export class WaterService {
     if (this.waters) {
       return of(this.waters);
     }
-    return this.http.get<WaterStateModel[]>('/waters')
-      .pipe(tap(waters => this.waters = waters));
+    const userId = localStorage.getItem('userId');
+
+    return this.http.get<WaterStateModel[]>('/water/users/' + userId)
+      .pipe(tap(waters => {
+        this.waters = waters;
+      }));
   }
 
   saveWater() {
@@ -45,12 +49,13 @@ export class WaterService {
         'Content-Type':  'application/json'
       })
     };
-
+    const userId = localStorage.getItem('userId');
     this.store.selectOnce(state => state.water)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((water: WaterStateModel) => {
         this.waterModel = {
           id: water.id,
+          userId: +userId,
           name: water.name,
           beerStyleId: water.beerStyleId,
           waterReport: water.waterReport,

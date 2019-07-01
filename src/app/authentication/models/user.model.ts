@@ -1,3 +1,6 @@
 export interface UserModel {
-  status: string;
+  userId: string;
+  username: string;
+  password: string;
+  result: any;
 }

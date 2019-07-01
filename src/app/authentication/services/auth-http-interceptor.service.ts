@@ -9,10 +9,11 @@ export class AuthHttpInterceptorService implements HttpInterceptor {
   constructor() { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    if (sessionStorage.getItem('username') && sessionStorage.getItem('basicauth')) {
+    if (localStorage.getItem('username') && localStorage.getItem('basicauth')) {
       req = req.clone({
         setHeaders: {
-          Authorization: sessionStorage.getItem('basicauth')
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('basicauth')
         }
       });
     }
