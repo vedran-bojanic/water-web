@@ -20,7 +20,10 @@ export class WaterReportComponent implements OnInit, OnDestroy {
   private ngUnsubscribe: Subject<any>;
   waterReportForm: FormGroup;
 
-  constructor(private router: Router, private fb: FormBuilder, private store: Store, private waterService: WaterService) {
+  constructor(private router: Router,
+              private fb: FormBuilder,
+              private store: Store,
+              private waterService: WaterService) {
     this.ngUnsubscribe = new Subject();
     this.createForm();
   }

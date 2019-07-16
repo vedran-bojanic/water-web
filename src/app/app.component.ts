@@ -7,8 +7,7 @@ import { StepperService } from './water/components/stepper/services/stepper.serv
 })
 export class AppComponent implements OnInit  {
 
-  constructor(private stepperService: StepperService) {
-  }
+  constructor(private stepperService: StepperService) { }
 
   ngOnInit() {
     this.stepperService.init();

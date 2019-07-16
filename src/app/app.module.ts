@@ -19,9 +19,12 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { environment } from '../environments/environment';
 import { WaterState } from './state/water.state';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxsResetPluginModule } from 'ngxs-reset-plugin';
+import { LoginComponent } from './authentication/components/login/login.component';
+import { AuthHttpInterceptorService } from './authentication/services/auth-http-interceptor.service';
+import { RegisterComponent } from './authentication/components/register/register.component';
 
 
 @NgModule({
@@ -51,9 +54,16 @@ import { NgxsResetPluginModule } from 'ngxs-reset-plugin';
     NavbarComponent,
     FooterComponent,
     RootPageComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    LoginComponent,
+    RegisterComponent
   ],
-  providers: [GrainService],
+  providers: [
+    GrainService,
+    {
+      provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptorService, multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

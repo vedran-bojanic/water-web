@@ -6,7 +6,7 @@
       <p class="lead">This web application was made for educational purposes only! Enjoy using application and think about the environment first!</p>
     </div>
   </div>
-  <div class="container">
+  <div class="container" *ngIf="authenticationService.isUserLoggedIn()">
     <div class="row">
       <div class="col py-1">
         <h4>Load water</h4>
@@ -17,7 +17,7 @@
         <div style="width: 300px;">
           <ng-select [items]="waters"
                      bindLabel="name"
-                     placeholder="- Select Style -"
+                     placeholder="- Select Water -"
                      (change)="onWaterChange()"
                      [(ngModel)]="selectedWater">
           </ng-select>
